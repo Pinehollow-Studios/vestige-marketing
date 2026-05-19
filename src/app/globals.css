@@ -95,7 +95,21 @@
    var(--font-display) so next/font wires through.
    ═══════════════════════════════════════════════════════════════ */
 
-html, body { background: #06090E; }
+/* Page-level vertical gradient — subtle mint tint at the bottom so the
+   Features → Closing CTA transition reads as a continuous shift rather
+   than a hard edge. The tint is light enough to be invisible at the
+   top half of the document. */
+html, body {
+  background: linear-gradient(
+    180deg,
+    #06090E 0%,
+    #06090E 55%,
+    #07110d 78%,
+    #08160f 92%,
+    #0a1b12 100%
+  );
+  background-attachment: fixed;
+}
 
 /* ─── Reset / base ─────────────────────────────────────────── */
 .fw-root {
@@ -608,27 +622,6 @@ html, body { background: #06090E; }
 }
 @keyframes fw-motif-spin {
   to { transform: rotate(360deg); }
-}
-
-/* ─── Inter-section colour fade (Features → Closing CTA) ─── */
-/* Standalone block sitting between the two <section>s, with negative
-   margins so it overlaps both. Visible as a vertical mint ramp:
-   transparent at the top (still mid-Features), strongest mint at the
-   bottom (just entering CTA). Lives outside any overflow:hidden so
-   the gradient is never clipped. */
-.fw-section-fade {
-  position: relative;
-  z-index: 1;
-  height: 380px;
-  margin: -190px 0;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    color-mix(in srgb, var(--accent) 4%, transparent) 35%,
-    color-mix(in srgb, var(--accent) 10%, transparent) 70%,
-    color-mix(in srgb, var(--accent) 16%, transparent) 100%
-  );
-  pointer-events: none;
 }
 
 /* ─── Closing CTA ──────────────────────────────────────────── */

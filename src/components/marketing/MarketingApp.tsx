@@ -213,10 +213,9 @@ export function MarketingApp() {
         </div>
       </section>
 
-      {/* ═══ COLOUR FADE ═══════════════════════════════════ */}
-      <div className="fw-section-fade" aria-hidden />
-
       {/* ═══ CLOSING CTA ═══════════════════════════════════ */}
+      {/* Section transition lives on the body's vertical gradient now —
+          no dedicated fade element. */}
       <ClosingCTA palette={PALETTE} />
 
       {/* ═══ FOOTER ════════════════════════════════════════ */}

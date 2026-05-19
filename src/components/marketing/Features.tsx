@@ -19,20 +19,28 @@ function FeatureMotif({ kind, palette }: { kind: MotifKind; palette: Palette }) 
   const acc = accentFor(palette);
 
   if (kind === "atlas") {
-    // Approximate England silhouette in a 200×140 viewBox. Not a real
-    // GeoJSON — just enough of the outline (Cornwall tip bottom-left,
-    // East Anglia bulge right, Yorkshire top-right) to read as England.
+    // ~40-point hand-drawn England silhouette in a 200×140 viewBox.
+    // Captures the distinctive features at this scale:
+    //   • Pointy Cornwall taper bottom-left (50,128)
+    //   • The Wash indent on the east coast (~y=78)
+    //   • East Anglia bulge protruding to x=165 around y=92
+    //   • Thames Estuary notch (~y=116)
+    //   • Kent corner (162,124)
+    //   • Bristol Channel cut on the south-west (~96,110)
+    //   • Welsh-border indents on the west (the carved-in points
+    //     between y=80 and y=110)
+    //   • Cumbria jut and Solway Firth top-left
     const pins = [
-      { x: 132, y: 100, bright: true },  // Surrey
-      { x: 142, y: 88, bright: false },  // London
-      { x: 150, y: 108, bright: true },  // Kent
-      { x: 100, y: 102, bright: false }, // Devon
-      { x: 75, y: 92, bright: true },    // Cornwall
-      { x: 90, y: 65, bright: false },   // Midlands
-      { x: 105, y: 48, bright: true },   // Yorkshire
-      { x: 118, y: 70, bright: false },  // Lincolnshire
-      { x: 128, y: 58, bright: true },   // East Riding
-      { x: 95, y: 80, bright: false },   // Birmingham area
+      { x: 134, y: 108, bright: true },  // Surrey
+      { x: 142, y: 100, bright: false }, // London
+      { x: 150, y: 116, bright: true },  // Kent
+      { x: 95, y: 124, bright: false },  // Dorset
+      { x: 75, y: 122, bright: true },   // N. Devon
+      { x: 100, y: 80, bright: false },  // Midlands
+      { x: 122, y: 60, bright: true },   // Yorkshire
+      { x: 132, y: 90, bright: false },  // Lincolnshire
+      { x: 145, y: 92, bright: true },   // Norfolk
+      { x: 100, y: 50, bright: false },  // North Yorkshire
     ];
     return (
       <svg
@@ -53,7 +61,7 @@ function FeatureMotif({ kind, palette }: { kind: MotifKind; palette: Palette }) 
             x2="100%"
             y2="100%"
           >
-            <stop offset="0%" stopColor={acc.a} stopOpacity="0.12" />
+            <stop offset="0%" stopColor={acc.a} stopOpacity="0.14" />
             <stop offset="100%" stopColor={acc.b} stopOpacity="0.06" />
           </linearGradient>
         </defs>
@@ -61,12 +69,13 @@ function FeatureMotif({ kind, palette }: { kind: MotifKind; palette: Palette }) 
 
         {/* England silhouette */}
         <path
-          d="M 112 18 L 95 22 L 80 32 L 70 45 L 70 60 L 60 70 L 70 85 L 60 100 L 50 120 L 60 130 L 75 124 L 95 130 L 115 127 L 135 130 L 150 120 L 158 104 L 162 86 L 158 70 L 152 56 L 148 42 L 140 26 L 125 18 Z"
+          d="M 105 13 L 116 16 L 121 27 L 125 38 L 132 44 L 138 52 L 137 64 L 141 74 L 136 78 L 145 82 L 159 84 L 165 92 L 161 102 L 156 110 L 145 116 L 156 119 L 162 124 L 152 130 L 132 132 L 110 133 L 90 133 L 75 134 L 60 132 L 50 128 L 56 122 L 70 120 L 84 122 L 92 116 L 86 108 L 94 102 L 86 92 L 92 80 L 88 68 L 82 60 L 86 50 L 78 42 L 72 34 L 78 26 L 92 22 Z"
           fill={`url(#mot-atlas-fill-${palette})`}
           stroke={acc.a}
-          strokeOpacity="0.4"
-          strokeWidth="0.8"
+          strokeOpacity="0.55"
+          strokeWidth="1"
           strokeLinejoin="round"
+          strokeLinecap="round"
         />
 
         {/* Course pins scattered across the map */}
