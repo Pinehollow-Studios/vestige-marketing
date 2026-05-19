@@ -15,6 +15,8 @@ import { CourseMarquee } from "./CourseMarquee";
 import { StatsStrip } from "./StatsStrip";
 import { FeatureCard } from "./Features";
 import { ClosingCTA } from "./ClosingCTA";
+import { ScrollProgress } from "./ScrollProgress";
+import { Reveal } from "./Reveal";
 
 /**
  * Hardcoded palette + backdrop mode — the TweaksPanel exploration
@@ -32,6 +34,8 @@ export function MarketingApp() {
 
   return (
     <div className="fw-root" data-mode={HERO_MODE} data-palette={PALETTE}>
+      <ScrollProgress />
+
       {/* ═══ HERO ═══════════════════════════════════════════ */}
       <section className="fw-hero">
         <HeroBackdrop mode={HERO_MODE} palette={PALETTE} />
@@ -149,6 +153,7 @@ export function MarketingApp() {
 
       {/* ═══ FEATURES ══════════════════════════════════════ */}
       <section id="features" className="fw-features-section">
+        <Reveal>
         <div className="fw-features-header">
           <span
             style={{
@@ -192,16 +197,18 @@ export function MarketingApp() {
           </h2>
           <p className="fw-features-sub">{siteConfig.featuresHeader.sub}</p>
         </div>
+        </Reveal>
         <div className="fw-features">
           {siteConfig.features.map((f, i) => (
-            <FeatureCard
-              key={i}
-              kind={f.kind}
-              palette={PALETTE}
-              eyebrow={f.eyebrow}
-              title={f.title}
-              body={f.body}
-            />
+            <Reveal key={i} delay={i * 120}>
+              <FeatureCard
+                kind={f.kind}
+                palette={PALETTE}
+                eyebrow={f.eyebrow}
+                title={f.title}
+                body={f.body}
+              />
+            </Reveal>
           ))}
         </div>
       </section>

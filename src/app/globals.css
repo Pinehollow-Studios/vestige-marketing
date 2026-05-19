@@ -366,6 +366,20 @@ html, body { background: #06090E; }
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   z-index: 1;
+  transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+}
+/* Focus state — pill lifts a touch, border brightens, halo intensifies. */
+.fw-email:has(input:focus) .fw-email-shell,
+.fw-email:focus-within .fw-email-shell {
+  border-color: rgba(91, 228, 195, 0.55);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.18),
+    0 28px 64px -18px rgba(0,0,0,0.75),
+    0 0 0 1px rgba(91, 228, 195, 0.18);
+  transform: translateY(-1px);
+}
+.fw-email:focus-within .fw-email-glow {
+  opacity: 0.85;
 }
 .fw-email-shell input {
   flex: 1;
@@ -437,7 +451,10 @@ html, body { background: #06090E; }
   display: inline-flex;
   align-items: center;
   white-space: nowrap;
-  animation: fw-marquee-roll 60s linear infinite;
+  animation: fw-marquee-roll 40s linear infinite;
+}
+.fw-marquee:hover .fw-marquee-track {
+  animation-play-state: paused;
 }
 .fw-marquee-item {
   display: inline-flex;
@@ -599,8 +616,27 @@ html, body { background: #06090E; }
   z-index: 2;
   padding: clamp(60px, 8vw, 140px) clamp(20px, 5vw, 80px) clamp(80px, 8vw, 140px);
   text-align: center;
-  border-top: 1px solid rgba(255,255,255,0.06);
+  /* border-top removed in favour of the mint glow fade band below */
   overflow: hidden;
+}
+/* Mint glow fade band straddling the Features → CTA boundary.
+   Sits as a pseudo-element above the section so it bleeds into
+   the previous section's space, smoothing the colour transition. */
+.fw-cta-section::before {
+  content: "";
+  position: absolute;
+  top: -240px;
+  left: 0;
+  right: 0;
+  height: 480px;
+  background: radial-gradient(
+    ellipse 60% 50% at 50% 50%,
+    color-mix(in srgb, var(--accent) 10%, transparent) 0%,
+    color-mix(in srgb, var(--accent) 4%, transparent) 35%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
 }
 .fw-cta-glow {
   position: absolute;
@@ -611,6 +647,12 @@ html, body { background: #06090E; }
   opacity: 0.35;
   pointer-events: none;
   z-index: 0;
+  /* Slow breathing pulse — keeps the CTA section feeling alive */
+  animation: fw-cta-breathe 6s ease-in-out infinite;
+}
+@keyframes fw-cta-breathe {
+  0%, 100% { opacity: 0.25; transform: translate(-50%, -50%) scale(1); }
+  50%      { opacity: 0.42; transform: translate(-50%, -50%) scale(1.06); }
 }
 .fw-cta-title {
   position: relative;
@@ -652,9 +694,23 @@ html, body { background: #06090E; }
   .fw-footer { flex-direction: column; align-items: flex-start; gap: 16px; }
 }
 
+/* ─── Scroll progress bar ──────────────────────────────────── */
+.fw-scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #5BE4C3, #8FE85B);
+  z-index: 100;
+  pointer-events: none;
+  transition: width 90ms linear;
+  box-shadow: 0 0 8px rgba(91, 228, 195, 0.6);
+}
+
 /* ─── Reduce motion ────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .fw-aurora-blob, .fw-aurora-cursor,
   .fw-marquee-track, .fw-glasscase-disc, .fw-glasscase-disc-2,
+  .fw-cta-glow,
   [style*="animation"] { animation: none !important; }
 }

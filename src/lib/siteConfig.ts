@@ -112,8 +112,8 @@ export const siteConfig: SiteConfig = {
   ],
 
   stats: [
-    { kind: "number", target: 1842, label: "Courses, top to bottom" },
-    { kind: "number", target: 39, label: "Historic counties" },
+    { kind: "number", target: 2500, suffix: "+", label: "Courses, top to bottom" },
+    { kind: "number", target: 48, label: "Historic counties" },
     { kind: "number", target: 0, prefix: "£", label: "Cost at launch" },
     { kind: "static", value: "Summer ’27", label: "On the App Store" },
   ],
@@ -132,7 +132,7 @@ export const siteConfig: SiteConfig = {
       eyebrow: "The atlas",
       title: "Every course in England.",
       body:
-        "All 1,842 of them, from championship links to nine-hole village greens. The map is complete on the day we launch.",
+        "All 2,500+ of them, from championship links to nine-hole village greens. The map is complete on the day we launch.",
     },
     {
       kind: "tap",
@@ -160,6 +160,6 @@ export const siteConfig: SiteConfig = {
   },
 
   footer: {
-    marks: ["Pinehollow Studios", "Sheffield", "MMXXVI"],
+    marks: ["Pinehollow Studios Limited"],
   },
 };
