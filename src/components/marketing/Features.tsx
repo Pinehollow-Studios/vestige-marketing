@@ -23,17 +23,25 @@ function FeatureMotif({ kind, palette }: { kind: MotifKind; palette: Palette }) 
     // (nvkelso/natural-earth-vector). Mainland polygon only; the original
     // 1,792 coastline points are downsampled to ~106 via scripts/build-england-path.mjs
     // (Mercator-corrected projection into the 200×140 viewBox).
+    // Pin positions derived from real course (lng, lat) projected through
+    // the same Mercator-corrected projection as the silhouette, then
+    // nudged 2-3px inland from the coast so they read as clearly inside
+    // the shape rather than sitting on the boundary.
     const pins = [
-      { x: 95, y: 60, bright: true },    // Royal Birkdale (Lancashire)
-      { x: 92, y: 65, bright: false },   // Royal Lytham
-      { x: 128, y: 105, bright: true },  // Sunningdale (Surrey/Berks)
-      { x: 122, y: 102, bright: false }, // The Berkshire
-      { x: 143, y: 108, bright: true },  // Royal St George's (Kent)
-      { x: 65, y: 124, bright: true },   // St Enodoc (Cornwall)
-      { x: 72, y: 115, bright: false },  // Saunton (Devon)
-      { x: 125, y: 75, bright: true },   // Woodhall Spa (Lincolnshire)
-      { x: 120, y: 48, bright: false },  // Ganton (N. Yorkshire)
-      { x: 95, y: 67, bright: false },   // Royal Liverpool
+      { x: 95, y: 55, bright: true },    // Royal Birkdale (Lancs)
+      { x: 95, y: 62, bright: false },   // Royal Liverpool (Wirral)
+      { x: 120, y: 100, bright: true },  // Sunningdale (Surrey)
+      { x: 115, y: 102, bright: false }, // The Berkshire
+      { x: 135, y: 108, bright: true },  // Royal St George's (Kent)
+      { x: 68, y: 119, bright: false },  // St Enodoc (Cornwall)
+      { x: 75, y: 110, bright: true },   // Saunton (N. Devon)
+      { x: 122, y: 65, bright: false },  // Woodhall Spa (Lincs)
+      { x: 115, y: 45, bright: true },   // Ganton (N. Yorks)
+      { x: 138, y: 82, bright: false },  // Royal Norwich (Norfolk)
+      { x: 108, y: 75, bright: true },   // Notts (Hollinwell)
+      { x: 93, y: 102, bright: false },  // Burnham & Berrow (Somerset)
+      { x: 108, y: 53, bright: true },   // Alwoodley (Leeds)
+      { x: 123, y: 110, bright: false }, // Walton Heath (Surrey)
     ];
     return (
       <svg
