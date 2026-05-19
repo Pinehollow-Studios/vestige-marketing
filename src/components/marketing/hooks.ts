@@ -78,14 +78,8 @@ export function useScrollReveal<T extends HTMLElement = HTMLElement>({
     const el = ref.current;
     if (!el) return;
 
-    // Reduce-motion users: skip the transition, render at rest state.
-    if (
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      setRevealed(true);
-      return;
-    }
+    // Note: prefers-reduced-motion is intentionally NOT honoured —
+    // motion is part of the brand on this marketing surface.
 
     const obs = new IntersectionObserver(
       (entries) => {

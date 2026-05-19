@@ -610,33 +610,35 @@ html, body { background: #06090E; }
   to { transform: rotate(360deg); }
 }
 
+/* ─── Inter-section colour fade (Features → Closing CTA) ─── */
+/* Standalone block sitting between the two <section>s, with negative
+   margins so it overlaps both. Visible as a vertical mint ramp:
+   transparent at the top (still mid-Features), strongest mint at the
+   bottom (just entering CTA). Lives outside any overflow:hidden so
+   the gradient is never clipped. */
+.fw-section-fade {
+  position: relative;
+  z-index: 1;
+  height: 380px;
+  margin: -190px 0;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    color-mix(in srgb, var(--accent) 4%, transparent) 35%,
+    color-mix(in srgb, var(--accent) 10%, transparent) 70%,
+    color-mix(in srgb, var(--accent) 16%, transparent) 100%
+  );
+  pointer-events: none;
+}
+
 /* ─── Closing CTA ──────────────────────────────────────────── */
 .fw-cta-section {
   position: relative;
   z-index: 2;
   padding: clamp(60px, 8vw, 140px) clamp(20px, 5vw, 80px) clamp(80px, 8vw, 140px);
   text-align: center;
-  /* border-top removed in favour of the mint glow fade band below */
-  overflow: hidden;
-}
-/* Mint glow fade band straddling the Features → CTA boundary.
-   Sits as a pseudo-element above the section so it bleeds into
-   the previous section's space, smoothing the colour transition. */
-.fw-cta-section::before {
-  content: "";
-  position: absolute;
-  top: -240px;
-  left: 0;
-  right: 0;
-  height: 480px;
-  background: radial-gradient(
-    ellipse 60% 50% at 50% 50%,
-    color-mix(in srgb, var(--accent) 10%, transparent) 0%,
-    color-mix(in srgb, var(--accent) 4%, transparent) 35%,
-    transparent 70%
-  );
-  pointer-events: none;
-  z-index: 0;
+  /* overflow removed so the .fw-cta-glow blur can bleed naturally
+     into the adjacent fade strip — strengthens the colour transition. */
 }
 .fw-cta-glow {
   position: absolute;
@@ -707,10 +709,6 @@ html, body { background: #06090E; }
   box-shadow: 0 0 8px rgba(91, 228, 195, 0.6);
 }
 
-/* ─── Reduce motion ────────────────────────────────────────── */
-@media (prefers-reduced-motion: reduce) {
-  .fw-aurora-blob, .fw-aurora-cursor,
-  .fw-marquee-track, .fw-glasscase-disc, .fw-glasscase-disc-2,
-  .fw-cta-glow,
-  [style*="animation"] { animation: none !important; }
-}
+/* Note: the prefers-reduced-motion: reduce override has been removed
+   intentionally. This is a marketing surface where motion is the design
+   — every animation runs regardless of OS-level reduce-motion. */

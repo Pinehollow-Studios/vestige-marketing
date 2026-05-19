@@ -213,6 +213,9 @@ export function MarketingApp() {
         </div>
       </section>
 
+      {/* ═══ COLOUR FADE ═══════════════════════════════════ */}
+      <div className="fw-section-fade" aria-hidden />
+
       {/* ═══ CLOSING CTA ═══════════════════════════════════ */}
       <ClosingCTA palette={PALETTE} />
 
