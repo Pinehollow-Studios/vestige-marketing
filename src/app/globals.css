@@ -95,21 +95,7 @@
    var(--font-display) so next/font wires through.
    ═══════════════════════════════════════════════════════════════ */
 
-/* Page-level vertical gradient — subtle mint tint at the bottom so the
-   Features → Closing CTA transition reads as a continuous shift rather
-   than a hard edge. The tint is light enough to be invisible at the
-   top half of the document. */
-html, body {
-  background: linear-gradient(
-    180deg,
-    #06090E 0%,
-    #06090E 55%,
-    #07110d 78%,
-    #08160f 92%,
-    #0a1b12 100%
-  );
-  background-attachment: fixed;
-}
+html, body { background: #06090E; }
 
 /* ─── Reset / base ─────────────────────────────────────────── */
 .fw-root {
@@ -624,26 +610,142 @@ html, body {
   to { transform: rotate(360deg); }
 }
 
+/* ─── Roadmap ──────────────────────────────────────────────── */
+.fw-roadmap-section {
+  position: relative;
+  z-index: 2;
+  padding: clamp(60px, 8vw, 140px) clamp(20px, 5vw, 80px);
+}
+.fw-roadmap-header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto clamp(60px, 7vw, 100px);
+}
+.fw-roadmap-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(32px, 4.2vw, 64px);
+  letter-spacing: -2px;
+  line-height: 1.05;
+  margin: 16px 0 0;
+  color: #F6F4EE;
+  text-wrap: balance;
+}
+.fw-roadmap-sub {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(15px, 1.4vw, 19px);
+  color: rgba(246,244,238,0.65);
+  margin-top: 20px;
+  line-height: 1.55;
+}
+
+.fw-timeline {
+  position: relative;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 4%;
+}
+.fw-timeline-track {
+  position: absolute;
+  top: 6px;
+  left: calc(4% + 16%);
+  right: calc(4% + 16%);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,0.18) 8%,
+    rgba(255,255,255,0.18) 92%,
+    transparent
+  );
+}
+.fw-timeline-track-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  box-shadow: 0 0 8px rgba(91, 228, 195, 0.6);
+  transition: width 1800ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.fw-timeline-nodes {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.fw-timeline-node {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.fw-timeline-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow:
+    0 0 0 4px rgba(91, 228, 195, 0.12),
+    0 0 16px rgba(91, 228, 195, 0.55);
+  margin-bottom: 28px;
+  position: relative;
+  flex-shrink: 0;
+}
+.fw-timeline-dot::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  opacity: 0.5;
+  animation: fw-pulse-ring 2.4s ease-out infinite;
+}
+.fw-timeline-date {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0;
+}
+.fw-timeline-label {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(22px, 2.4vw, 30px);
+  letter-spacing: -0.8px;
+  line-height: 1.1;
+  margin: 14px 0 0;
+  color: #F6F4EE;
+}
+.fw-timeline-body {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgba(246, 244, 238, 0.66);
+  margin: 10px auto 0;
+  max-width: 240px;
+}
+@media (max-width: 760px) {
+  .fw-timeline-nodes {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .fw-timeline-track {
+    display: none;
+  }
+}
+
 /* ─── Closing CTA ──────────────────────────────────────────── */
 .fw-cta-section {
   position: relative;
   z-index: 2;
   padding: clamp(60px, 8vw, 140px) clamp(20px, 5vw, 80px) clamp(80px, 8vw, 140px);
   text-align: center;
-  /* overflow:hidden contains the glow so its blur cannot bleed into
-     the footer or the adjacent fade strip. The fade strip handles
-     the section transition independently. */
-  overflow: hidden;
-}
-.fw-cta-glow {
-  position: absolute;
-  width: 80vmax; height: 50vmax;
-  left: 50%; top: 50%;
-  transform: translate(-50%, -50%);
-  filter: blur(80px);
-  opacity: 0.35;
-  pointer-events: none;
-  z-index: 0;
 }
 .fw-cta-title {
   position: relative;

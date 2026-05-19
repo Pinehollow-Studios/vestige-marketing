@@ -64,6 +64,21 @@ export type SiteConfig = {
     sub: string;
   };
 
+  /** Roadmap timeline — three milestones from now to launch. */
+  roadmap: {
+    eyebrow: string;
+    titlePre: string;
+    titleItalic: string;
+    titlePost: string;
+    sub: string;
+    milestones: ReadonlyArray<{
+      month: string;
+      year: string;
+      label: string;
+      body: string;
+    }>;
+  };
+
   footer: {
     /** Short marks shown to the right of the wordmark. */
     marks: ReadonlyArray<string>;
@@ -149,6 +164,34 @@ export const siteConfig: SiteConfig = {
         "See whose collection runs deepest — among your friends, and across the country. No streaks. No strangers in your feed.",
     },
   ],
+
+  roadmap: {
+    eyebrow: "Road to launch",
+    titlePre: "From here, to ",
+    titleItalic: "summer",
+    titlePost: ".",
+    sub: "Three steps between now and the App Store.",
+    milestones: [
+      {
+        month: "Oct",
+        year: "2026",
+        label: "Beta one",
+        body: "Friends and family. The first look.",
+      },
+      {
+        month: "Feb",
+        year: "2027",
+        label: "Beta two",
+        body: "Public TestFlight. A wider trial.",
+      },
+      {
+        month: "Summer",
+        year: "2027",
+        label: "Launch day",
+        body: "On the App Store. Free for everyone.",
+      },
+    ],
+  },
 
   closingCta: {
     eyebrowTarget: 2847,

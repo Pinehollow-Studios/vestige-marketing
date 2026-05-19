@@ -17,6 +17,7 @@ import { FeatureCard } from "./Features";
 import { ClosingCTA } from "./ClosingCTA";
 import { ScrollProgress } from "./ScrollProgress";
 import { Reveal } from "./Reveal";
+import { Roadmap } from "./Roadmap";
 
 /**
  * Hardcoded palette + backdrop mode — the TweaksPanel exploration
@@ -213,9 +214,10 @@ export function MarketingApp() {
         </div>
       </section>
 
+      {/* ═══ ROADMAP ═══════════════════════════════════════ */}
+      <Roadmap />
+
       {/* ═══ CLOSING CTA ═══════════════════════════════════ */}
-      {/* Section transition lives on the body's vertical gradient now —
-          no dedicated fade element. */}
       <ClosingCTA palette={PALETTE} />
 
       {/* ═══ FOOTER ════════════════════════════════════════ */}

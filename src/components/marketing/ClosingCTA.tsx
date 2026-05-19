@@ -14,12 +14,6 @@ export function ClosingCTA({ palette = "mint" }: { palette?: Palette }) {
   return (
     <section id="join" className="fw-cta-section">
       <div
-        className="fw-cta-glow"
-        style={{
-          background: `radial-gradient(ellipse, ${acc.a} 0%, transparent 60%)`,
-        }}
-      />
-      <div
         style={{
           position: "relative",
           zIndex: 2,
