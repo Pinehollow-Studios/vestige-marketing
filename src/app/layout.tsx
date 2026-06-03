@@ -10,14 +10,14 @@ const inter = Inter({
 });
 
 // Modern editorial serif — variable opsz / SOFT / WONK axes for character.
-// Replaces Source Serif 4; the existing italic-gradient shimmer treatment
-// in RevealHeadline keys off the italic style, which Fraunces ships in
-// every weight.
+// Replaces Source Serif 4. Used upright only (the italic treatment was
+// removed sitewide), so only the normal style is loaded to keep the font
+// payload small on mobile.
 const fraunces = Fraunces({
   subsets: ["latin"],
   variable: "--font-display-face",
   weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
+  style: ["normal"],
   display: "swap",
 });
 

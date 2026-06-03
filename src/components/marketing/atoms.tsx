@@ -61,7 +61,6 @@ export function RevealHeadline({
         const child = inItal ? (
           <span
             style={{
-              fontStyle: "italic",
               background: italGradient
                 ? `linear-gradient(120deg, ${acc.a} 0%, ${acc.b} 50%, ${acc.a} 100%)`
                 : undefined,
@@ -143,6 +142,8 @@ type FwLockupProps = {
   gap?: number;
   /** Caption to the right of the mark. Defaults to siteConfig.brandName. */
   label?: string;
+  /** Show the gradient brand mark to the left of the wordmark. */
+  showMark?: boolean;
 };
 
 export function FwLockup({
@@ -151,10 +152,11 @@ export function FwLockup({
   color,
   gap = 10,
   label = "VESTIGE",
+  showMark = true,
 }: FwLockupProps) {
   return (
     <span style={{ display: "inline-flex", alignItems: "center", gap }}>
-      <FwMark size={size} palette={palette} />
+      {showMark && <FwMark size={size} palette={palette} />}
       <span
         style={{
           fontFamily: fwF.ui,
