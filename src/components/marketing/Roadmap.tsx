@@ -53,7 +53,6 @@ export function Roadmap() {
             {titlePre}
             <span
               style={{
-                fontStyle: "italic",
                 fontWeight: 500,
                 background:
                   "linear-gradient(120deg, var(--accent), var(--accent-2), var(--accent))",

@@ -16,7 +16,6 @@ export function CourseMarquee() {
               <span
                 style={{
                   fontFamily: fwF.display,
-                  fontStyle: "italic",
                   fontWeight: 400,
                 }}
               >

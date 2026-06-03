@@ -57,7 +57,6 @@ export function ClosingCTA({ palette = "mint" }: { palette?: Palette }) {
         {headlinePre}
         <span
           style={{
-            fontStyle: "italic",
             fontWeight: 500,
             background: `linear-gradient(120deg, ${acc.a}, ${acc.b}, ${acc.a})`,
             backgroundSize: "200% 100%",

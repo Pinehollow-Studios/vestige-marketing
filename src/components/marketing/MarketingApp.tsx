@@ -42,7 +42,7 @@ export function MarketingApp() {
 
         {/* Top bar */}
         <div className="fw-topbar">
-          <FwLockup palette={PALETTE} label={siteConfig.brandName.toUpperCase()} />
+          <FwLockup palette={PALETTE} showMark={false} label={siteConfig.brandName.toUpperCase()} />
           <nav className="fw-topbar-nav">
             <a href="#what">What it is</a>
             <a href="#features">Inside</a>
@@ -182,7 +182,6 @@ export function MarketingApp() {
             {siteConfig.featuresHeader.titlePre}
             <span
               style={{
-                fontStyle: "italic",
                 fontWeight: 500,
                 background: `linear-gradient(120deg, ${acc.a}, ${acc.b}, ${acc.a})`,
                 backgroundSize: "200% 100%",

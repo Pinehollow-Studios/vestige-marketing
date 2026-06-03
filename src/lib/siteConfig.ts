@@ -99,7 +99,7 @@ export const siteConfig: SiteConfig = {
   brandShortName: "Vestige",
   brandLowerName: "vestige",
   tagline: "Every course in England, tracked.",
-  domain: "vestige.app",
+  domain: "vestige.golf",
   appStoreUrl: null,
   contactEmail: "hello@pinehollow.studio",
 
@@ -109,7 +109,7 @@ export const siteConfig: SiteConfig = {
     headline: ["Every course in England, ", "tracked", "."],
     lede:
       "An iPhone app to keep the golf courses you have played in England, and compare your collection with friends. Almost ready.",
-    metaStrip: ["iPhone, iOS 17+", "Free at launch", "Summer 2027"],
+    metaStrip: ["iPhone, iOS 18+", "Free at launch", "Summer 2027"],
   },
 
   marquee: [

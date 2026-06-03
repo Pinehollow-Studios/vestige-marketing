@@ -101,6 +101,7 @@ html, body { background: #06090E; }
 .fw-root {
   position: relative;
   min-height: 100vh;
+  min-height: 100dvh;
   color: #F6F4EE;
   font-family: var(--font-ui);
   -webkit-font-smoothing: antialiased;
@@ -113,6 +114,7 @@ html, body { background: #06090E; }
 .fw-hero {
   position: relative;
   min-height: 100vh;
+  min-height: 100dvh;
   padding: clamp(20px, 4vw, 36px) clamp(20px, 5vw, 80px) clamp(36px, 5vw, 60px);
   display: flex;
   flex-direction: column;
@@ -322,8 +324,7 @@ html, body { background: #06090E; }
 
 /* ─── Lede ─────────────────────────────────────────────────── */
 .fw-lede {
-  font-family: var(--font-display);
-  font-style: italic;
+  font-family: var(--font-ui);
   font-weight: 400;
   font-size: clamp(15px, 1.5vw, 21px);
   line-height: 1.55;
@@ -524,8 +525,7 @@ html, body { background: #06090E; }
   text-wrap: balance;
 }
 .fw-features-sub {
-  font-family: var(--font-display);
-  font-style: italic;
+  font-family: var(--font-ui);
   font-size: clamp(15px, 1.4vw, 19px);
   color: rgba(246,244,238,0.65);
   margin-top: 20px;
@@ -582,8 +582,7 @@ html, body { background: #06090E; }
   color: #F6F4EE;
 }
 .fw-feature-copy {
-  font-family: var(--font-display);
-  font-style: italic;
+  font-family: var(--font-ui);
   font-size: 15px;
   line-height: 1.55;
   color: rgba(246,244,238,0.66);
@@ -632,8 +631,7 @@ html, body { background: #06090E; }
   text-wrap: balance;
 }
 .fw-roadmap-sub {
-  font-family: var(--font-display);
-  font-style: italic;
+  font-family: var(--font-ui);
   font-size: clamp(15px, 1.4vw, 19px);
   color: rgba(246,244,238,0.65);
   margin-top: 20px;
@@ -722,8 +720,7 @@ html, body { background: #06090E; }
   color: #F6F4EE;
 }
 .fw-timeline-body {
-  font-family: var(--font-display);
-  font-style: italic;
+  font-family: var(--font-ui);
   font-size: 15px;
   line-height: 1.55;
   color: rgba(246, 244, 238, 0.66);
@@ -762,8 +759,7 @@ html, body { background: #06090E; }
 .fw-cta-sub {
   position: relative;
   z-index: 2;
-  font-family: var(--font-display);
-  font-style: italic;
+  font-family: var(--font-ui);
   font-size: clamp(15px, 1.4vw, 19px);
   color: rgba(246,244,238,0.65);
   margin: 22px auto 0;
