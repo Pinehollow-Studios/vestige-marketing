@@ -1,10 +1,10 @@
-# fairways-marketing
+# vestige-marketing
 
-Marketing site for the Fairways iOS app. Built name-agnostic so the brand swap (when Apple approves a different name) is a single-file change.
+Marketing site for the Vestige iOS app. Built name-agnostic so the brand swap (when Apple approves a different name) is a single-file change.
 
 Stack: Next.js 16 (App Router) · TypeScript · Tailwind 4 · Source Serif 4 + Inter via `next/font/google` · Deploy on Vercel.
 
-Design tokens mirror the iOS app's Atlas system (`Fairways-ios/Fairways/DesignSystem/Theme.swift`). Dark-only.
+Design tokens mirror the iOS app's Atlas system (`Vestige-ios/Vestige/DesignSystem/Theme.swift`). Dark-only.
 
 ## Local dev
 
@@ -41,7 +41,7 @@ The waitlist form calls a server action that adds the email to a Resend Audience
 
 1. Sign up at https://resend.com.
 2. Verify your sending domain (you'll want to do this anyway for transactional email later).
-3. **Audiences** → New Audience (call it "Fairways launch waitlist" or similar).
+3. **Audiences** → New Audience (call it "Vestige launch waitlist" or similar).
 4. **API Keys** → Create with Audience write scope.
 5. Locally: `cp .env.example .env.local` and fill in `RESEND_API_KEY` + `RESEND_AUDIENCE_ID`.
 6. On Vercel: Project Settings → Environment Variables → add both for Production and Preview.
