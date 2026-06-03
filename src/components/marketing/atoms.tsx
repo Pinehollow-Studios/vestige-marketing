@@ -150,7 +150,7 @@ export function FwLockup({
   size = 26,
   color,
   gap = 10,
-  label = "FAIRWAYS",
+  label = "VESTIGE",
 }: FwLockupProps) {
   return (
     <span style={{ display: "inline-flex", alignItems: "center", gap }}>

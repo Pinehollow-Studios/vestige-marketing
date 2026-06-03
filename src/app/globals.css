@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════════════════
-   Fairways Modern Design — tokens
+   Vestige Modern Design — tokens
    Verbatim port of handoff/tokens.css.
    Font @import removed — Source Serif 4 + Inter are loaded by
    next/font in layout.tsx; we reference them via the variables
@@ -89,7 +89,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   Fairways marketing site — motion styles
+   Vestige marketing site — motion styles
    Verbatim port of handoff/marketing.css.
    "Source Serif 4" literal family-name references swapped for
    var(--font-display) so next/font wires through.

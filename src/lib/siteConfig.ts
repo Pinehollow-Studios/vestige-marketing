@@ -95,11 +95,11 @@ export type SiteConfig = {
 };
 
 export const siteConfig: SiteConfig = {
-  brandName: "Fairways",
-  brandShortName: "Fairways",
-  brandLowerName: "fairways",
+  brandName: "Vestige",
+  brandShortName: "Vestige",
+  brandLowerName: "vestige",
   tagline: "Every course in England, tracked.",
-  domain: "fairways.app",
+  domain: "vestige.app",
   appStoreUrl: null,
   contactEmail: "hello@pinehollow.studio",
 
