@@ -5,54 +5,62 @@ import { accentFor, fwF, fwT, type Palette } from "./palette";
 import { useCountUp } from "./hooks";
 import { GlassEmail } from "./GlassEmail";
 
-export function ClosingCTA({ palette = "mint" }: { palette?: Palette }) {
+export function ClosingCTA({
+  palette = "mint",
+  joinedTotal = null,
+}: {
+  palette?: Palette;
+  joinedTotal?: number | null;
+}) {
   const acc = accentFor(palette);
-  const { eyebrowTarget, eyebrowLabel, headlinePre, headlineItalic, sub, ctaLabel } =
+  const { eyebrowLabel, headlinePre, headlineItalic, sub, ctaLabel } =
     siteConfig.closingCta;
-  const joined = useCountUp(eyebrowTarget, { duration: 1800, delay: 200 });
+  const joined = useCountUp(joinedTotal ?? 0, { duration: 1800, delay: 200 });
 
   return (
     <section id="join" className="fw-cta-section">
-      <div
-        style={{
-          position: "relative",
-          zIndex: 2,
-          display: "inline-flex",
-          alignItems: "center",
-          gap: 10,
-          padding: "7px 14px 7px 11px",
-          background: "rgba(255,255,255,0.04)",
-          border: "1px solid rgba(255,255,255,0.10)",
-          borderRadius: 999,
-          marginBottom: 32,
-        }}
-      >
-        <span style={{ position: "relative", display: "inline-flex" }}>
-          <span
-            style={{
-              width: 6,
-              height: 6,
-              borderRadius: 999,
-              background: acc.a,
-              animation: "fw-pulse-dot 1.8s ease-in-out infinite",
-            }}
-          />
-        </span>
-        <span
+      {joinedTotal != null && (
+        <div
           style={{
-            fontFamily: fwF.ui,
-            fontSize: 12,
-            fontWeight: 600,
-            color: "rgba(246,244,238,0.7)",
-            fontFeatureSettings: '"tnum" 1',
+            position: "relative",
+            zIndex: 2,
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 10,
+            padding: "7px 14px 7px 11px",
+            background: "rgba(255,255,255,0.04)",
+            border: "1px solid rgba(255,255,255,0.10)",
+            borderRadius: 999,
+            marginBottom: 32,
           }}
         >
-          <span style={{ color: fwT.ink, fontWeight: 700 }}>
-            {joined.toLocaleString("en-GB")}
-          </span>{" "}
-          {eyebrowLabel}
-        </span>
-      </div>
+          <span style={{ position: "relative", display: "inline-flex" }}>
+            <span
+              style={{
+                width: 6,
+                height: 6,
+                borderRadius: 999,
+                background: acc.a,
+                animation: "fw-pulse-dot 1.8s ease-in-out infinite",
+              }}
+            />
+          </span>
+          <span
+            style={{
+              fontFamily: fwF.ui,
+              fontSize: 12,
+              fontWeight: 600,
+              color: "rgba(246,244,238,0.7)",
+              fontFeatureSettings: '"tnum" 1',
+            }}
+          >
+            <span style={{ color: fwT.ink, fontWeight: 700 }}>
+              {joined.toLocaleString("en-GB")}
+            </span>{" "}
+            {eyebrowLabel}
+          </span>
+        </div>
+      )}
       <h2 className="fw-cta-title">
         {headlinePre}
         <span

@@ -1,59 +1,106 @@
 import "server-only";
 
 /**
- * Resend Audiences integration.
+ * Resend waitlist integration.
+ *
+ * Resend retired "Audiences" in 2025 — contacts are now global and grouped by
+ * "segments". A waitlist signup therefore (1) upserts a global contact and
+ * (2) adds it to the launch-waitlist segment, which the launch broadcast will
+ * target.
  *
  * To wire this up:
  *   1. Sign up at https://resend.com, verify your sending domain.
- *   2. Create an Audience (Dashboard → Audiences → New).
- *   3. Create an API key with Audience write scope.
- *   4. Set RESEND_API_KEY + RESEND_AUDIENCE_ID in .env.local (dev)
- *      and in Vercel project env vars (prod).
+ *   2. Create a Segment (Dashboard → Contacts → Segments) for the waitlist.
+ *   3. Create a *Full access* API key — writing contacts needs more than the
+ *      send-only scope. (Server-side only; never exposed to the browser.)
+ *   4. Set RESEND_API_KEY + RESEND_WAITLIST_SEGMENT_ID in .env.local (dev)
+ *      and in the Vercel project env vars (prod).
  *
- * Until both env vars are set, addToAudience() is a no-op that logs and
- * returns success — so the waitlist form works end-to-end locally before
- * the Resend account exists.
+ * Until both env vars are set, addToWaitlist() is a no-op that logs and returns
+ * success — so the form works end-to-end locally before Resend is configured.
  */
 
 const RESEND_API = "https://api.resend.com";
 
+// api.resend.com is fronted by Cloudflare, which blocks requests with a missing
+// or bot-like User-Agent (HTTP 403, "error code: 1010"). Send an explicit one.
+const USER_AGENT = "vestige-marketing/1.0 (+https://vestige.golf)";
+
 export type WaitlistResult =
-  | { ok: true; mode: "live" | "noop" }
+  | { ok: true; mode: "live" | "noop"; isNew: boolean }
   | { ok: false; error: string };
 
-export async function addToAudience(email: string): Promise<WaitlistResult> {
+export async function addToWaitlist(email: string): Promise<WaitlistResult> {
   const apiKey = process.env.RESEND_API_KEY;
-  const audienceId = process.env.RESEND_AUDIENCE_ID;
+  const segmentId = process.env.RESEND_WAITLIST_SEGMENT_ID;
 
-  if (!apiKey || !audienceId) {
-    // Local-dev / pre-Resend-account fallback: log the email and pretend it worked.
+  if (!apiKey || !segmentId) {
+    // Local-dev / pre-Resend fallback: log the email and pretend it worked.
     // Switches to live mode the moment both env vars are populated.
     console.log("[waitlist:noop]", email);
-    return { ok: true, mode: "noop" };
+    return { ok: true, mode: "noop", isNew: true };
   }
 
-  try {
-    const res = await fetch(
-      `${RESEND_API}/audiences/${audienceId}/contacts`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({ email, unsubscribed: false }),
-      }
-    );
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${apiKey}`,
+    "User-Agent": USER_AGENT,
+  };
 
-    if (!res.ok) {
-      // 409 = already on the list — treat as success (idempotent).
-      if (res.status === 409) return { ok: true, mode: "live" };
-      const body = await res.text().catch(() => "");
-      console.error("[waitlist:error]", res.status, body);
-      return { ok: false, error: "We couldn't save your email. Try again in a moment." };
+  try {
+    // Has this email already joined? Used so the welcome email is sent only to
+    // genuinely new signups (GET 200 = exists; 404/anything else = treat as new
+    // — a possible double-welcome beats never welcoming anyone).
+    let isNew = true;
+    try {
+      const existing = await fetch(
+        `${RESEND_API}/contacts/${encodeURIComponent(email)}`,
+        { method: "GET", headers }
+      );
+      isNew = !existing.ok;
+    } catch {
+      /* network blip — fall back to treating as new */
     }
 
-    return { ok: true, mode: "live" };
+    // 1. Upsert the global contact. Resend is idempotent here: a repeat email
+    //    returns the existing contact's id (201) rather than erroring.
+    const createRes = await fetch(`${RESEND_API}/contacts`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ email, unsubscribed: false }),
+    });
+
+    if (!createRes.ok) {
+      const body = await createRes.text().catch(() => "");
+      console.error("[waitlist:create-error]", createRes.status, body);
+      return {
+        ok: false,
+        error: "We couldn't save your email. Try again in a moment.",
+      };
+    }
+
+    const contact = (await createRes.json().catch(() => null)) as {
+      id?: string;
+    } | null;
+
+    // 2. Add the contact to the launch-waitlist segment (what the launch
+    //    broadcast targets). Also idempotent. The email is already captured as
+    //    a contact, so a failure here is logged but not surfaced to the user —
+    //    segment membership can be backfilled.
+    if (contact?.id) {
+      const segRes = await fetch(
+        `${RESEND_API}/contacts/${contact.id}/segments/${segmentId}`,
+        { method: "POST", headers }
+      );
+      if (!segRes.ok) {
+        const body = await segRes.text().catch(() => "");
+        console.error("[waitlist:segment-error]", segRes.status, body);
+      }
+    } else {
+      console.error("[waitlist:no-contact-id]", email);
+    }
+
+    return { ok: true, mode: "live", isNew };
   } catch (err) {
     console.error("[waitlist:exception]", err);
     return { ok: false, error: "Something went wrong. Try again in a moment." };
