@@ -27,7 +27,9 @@ import { Roadmap } from "./Roadmap";
 const PALETTE = "mint" as const;
 const HERO_MODE: HeroMode = "aurora";
 
-export function MarketingApp() {
+type LiveCount = { total: number; weekly: number };
+
+export function MarketingApp({ liveCount }: { liveCount: LiveCount | null }) {
   const acc = accentFor(PALETTE);
   const [pre, ital, post] = siteConfig.hero.headline;
   useMouseParallax();
@@ -52,14 +54,13 @@ export function MarketingApp() {
 
         {/* Centred hero content */}
         <div className="fw-hero-content">
-          <div style={{ marginBottom: 30 }}>
-            <LiveEyebrow
-              palette={PALETTE}
-              target={siteConfig.hero.liveEyebrowTarget}
-            >
-              {siteConfig.hero.liveEyebrowLabel}
-            </LiveEyebrow>
-          </div>
+          {liveCount && (
+            <div style={{ marginBottom: 30 }}>
+              <LiveEyebrow palette={PALETTE} target={liveCount.weekly}>
+                {siteConfig.hero.liveEyebrowLabel}
+              </LiveEyebrow>
+            </div>
+          )}
 
           <RevealHeadline
             pre={pre}
@@ -216,7 +217,10 @@ export function MarketingApp() {
       <Roadmap />
 
       {/* ═══ CLOSING CTA ═══════════════════════════════════ */}
-      <ClosingCTA palette={PALETTE} />
+      <ClosingCTA
+        palette={PALETTE}
+        joinedTotal={liveCount ? liveCount.total : null}
+      />
 
       {/* ═══ FOOTER ════════════════════════════════════════ */}
       <footer className="fw-footer">

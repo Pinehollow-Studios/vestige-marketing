@@ -1,6 +1,7 @@
 "use server";
 
-import { addToAudience } from "@/lib/resend";
+import { addToWaitlist } from "@/lib/resend";
+import { sendWelcomeEmail } from "@/lib/email";
 
 export type JoinWaitlistState =
   | { status: "idle" }
@@ -20,7 +21,15 @@ export async function joinWaitlist(
     return { status: "error", message: "That doesn't look like a valid email." };
   }
 
-  const result = await addToAudience(email);
+  const result = await addToWaitlist(email);
   if (!result.ok) return { status: "error", message: result.error };
+
+  // Welcome only genuinely-new signups, and only when the contact was actually
+  // saved (live mode). sendWelcomeEmail swallows its own errors, so a failed
+  // send never turns a successful signup into an error.
+  if (result.mode === "live" && result.isNew) {
+    await sendWelcomeEmail(email);
+  }
+
   return { status: "ok", email };
 }

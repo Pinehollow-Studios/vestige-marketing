@@ -18,8 +18,8 @@ export type SiteConfig = {
 
   /** Hero composition — three-line serif stack with the italic word in the middle. */
   hero: {
-    /** UPPERCASE chip above the headline. Placeholder count rendered next to it. */
-    liveEyebrowTarget: number;
+    /** The live signup counter only surfaces once weekly signups exceed this. */
+    liveCountMinWeekly: number;
     liveEyebrowLabel: string;
     /** Three-part headline: [pre, italicWord, post]. */
     headline: readonly [string, string, string];
@@ -48,7 +48,6 @@ export type SiteConfig = {
 
   /** Closing CTA section. */
   closingCta: {
-    eyebrowTarget: number;
     eyebrowLabel: string;
     headlinePre: string;
     headlineItalic: string;
@@ -104,7 +103,7 @@ export const siteConfig: SiteConfig = {
   contactEmail: "hello@pinehollow.studio",
 
   hero: {
-    liveEyebrowTarget: 2847,
+    liveCountMinWeekly: 100,
     liveEyebrowLabel: "joined the waiting list this week",
     headline: ["Every course in England, ", "tracked", "."],
     lede:
@@ -203,7 +202,6 @@ export const siteConfig: SiteConfig = {
   },
 
   closingCta: {
-    eyebrowTarget: 2847,
     eyebrowLabel: "already on the list",
     headlinePre: "Be among the ",
     headlineItalic: "first.",

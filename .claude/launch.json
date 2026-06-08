@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 3000
+    },
+    {
+      "name": "vestige-emails",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "email"],
+      "port": 3001
     }
   ]
 }
