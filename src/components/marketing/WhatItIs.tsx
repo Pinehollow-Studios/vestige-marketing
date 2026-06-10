@@ -11,7 +11,7 @@ import { Reveal } from "./Reveal";
  */
 export function WhatItIs({ palette = "mint" }: { palette?: Palette }) {
   const acc = accentFor(palette);
-  const { eyebrow, titlePre, titleItalic, body } = siteConfig.what;
+  const { titlePre, titleItalic, body } = siteConfig.what;
 
   return (
     <section
@@ -25,23 +25,6 @@ export function WhatItIs({ palette = "mint" }: { palette?: Palette }) {
     >
       <Reveal>
         <div style={{ maxWidth: 760, margin: "0 auto", textAlign: "center" }}>
-          <span
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-              fontFamily: fwF.ui,
-              fontSize: 11,
-              fontWeight: 700,
-              letterSpacing: 1.6,
-              textTransform: "uppercase",
-              color: acc.a,
-            }}
-          >
-            <span style={{ width: 5, height: 5, borderRadius: 999, background: acc.a }} />
-            {eyebrow}
-          </span>
-
           <h2
             style={{
               fontFamily: fwF.display,
@@ -50,7 +33,7 @@ export function WhatItIs({ palette = "mint" }: { palette?: Palette }) {
               letterSpacing: "-1.5px",
               lineHeight: 1.05,
               color: fwT.ink,
-              margin: "18px 0 0",
+              margin: 0,
             }}
           >
             {titlePre}

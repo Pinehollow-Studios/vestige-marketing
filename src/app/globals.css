@@ -541,9 +541,12 @@ html, body { background: #06090E; }
   max-width: 1280px;
   margin: 0 auto;
 }
+.fw-features > * { display: flex; }      /* let each Reveal wrapper stretch its card */
 .fw-feature {
   position: relative;
   overflow: hidden;
+  width: 100%;
+  height: 100%;                            /* all three cards match the tallest in the row */
   background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
   border: 1px solid rgba(255,255,255,0.10);
   border-radius: 24px;
@@ -567,6 +570,23 @@ html, body { background: #06090E; }
   background: rgba(0,0,0,0.25);
   overflow: hidden;
   border: 1px solid rgba(255,255,255,0.06);
+}
+/* light sheen that sweeps across each illustration, staggered per card */
+.fw-feature-motif::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,0.07) 50%, transparent 65%);
+  transform: translateX(-120%);
+  animation: fw-feature-sheen 6.5s ease-in-out infinite;
+  pointer-events: none;
+}
+.fw-features > *:nth-child(2) .fw-feature-motif::after { animation-delay: 2.2s; }
+.fw-features > *:nth-child(3) .fw-feature-motif::after { animation-delay: 4.4s; }
+@keyframes fw-feature-sheen {
+  0%   { transform: translateX(-120%); }
+  35%  { transform: translateX(120%); }
+  100% { transform: translateX(120%); }
 }
 .fw-feature-eyebrow {
   font-family: var(--font-ui);
@@ -809,12 +829,16 @@ html, body { background: #06090E; }
   border-top: 1px solid rgba(255,255,255,0.10);
 }
 .fw-faq-q {
+  width: 100%;
+  background: none;
+  border: 0;
+  appearance: none;
+  text-align: left;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
   cursor: pointer;
-  list-style: none;
   padding: 22px 4px;
   font-family: var(--font-display);
   font-size: clamp(16px, 1.7vw, 19px);
@@ -823,7 +847,6 @@ html, body { background: #06090E; }
   transition: color 0.2s ease;
 }
 .fw-faq-q:hover { color: #5BE4C3; }
-.fw-faq-q::-webkit-details-marker { display: none; }
 .fw-faq-mark {
   flex: none;
   font-family: var(--font-ui);
@@ -831,9 +854,17 @@ html, body { background: #06090E; }
   font-size: 24px;
   line-height: 1;
   color: #5BE4C3;
-  transition: transform 0.25s ease;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-.fw-faq-item[open] .fw-faq-mark { transform: rotate(45deg); }
+.fw-faq-item[data-open="true"] .fw-faq-mark { transform: rotate(45deg); }
+/* grid-rows 0fr→1fr animates the panel height with no measuring JS */
+.fw-faq-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.34s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.fw-faq-item[data-open="true"] .fw-faq-panel { grid-template-rows: 1fr; }
+.fw-faq-panel-inner { overflow: hidden; }
 .fw-faq-a {
   font-family: var(--font-ui);
   font-size: 15px;
@@ -842,7 +873,11 @@ html, body { background: #06090E; }
   margin: 0 4px;
   padding: 0 0 24px;
   max-width: 620px;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.3s ease 0.04s, transform 0.3s ease 0.04s;
 }
+.fw-faq-item[data-open="true"] .fw-faq-a { opacity: 1; transform: translateY(0); }
 
 /* ─── Footer ───────────────────────────────────────────────── */
 .fw-footer {

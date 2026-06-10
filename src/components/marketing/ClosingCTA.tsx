@@ -13,9 +13,11 @@ export function ClosingCTA({
   joinedTotal?: number | null;
 }) {
   const acc = accentFor(palette);
-  const { eyebrowLabel, headlinePre, headlineItalic, sub, ctaLabel } =
+  const { eyebrowLabel, headlinePre, headlineItalic, sub, ctaLabel, forwardNudge } =
     siteConfig.closingCta;
   const joined = useCountUp(joinedTotal ?? 0, { duration: 1800, delay: 200 });
+  // Pull off a leading "P.S." so it can be tinted mint.
+  const psMatch = forwardNudge.match(/^(P\.S\.)\s+([\s\S]*)$/);
 
   return (
     <section id="join" className="fw-cta-section">
@@ -107,15 +109,22 @@ export function ClosingCTA({
         style={{
           position: "relative",
           zIndex: 2,
-          margin: "26px auto 0",
-          maxWidth: 440,
+          margin: "48px auto 0",
+          maxWidth: 470,
           fontFamily: fwF.ui,
-          fontSize: 13.5,
-          lineHeight: 1.55,
-          color: "rgba(246,244,238,0.4)",
+          fontSize: 14.5,
+          lineHeight: 1.6,
+          color: "rgba(246,244,238,0.62)",
         }}
       >
-        {siteConfig.closingCta.forwardNudge}
+        {psMatch ? (
+          <>
+            <span style={{ color: acc.a, fontWeight: 700 }}>{psMatch[1]}</span>{" "}
+            {psMatch[2]}
+          </>
+        ) : (
+          forwardNudge
+        )}
       </p>
     </section>
   );

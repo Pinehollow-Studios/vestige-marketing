@@ -1,15 +1,19 @@
 "use client";
 
+import { useState } from "react";
 import { siteConfig } from "@/lib/siteConfig";
 import { accentFor, type Palette } from "./palette";
 import { Reveal } from "./Reveal";
 
 /**
- * FAQ — native <details> accordions (accessible, no JS, no client state beyond
- * the browser's own toggle). Answers the questions friends text back anyway.
+ * FAQ — single-open accordion with an animated reveal. The panel height
+ * animates via a CSS grid-rows 0fr→1fr transition (smooth, no JS measuring),
+ * with the answer fading + lifting in. Buttons carry aria-expanded/controls
+ * so it stays keyboard- and screen-reader-friendly.
  */
 export function Faq({ palette = "mint" }: { palette?: Palette }) {
   const acc = accentFor(palette);
+  const [open, setOpen] = useState<number | null>(null);
 
   return (
     <section className="fw-faq-section">
@@ -25,17 +29,36 @@ export function Faq({ palette = "mint" }: { palette?: Palette }) {
         </div>
 
         <div className="fw-faq-list">
-          {siteConfig.faq.map((item, i) => (
-            <details key={i} className="fw-faq-item">
-              <summary className="fw-faq-q">
-                <span>{item.q}</span>
-                <span className="fw-faq-mark" aria-hidden>
-                  +
-                </span>
-              </summary>
-              <p className="fw-faq-a">{item.a}</p>
-            </details>
-          ))}
+          {siteConfig.faq.map((item, i) => {
+            const isOpen = open === i;
+            return (
+              <div key={i} className="fw-faq-item" data-open={isOpen}>
+                <button
+                  type="button"
+                  className="fw-faq-q"
+                  aria-expanded={isOpen}
+                  aria-controls={`faq-panel-${i}`}
+                  id={`faq-q-${i}`}
+                  onClick={() => setOpen(isOpen ? null : i)}
+                >
+                  <span>{item.q}</span>
+                  <span className="fw-faq-mark" aria-hidden>
+                    +
+                  </span>
+                </button>
+                <div
+                  className="fw-faq-panel"
+                  id={`faq-panel-${i}`}
+                  role="region"
+                  aria-labelledby={`faq-q-${i}`}
+                >
+                  <div className="fw-faq-panel-inner">
+                    <p className="fw-faq-a">{item.a}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </Reveal>
     </section>

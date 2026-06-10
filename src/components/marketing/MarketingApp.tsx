@@ -56,38 +56,13 @@ export function MarketingApp({ liveCount }: { liveCount: LiveCount | null }) {
 
         {/* Centred hero content */}
         <div className="fw-hero-content">
-          <div style={{ marginBottom: 30 }}>
-            {liveCount ? (
+          {liveCount && (
+            <div style={{ marginBottom: 30 }}>
               <LiveEyebrow palette={PALETTE} target={liveCount.weekly}>
                 {siteConfig.hero.liveEyebrowLabel}
               </LiveEyebrow>
-            ) : (
-              <span
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 8,
-                  fontFamily: fwF.ui,
-                  fontSize: 11,
-                  fontWeight: 700,
-                  letterSpacing: 1.6,
-                  textTransform: "uppercase",
-                  color: acc.a,
-                }}
-              >
-                <span
-                  style={{
-                    width: 5,
-                    height: 5,
-                    borderRadius: 999,
-                    background: acc.a,
-                    boxShadow: `0 0 8px ${acc.a}`,
-                  }}
-                />
-                {siteConfig.hero.staticEyebrow}
-              </span>
-            )}
-          </div>
+            </div>
+          )}
 
           <RevealHeadline
             pre={pre}
@@ -179,36 +154,10 @@ export function MarketingApp({ liveCount }: { liveCount: LiveCount | null }) {
       {/* ═══ STATS STRIP ═══════════════════════════════════ */}
       <StatsStrip />
 
-      {/* ═══ WHY / WHAT IT IS ══════════════════════════════ */}
-      <WhatItIs palette={PALETTE} />
-
       {/* ═══ FEATURES ══════════════════════════════════════ */}
       <section id="features" className="fw-features-section">
         <Reveal>
         <div className="fw-features-header">
-          <span
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-              fontFamily: fwF.ui,
-              fontSize: 11,
-              fontWeight: 700,
-              letterSpacing: 1.6,
-              textTransform: "uppercase",
-              color: acc.a,
-            }}
-          >
-            <span
-              style={{
-                width: 5,
-                height: 5,
-                borderRadius: 999,
-                background: acc.a,
-              }}
-            />
-            {siteConfig.featuresHeader.eyebrow}
-          </span>
           <h2 className="fw-features-title">
             {siteConfig.featuresHeader.titlePre}
             <span
@@ -242,6 +191,9 @@ export function MarketingApp({ liveCount }: { liveCount: LiveCount | null }) {
           ))}
         </div>
       </section>
+
+      {/* ═══ WHY / WHAT IT IS ══════════════════════════════ */}
+      <WhatItIs palette={PALETTE} />
 
       {/* ═══ ROADMAP ═══════════════════════════════════════ */}
       <Roadmap />

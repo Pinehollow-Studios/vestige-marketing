@@ -125,7 +125,7 @@ export const siteConfig: SiteConfig = {
     staticEyebrow: "Every course in England",
     headline: ["How many have you ", "played", "?"],
     lede:
-      "England has 2,500 courses — from Open Championship links to your local nine-holer. Vestige keeps the ones you've played, fills in your map of the country, and shows how your collection compares with your friends'.",
+      "England has over 2,500 courses — from Open Championship links to your local nine-holer. Vestige keeps the ones you've played, fills in your map of the country, and shows how your collection compares with your friends'.",
     metaStrip: ["iPhone, iOS 18+", "Free at launch", "Summer 2027"],
   },
 
@@ -180,7 +180,7 @@ export const siteConfig: SiteConfig = {
   faq: [
     {
       q: "Is it really free?",
-      a: "Free at launch — the whole app, no catch. If that ever changes, we'll tell you plainly first.",
+      a: "Yes — completely free. The whole app, the whole collection, no premium tier and no catch.",
     },
     {
       q: "Does it track my score or handicap?",
@@ -199,8 +199,8 @@ export const siteConfig: SiteConfig = {
       a: "England first. The rest of the British Isles will follow.",
     },
     {
-      q: "Is there an Android version?",
-      a: "iPhone first (iOS 18 and up). We'll see where it goes from there.",
+      q: "What do you do with my data?",
+      a: "As little as possible. No ads, and we never sell your personal data — your collection is yours, and you can export or delete it whenever you like.",
     },
     {
       q: "When can I actually use it?",
@@ -214,21 +214,21 @@ export const siteConfig: SiteConfig = {
       eyebrow: "The atlas",
       title: "Every course in England.",
       body:
-        "All 2,500+ of them, from championship links to nine-hole village greens. The map is complete on the day we launch.",
+        "All 2,500+ of them — championship links to nine-hole village greens, complete on the day we launch.",
     },
     {
       kind: "tap",
       eyebrow: "One tap",
       title: "A round, kept.",
       body:
-        "Tap the course. Add a score if you want to. No card to scan, no per-hole bookkeeping — the round is kept in the time it takes to read this sentence.",
+        "Tap the course, add a score if you like. No card to scan, no per-hole bookkeeping.",
     },
     {
       kind: "board",
       eyebrow: "Your circle",
       title: "A polite competition.",
       body:
-        "See whose collection runs deepest — among your friends, and across the country. No streaks. No strangers in your feed.",
+        "See whose collection runs deepest — your friends, and the whole country. No strangers in your feed.",
     },
   ],
 
