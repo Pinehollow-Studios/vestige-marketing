@@ -40,7 +40,7 @@ function StatItem({
         willChange: "transform, opacity",
       }}
     >
-      <div className="v">
+      <div className={staticVal != null ? "v v-static" : "v"}>
         {staticVal != null ? (
           staticVal
         ) : (

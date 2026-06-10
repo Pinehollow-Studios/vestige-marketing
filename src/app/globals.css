@@ -501,6 +501,9 @@ html, body { background: #06090E; }
 }
 @media (max-width: 760px) {
   .fw-stats { grid-template-columns: repeat(2, 1fr); }
+  /* Text values (e.g. "Summer ’27") are wider than the numerals and wrap
+     awkwardly in the 2-col layout — size them down a touch to stay on one line. */
+  .fw-stat .v.v-static { font-size: clamp(26px, 7vw, 34px); white-space: nowrap; }
 }
 
 /* ─── Feature row ──────────────────────────────────────────── */
@@ -765,6 +768,80 @@ html, body { background: #06090E; }
   margin: 22px auto 0;
   max-width: 560px;
   line-height: 1.55;
+}
+
+/* ─── FAQ ──────────────────────────────────────────────────── */
+.fw-faq-section {
+  position: relative;
+  z-index: 2;
+  padding: clamp(56px, 8vw, 130px) clamp(20px, 5vw, 80px);
+}
+.fw-faq-head {
+  text-align: center;
+  margin: 0 auto clamp(34px, 4vw, 54px);
+}
+.fw-faq-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
+.fw-faq-title {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4.4vw, 56px);
+  font-weight: 500;
+  letter-spacing: -1.5px;
+  color: #F6F4EE;
+  margin: 16px 0 0;
+}
+.fw-faq-list {
+  max-width: 720px;
+  margin: 0 auto;
+}
+.fw-faq-item {
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+}
+.fw-faq-item:first-child {
+  border-top: 1px solid rgba(255,255,255,0.10);
+}
+.fw-faq-q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  cursor: pointer;
+  list-style: none;
+  padding: 22px 4px;
+  font-family: var(--font-display);
+  font-size: clamp(16px, 1.7vw, 19px);
+  font-weight: 500;
+  color: #F6F4EE;
+  transition: color 0.2s ease;
+}
+.fw-faq-q:hover { color: #5BE4C3; }
+.fw-faq-q::-webkit-details-marker { display: none; }
+.fw-faq-mark {
+  flex: none;
+  font-family: var(--font-ui);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1;
+  color: #5BE4C3;
+  transition: transform 0.25s ease;
+}
+.fw-faq-item[open] .fw-faq-mark { transform: rotate(45deg); }
+.fw-faq-a {
+  font-family: var(--font-ui);
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(246,244,238,0.6);
+  margin: 0 4px;
+  padding: 0 0 24px;
+  max-width: 620px;
 }
 
 /* ─── Footer ───────────────────────────────────────────────── */

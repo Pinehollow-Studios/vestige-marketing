@@ -2,6 +2,7 @@
 
 import { addToWaitlist } from "@/lib/resend";
 import { sendWelcomeEmail } from "@/lib/email";
+import { normalizeSource } from "@/lib/sources";
 
 export type JoinWaitlistState =
   | { status: "idle" }
@@ -21,7 +22,10 @@ export async function joinWaitlist(
     return { status: "error", message: "That doesn't look like a valid email." };
   }
 
-  const result = await addToWaitlist(email);
+  // Where the signup came from (?from= tag, validated against the known list).
+  const source = normalizeSource(formData.get("source"));
+
+  const result = await addToWaitlist(email, source);
   if (!result.ok) return { status: "error", message: result.error };
 
   // Welcome only genuinely-new signups, and only when the contact was actually

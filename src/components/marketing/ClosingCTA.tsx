@@ -81,6 +81,42 @@ export function ClosingCTA({
       <div style={{ position: "relative", zIndex: 2 }}>
         <GlassEmail palette={palette} cta={ctaLabel} />
       </div>
+      <p
+        style={{
+          position: "relative",
+          zIndex: 2,
+          marginTop: 16,
+          fontFamily: fwF.ui,
+          fontSize: 12.5,
+          color: "rgba(246,244,238,0.45)",
+        }}
+      >
+        No spam — just {siteConfig.brandName}. Unsubscribe anytime ·{" "}
+        <a
+          href="/privacy"
+          style={{
+            color: "rgba(246,244,238,0.7)",
+            textDecoration: "underline",
+            textUnderlineOffset: 2,
+          }}
+        >
+          Privacy
+        </a>
+      </p>
+      <p
+        style={{
+          position: "relative",
+          zIndex: 2,
+          margin: "26px auto 0",
+          maxWidth: 440,
+          fontFamily: fwF.ui,
+          fontSize: 13.5,
+          lineHeight: 1.55,
+          color: "rgba(246,244,238,0.4)",
+        }}
+      >
+        {siteConfig.closingCta.forwardNudge}
+      </p>
     </section>
   );
 }

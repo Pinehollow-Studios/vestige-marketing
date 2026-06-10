@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import { joinWaitlist, type JoinWaitlistState } from "@/app/actions";
 import { accentFor, type Palette } from "./palette";
 
@@ -26,6 +26,23 @@ export function GlassEmail({
 }: GlassEmailProps) {
   const acc = accentFor(palette);
   const [state, action, pending] = useActionState(joinWaitlist, initial);
+
+  // Where did this visitor come from? Read the `?from=` tag off the URL and
+  // ride it along with the signup via a hidden field. We write straight to the
+  // input's DOM value in an effect rather than through React state: the tag is
+  // client-only, so this avoids a hydration mismatch (and a cascading render).
+  // Empty/unknown is normalised to "organic" server-side. See src/lib/sources.ts.
+  const sourceRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    try {
+      const from = new URLSearchParams(window.location.search).get("from");
+      if (from && sourceRef.current) {
+        sourceRef.current.value = from.trim().toLowerCase().slice(0, 40);
+      }
+    } catch {
+      /* no-op: source is optional and falls back to "organic" server-side */
+    }
+  }, []);
   const sent = state.status === "ok";
   const error = state.status === "error" ? state.message : null;
   const tall = size === "lg" ? 64 : 54;
@@ -36,6 +53,7 @@ export function GlassEmail({
       className={`fw-email fw-email-${size}`}
       data-sent={sent ? "1" : "0"}
     >
+      <input type="hidden" name="source" defaultValue="" ref={sourceRef} />
       <div
         className="fw-email-glow"
         style={{

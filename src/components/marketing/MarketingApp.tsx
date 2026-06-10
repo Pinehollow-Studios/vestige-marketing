@@ -12,7 +12,9 @@ import {
 import { GlassEmail } from "./GlassEmail";
 import { CourseMarquee } from "./CourseMarquee";
 import { StatsStrip } from "./StatsStrip";
+import { WhatItIs } from "./WhatItIs";
 import { FeatureCard } from "./Features";
+import { Faq } from "./Faq";
 import { ClosingCTA } from "./ClosingCTA";
 import { ScrollProgress } from "./ScrollProgress";
 import { Reveal } from "./Reveal";
@@ -54,13 +56,38 @@ export function MarketingApp({ liveCount }: { liveCount: LiveCount | null }) {
 
         {/* Centred hero content */}
         <div className="fw-hero-content">
-          {liveCount && (
-            <div style={{ marginBottom: 30 }}>
+          <div style={{ marginBottom: 30 }}>
+            {liveCount ? (
               <LiveEyebrow palette={PALETTE} target={liveCount.weekly}>
                 {siteConfig.hero.liveEyebrowLabel}
               </LiveEyebrow>
-            </div>
-          )}
+            ) : (
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 8,
+                  fontFamily: fwF.ui,
+                  fontSize: 11,
+                  fontWeight: 700,
+                  letterSpacing: 1.6,
+                  textTransform: "uppercase",
+                  color: acc.a,
+                }}
+              >
+                <span
+                  style={{
+                    width: 5,
+                    height: 5,
+                    borderRadius: 999,
+                    background: acc.a,
+                    boxShadow: `0 0 8px ${acc.a}`,
+                  }}
+                />
+                {siteConfig.hero.staticEyebrow}
+              </span>
+            )}
+          </div>
 
           <RevealHeadline
             pre={pre}
@@ -74,7 +101,7 @@ export function MarketingApp({ liveCount }: { liveCount: LiveCount | null }) {
 
           <p className="fw-lede">{siteConfig.hero.lede}</p>
 
-          <GlassEmail palette={PALETTE} cta="Join the list" />
+          <GlassEmail palette={PALETTE} cta="Save my spot" />
 
           <div
             style={{
@@ -152,6 +179,9 @@ export function MarketingApp({ liveCount }: { liveCount: LiveCount | null }) {
       {/* ═══ STATS STRIP ═══════════════════════════════════ */}
       <StatsStrip />
 
+      {/* ═══ WHY / WHAT IT IS ══════════════════════════════ */}
+      <WhatItIs palette={PALETTE} />
+
       {/* ═══ FEATURES ══════════════════════════════════════ */}
       <section id="features" className="fw-features-section">
         <Reveal>
@@ -216,6 +246,9 @@ export function MarketingApp({ liveCount }: { liveCount: LiveCount | null }) {
       {/* ═══ ROADMAP ═══════════════════════════════════════ */}
       <Roadmap />
 
+      {/* ═══ FAQ ═══════════════════════════════════════════ */}
+      <Faq palette={PALETTE} />
+
       {/* ═══ CLOSING CTA ═══════════════════════════════════ */}
       <ClosingCTA
         palette={PALETTE}
@@ -253,6 +286,12 @@ export function MarketingApp({ liveCount }: { liveCount: LiveCount | null }) {
             rel="noopener noreferrer"
           >
             {siteConfig.footer.studio.websiteLabel}
+          </a>
+          <span className="fw-footer-sep" aria-hidden>
+            ·
+          </span>
+          <a className="fw-footer-link" href="/privacy">
+            Privacy
           </a>
         </div>
       </footer>

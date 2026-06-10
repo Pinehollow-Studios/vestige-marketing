@@ -1,12 +1,14 @@
 import "server-only";
 
+import type { WaitlistSource } from "@/lib/sources";
+
 /**
  * Resend waitlist integration.
  *
  * Resend retired "Audiences" in 2025 — contacts are now global and grouped by
- * "segments". A waitlist signup therefore (1) upserts a global contact and
- * (2) adds it to the launch-waitlist segment, which the launch broadcast will
- * target.
+ * "segments". A waitlist signup therefore (1) upserts a global contact — tagged
+ * with its acquisition source (see addToWaitlist) — and (2) adds it to the
+ * launch-waitlist segment, which the launch broadcast will target.
  *
  * To wire this up:
  *   1. Sign up at https://resend.com, verify your sending domain.
@@ -30,14 +32,17 @@ export type WaitlistResult =
   | { ok: true; mode: "live" | "noop"; isNew: boolean }
   | { ok: false; error: string };
 
-export async function addToWaitlist(email: string): Promise<WaitlistResult> {
+export async function addToWaitlist(
+  email: string,
+  source: WaitlistSource = "organic"
+): Promise<WaitlistResult> {
   const apiKey = process.env.RESEND_API_KEY;
   const segmentId = process.env.RESEND_WAITLIST_SEGMENT_ID;
 
   if (!apiKey || !segmentId) {
     // Local-dev / pre-Resend fallback: log the email and pretend it worked.
     // Switches to live mode the moment both env vars are populated.
-    console.log("[waitlist:noop]", email);
+    console.log("[waitlist:noop]", email, `source=${source}`);
     return { ok: true, mode: "noop", isNew: true };
   }
 
@@ -62,12 +67,24 @@ export async function addToWaitlist(email: string): Promise<WaitlistResult> {
       /* network blip — fall back to treating as new */
     }
 
-    // 1. Upsert the global contact. Resend is idempotent here: a repeat email
-    //    returns the existing contact's id (201) rather than erroring.
+    // 1. Upsert the global contact, tagging where the signup came from (the
+    //    source). Resend is idempotent: a repeat email returns the existing
+    //    contact's id (201) rather than erroring. We only set the source on a
+    //    genuinely new contact, so the *first* touch wins — a later re-signup via
+    //    a different link can't overwrite how someone originally came in.
+    //
+    //    Why last_name: Resend contacts have no custom-field/metadata support,
+    //    and the free tier caps segments at 3 (too few for one per source). We
+    //    never collect a real name, so the field is otherwise unused. It's
+    //    queryable later (contact export / GET contact) to reconcile the beta
+    //    "Founding Member" badges. NB: don't reference {{LAST_NAME}} in a
+    //    broadcast template, or it'll render the source. See src/lib/sources.ts.
+    const contactBody: Record<string, unknown> = { email, unsubscribed: false };
+    if (isNew) contactBody.last_name = source;
     const createRes = await fetch(`${RESEND_API}/contacts`, {
       method: "POST",
       headers,
-      body: JSON.stringify({ email, unsubscribed: false }),
+      body: JSON.stringify(contactBody),
     });
 
     if (!createRes.ok) {
