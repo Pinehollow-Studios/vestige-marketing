@@ -112,9 +112,11 @@ export default function PrivacyPage() {
         </p>
 
         <Section title="What we collect">
-          When you join the waiting list, we collect your email address. That is the only
-          personal information this website asks for or stores. There are no advertising
-          cookies and no third-party tracking.
+          When you join the waiting list, we collect your email address — the only personal
+          information this website asks for or stores. We also use Vercel&rsquo;s
+          privacy-first analytics to count visits and page views; it sets no cookies, does
+          not identify you, and does not follow you across other sites. There is no
+          advertising here.
         </Section>
 
         <Section title="Why we hold it, and our lawful basis">
