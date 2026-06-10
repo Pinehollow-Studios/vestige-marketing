@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Fraunces } from "next/font/google";
+import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/siteConfig";
 
@@ -9,11 +9,10 @@ const inter = Inter({
   display: "swap",
 });
 
-// Modern editorial serif — variable opsz / SOFT / WONK axes for character.
-// Replaces Source Serif 4. Used upright only (the italic treatment was
-// removed sitewide), so only the normal style is loaded to keep the font
+// Modern geometric sans — the display face. Replaces Fraunces. Used
+// upright only, so only the normal style is loaded to keep the font
 // payload small on mobile.
-const fraunces = Fraunces({
+const manrope = Manrope({
   subsets: ["latin"],
   variable: "--font-display-face",
   weight: ["400", "500", "600", "700"],
@@ -51,7 +50,7 @@ export default function RootLayout({
   return (
     <html
       lang="en-GB"
-      className={`${inter.variable} ${fraunces.variable}`}
+      className={`${inter.variable} ${manrope.variable}`}
     >
       <body>{children}</body>
     </html>

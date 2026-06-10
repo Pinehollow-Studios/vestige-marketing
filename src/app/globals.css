@@ -3,9 +3,9 @@
 /* ═══════════════════════════════════════════════════════════════
    Vestige Modern Design — tokens
    Verbatim port of handoff/tokens.css.
-   Font @import removed — Source Serif 4 + Inter are loaded by
-   next/font in layout.tsx; we reference them via the variables
-   --font-source-serif and --font-inter.
+   Font @import removed — Manrope (display) + Inter (ui) are loaded
+   by next/font in layout.tsx; we reference them via the variables
+   --font-display-face and --font-inter.
    ═══════════════════════════════════════════════════════════════ */
 
 :root {
@@ -45,7 +45,7 @@
   --on-amber:  #3D2308;
 
   /* ─── Type families (next/font wires the actual @font-face) ─ */
-  --font-display: var(--font-display-face), "New York", ui-serif, Georgia, serif;
+  --font-display: var(--font-display-face), -apple-system, "SF Pro", system-ui, sans-serif;
   --font-ui:      var(--font-inter), -apple-system, "SF Pro", system-ui, "Inter", sans-serif;
   --font-mono:    "SF Mono", ui-monospace, "JetBrains Mono", monospace;
   --num-features: "tnum" 1, "lnum" 1;
@@ -91,7 +91,7 @@
 /* ═══════════════════════════════════════════════════════════════
    Vestige marketing site — motion styles
    Verbatim port of handoff/marketing.css.
-   "Source Serif 4" literal family-name references swapped for
+   Literal display family-name references swapped for
    var(--font-display) so next/font wires through.
    ═══════════════════════════════════════════════════════════════ */
 
