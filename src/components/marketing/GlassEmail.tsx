@@ -3,6 +3,7 @@
 import { useActionState, useEffect, useRef } from "react";
 import { joinWaitlist, type JoinWaitlistState } from "@/app/actions";
 import { accentFor, type Palette } from "./palette";
+import { useMagnetic } from "./hooks";
 
 const initial: JoinWaitlistState = { status: "idle" };
 
@@ -46,6 +47,8 @@ export function GlassEmail({
   const sent = state.status === "ok";
   const error = state.status === "error" ? state.message : null;
   const tall = size === "lg" ? 64 : 54;
+  // CTA leans toward the cursor while the pointer roams the pill.
+  const magRef = useMagnetic<HTMLButtonElement>(0.22, ".fw-email");
 
   return (
     <form
@@ -72,6 +75,7 @@ export function GlassEmail({
           disabled={sent || pending}
         />
         <button
+          ref={magRef}
           type="submit"
           disabled={sent || pending}
           style={{

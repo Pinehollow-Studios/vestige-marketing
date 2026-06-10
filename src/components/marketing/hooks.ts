@@ -102,24 +102,225 @@ export function useScrollReveal<T extends HTMLElement = HTMLElement>({
 }
 
 /**
- * Scroll progress (0..1) — drives the thin gradient bar at the top of
- * MarketingApp. Updates on scroll, throttled by passive listener.
+ * Scroll-scrubbed progress (0..1) written as a CSS custom property on
+ * the element itself — children consume it via calc(). One rAF loop per
+ * instance, lerped (`smooth`) so the value glides rather than snaps.
+ *
+ * mode "view"  — p maps the element's top edge travelling from
+ *                `start` (viewport fraction, 0.9 = near bottom) to `end`.
+ * mode "exit"  — p maps absolute scrollY across ~0.85 viewport heights;
+ *                used by the hero, which is pinned at the document top.
  */
-export function useScrollProgress(): number {
-  const [p, setP] = useState(0);
+export function useViewScrub<T extends HTMLElement = HTMLElement>({
+  start = 0.9,
+  end = 0.35,
+  smooth = 0.14,
+  varName = "--p",
+  mode = "view",
+  // Decimal places written to the CSS var. Composited consumers
+  // (transform/opacity) can take 4; paint-triggering consumers (text
+  // opacity ramps, background-size, widths) should pass 2 so they
+  // repaint on ~1% steps instead of every frame.
+  precision = 4,
+}: {
+  start?: number;
+  end?: number;
+  smooth?: number;
+  varName?: string;
+  mode?: "view" | "exit";
+  precision?: number;
+} = {}) {
+  const ref = useRef<T | null>(null);
   useEffect(() => {
-    const fn = () => {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      const next = max > 0 ? window.scrollY / max : 0;
-      setP(Math.max(0, Math.min(1, next)));
+    const el = ref.current;
+    if (!el) return;
+    let raf = 0;
+    let cur = -1;
+    let lastWritten = "";
+    const loop = () => {
+      const vh = window.innerHeight || 1;
+      let p: number;
+      if (mode === "exit") {
+        p = window.scrollY / (vh * 0.85);
+      } else {
+        const top = el.getBoundingClientRect().top / vh;
+        p = (start - top) / (start - end);
+      }
+      const target = Math.max(0, Math.min(1, p));
+      cur = cur < 0 ? target : cur + (target - cur) * smooth;
+      if (Math.abs(target - cur) < 0.0005) cur = target;
+      const v = cur.toFixed(precision);
+      // skip the style write when settled — keeps the page recalc-free at rest
+      if (v !== lastWritten) {
+        el.style.setProperty(varName, v);
+        lastWritten = v;
+      }
+      raf = requestAnimationFrame(loop);
     };
-    fn();
-    window.addEventListener("scroll", fn, { passive: true });
-    window.addEventListener("resize", fn, { passive: true });
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+  }, [start, end, smooth, varName, mode, precision]);
+  return ref;
+}
+
+/**
+ * Scroll velocity (-1..1, lerped) written as a CSS custom property on
+ * the element — the marquee consumes it for its scroll-reactive skew.
+ * Written on the element (not <html>) to keep style recalc scoped.
+ */
+export function useScrollVelocity<T extends HTMLElement = HTMLElement>(
+  varName = "--sv"
+) {
+  const ref = useRef<T | null>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let raf = 0;
+    let last = window.scrollY;
+    let v = 0;
+    let lastWritten = "";
+    const loop = () => {
+      const y = window.scrollY;
+      const target = Math.max(-1, Math.min(1, (y - last) / 36));
+      last = y;
+      v += (target - v) * 0.09;
+      if (Math.abs(v) < 0.001) v = 0;
+      const out = v.toFixed(4);
+      if (out !== lastWritten) {
+        el.style.setProperty(varName, out);
+        lastWritten = out;
+      }
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
+  }, [varName]);
+  return ref;
+}
+
+/**
+ * 3D card tilt — writes `--rx`/`--ry` (deg multipliers) and `--gx`/`--gy`
+ * (0..1 glare position) onto the element; CSS turns them into a
+ * perspective transform + cursor-tracking glare. Mouse only — touch
+ * pointers are ignored so cards stay flat on mobile.
+ */
+export function useTilt<T extends HTMLElement = HTMLElement>(max = 6) {
+  const ref = useRef<T | null>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    let raf = 0;
+    const move = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse") return;
+      const r = el.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width;
+      const py = (e.clientY - r.top) / r.height;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        el.style.setProperty("--rx", ((py - 0.5) * -2 * max).toFixed(2));
+        el.style.setProperty("--ry", ((px - 0.5) * 2 * max).toFixed(2));
+        el.style.setProperty("--gx", px.toFixed(3));
+        el.style.setProperty("--gy", py.toFixed(3));
+        el.setAttribute("data-tilt", "1");
+      });
+    };
+    const leave = () => {
+      cancelAnimationFrame(raf);
+      el.style.setProperty("--rx", "0");
+      el.style.setProperty("--ry", "0");
+      el.removeAttribute("data-tilt");
+    };
+    el.addEventListener("pointermove", move);
+    el.addEventListener("pointerleave", leave);
     return () => {
-      window.removeEventListener("scroll", fn);
-      window.removeEventListener("resize", fn);
+      cancelAnimationFrame(raf);
+      el.removeEventListener("pointermove", move);
+      el.removeEventListener("pointerleave", leave);
     };
+  }, [max]);
+  return ref;
+}
+
+/**
+ * Magnetic pull — the element leans toward the cursor while the pointer
+ * is inside the surrounding `areaSelector` ancestor (falls back to the
+ * element itself). Writes `--mdx`/`--mdy` px offsets; CSS applies them
+ * inside the element's transform so hover scales still compose.
+ */
+export function useMagnetic<T extends HTMLElement = HTMLElement>(
+  strength = 0.32,
+  areaSelector?: string
+) {
+  const ref = useRef<T | null>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const area: HTMLElement =
+      (areaSelector && (el.closest(areaSelector) as HTMLElement)) || el;
+    let raf = 0;
+    const move = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse") return;
+      const r = el.getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      const dist = Math.hypot(dx, dy);
+      const reach = Math.max(r.width, r.height) * 1.4;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        if (dist < reach) {
+          el.style.setProperty("--mdx", (dx * strength).toFixed(1));
+          el.style.setProperty("--mdy", (dy * strength).toFixed(1));
+        } else {
+          el.style.setProperty("--mdx", "0");
+          el.style.setProperty("--mdy", "0");
+        }
+      });
+    };
+    const leave = () => {
+      cancelAnimationFrame(raf);
+      el.style.setProperty("--mdx", "0");
+      el.style.setProperty("--mdy", "0");
+    };
+    area.addEventListener("pointermove", move);
+    area.addEventListener("pointerleave", leave);
+    return () => {
+      cancelAnimationFrame(raf);
+      area.removeEventListener("pointermove", move);
+      area.removeEventListener("pointerleave", leave);
+    };
+  }, [strength, areaSelector]);
+  return ref;
+}
+
+/**
+ * Global page progress (0..1, lerped) written as `--gp` on <html> —
+ * the one variable every cross-page companion evolves against: the
+ * progress bar, the ambient colour journey, and the AtlasMini pins
+ * all consume it from CSS, so scroll causes zero React re-renders.
+ */
+export function useGlobalProgress() {
+  useEffect(() => {
+    let raf = 0;
+    let cur = -1;
+    let lastWritten = "";
+    const loop = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const target = max > 0 ? Math.max(0, Math.min(1, window.scrollY / max)) : 0;
+      cur = cur < 0 ? target : cur + (target - cur) * 0.14;
+      if (Math.abs(target - cur) < 0.0005) cur = target;
+      // 3 decimals: --gp feeds some paint-triggering consumers (atlas
+      // pins), so fewer distinct values = fewer repaints per scroll.
+      const v = cur.toFixed(3);
+      // writing --gp on <html> recalcs every consumer — only do it on change
+      if (v !== lastWritten) {
+        document.documentElement.style.setProperty("--gp", v);
+        lastWritten = v;
+      }
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
   }, []);
-  return p;
 }

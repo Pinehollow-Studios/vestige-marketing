@@ -28,11 +28,14 @@ export function Faq({ palette = "mint" }: { palette?: Palette }) {
           <h2 className="fw-faq-title">Questions, answered.</h2>
         </div>
 
-        <div className="fw-faq-list">
-          {siteConfig.faq.map((item, i) => {
-            const isOpen = open === i;
-            return (
-              <div key={i} className="fw-faq-item" data-open={isOpen}>
+      </Reveal>
+
+      <div className="fw-faq-list">
+        {siteConfig.faq.map((item, i) => {
+          const isOpen = open === i;
+          return (
+            <Reveal key={i} delay={i * 60} offset={18}>
+              <div className="fw-faq-item" data-open={isOpen}>
                 <button
                   type="button"
                   className="fw-faq-q"
@@ -57,10 +60,10 @@ export function Faq({ palette = "mint" }: { palette?: Palette }) {
                   </div>
                 </div>
               </div>
-            );
-          })}
-        </div>
-      </Reveal>
+            </Reveal>
+          );
+        })}
+      </div>
     </section>
   );
 }

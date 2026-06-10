@@ -2,7 +2,7 @@
 
 import { siteConfig } from "@/lib/siteConfig";
 import { fwF } from "./palette";
-import { useScrollReveal } from "./hooks";
+import { useViewScrub } from "./hooks";
 import { Reveal } from "./Reveal";
 
 /**
@@ -11,15 +11,19 @@ import { Reveal } from "./Reveal";
  * Layout mirrors the rest of the site: eyebrow + serif h2 (with italic
  * mint-gradient shimmer on one word) + italic sub + visual block.
  *
- * The connecting line draws left-to-right when the timeline scrolls
- * into view; each milestone fades up in stagger via <Reveal>; dots
- * pulse continuously.
+ * The connecting line is scrubbed to scroll — it draws left-to-right
+ * as the timeline travels up the viewport (and undraws if you scroll
+ * back), via the `--p` variable useViewScrub writes on the container.
+ * Each milestone fades up in stagger via <Reveal>; dots pulse.
  */
 export function Roadmap() {
   const { eyebrow, titlePre, titleItalic, titlePost, sub, milestones } =
     siteConfig.roadmap;
-  const [trackRef, trackRevealed] = useScrollReveal<HTMLDivElement>({
-    threshold: 0.2,
+  // precision 2 — the fill width relayouts/repaints, so step at ~1%
+  const trackRef = useViewScrub<HTMLDivElement>({
+    start: 0.92,
+    end: 0.4,
+    precision: 2,
   });
 
   return (
@@ -73,10 +77,7 @@ export function Roadmap() {
 
       <div ref={trackRef} className="fw-timeline">
         <div className="fw-timeline-track">
-          <div
-            className="fw-timeline-track-fill"
-            style={{ width: trackRevealed ? "100%" : "0%" }}
-          />
+          <div className="fw-timeline-track-fill" />
         </div>
         <div className="fw-timeline-nodes">
           {milestones.map((m, i) => (

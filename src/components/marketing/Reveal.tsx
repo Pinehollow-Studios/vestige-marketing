@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useScrollReveal } from "./hooks";
 
 type RevealProps = {
@@ -26,16 +26,30 @@ export function Reveal({
   className,
 }: RevealProps) {
   const [ref, revealed] = useScrollReveal<HTMLDivElement>();
+  // Once the entrance has fully played, strip the inline styles — a
+  // page full of lingering blur(0) filters + will-change wrappers
+  // holds dozens of compositor layers alive for no visual gain.
+  const [settled, setSettled] = useState(false);
+  useEffect(() => {
+    if (!revealed) return;
+    const t = setTimeout(() => setSettled(true), delay + 900);
+    return () => clearTimeout(t);
+  }, [revealed, delay]);
   return (
     <div
       ref={ref}
       className={className}
-      style={{
-        transform: revealed ? "translateY(0)" : `translateY(${offset}px)`,
-        opacity: revealed ? 1 : 0,
-        transition: `transform 720ms cubic-bezier(0.2,0.8,0.2,1) ${delay}ms, opacity 720ms ease ${delay}ms`,
-        willChange: "transform, opacity",
-      }}
+      style={
+        settled
+          ? undefined
+          : {
+              transform: revealed ? "translateY(0)" : `translateY(${offset}px)`,
+              opacity: revealed ? 1 : 0,
+              filter: revealed ? "blur(0px)" : "blur(10px)",
+              transition: `transform 820ms cubic-bezier(0.2,0.8,0.2,1) ${delay}ms, opacity 820ms ease ${delay}ms, filter 820ms ease ${delay}ms`,
+              willChange: "transform, opacity, filter",
+            }
+      }
     >
       {children}
     </div>

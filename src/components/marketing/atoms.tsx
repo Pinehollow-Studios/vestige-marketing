@@ -16,6 +16,12 @@ type RevealHeadlineProps = {
   lineHeight: string;
   letterSpacing: string;
   italGradient?: boolean;
+  /**
+   * External gate for the word-by-word reveal. When provided, the
+   * animation waits for `play` to flip true (e.g. the intro preloader
+   * finishing) instead of firing on its own mount timer.
+   */
+  play?: boolean;
 };
 
 export function RevealHeadline({
@@ -27,17 +33,28 @@ export function RevealHeadline({
   lineHeight,
   letterSpacing,
   italGradient = true,
+  play,
 }: RevealHeadlineProps) {
   const acc = accentFor(palette);
-  const [visible, setVisible] = useState(false);
+  const [internalVisible, setInternalVisible] = useState(false);
   useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 60);
+    if (play !== undefined) return;
+    const t = setTimeout(() => setInternalVisible(true), 60);
     return () => clearTimeout(t);
-  }, []);
-  const words = (pre + ital + post).split(/(\s+)/);
+  }, [play]);
+  const visible = play === undefined ? internalVisible : play;
+  // Pre-compute each word's character offset up front — mutating a
+  // counter inside the JSX map callback trips react-hooks/immutability.
+  const words: Array<{ w: string; start: number }> = [];
+  {
+    let off = 0;
+    for (const w of (pre + ital + post).split(/(\s+)/)) {
+      words.push({ w, start: off });
+      off += w.length;
+    }
+  }
   const italStart = pre.length;
   const italEnd = italStart + ital.length;
-  let cursor = 0;
   return (
     <h1
       style={{
@@ -52,10 +69,8 @@ export function RevealHeadline({
         textWrap: "pretty",
       }}
     >
-      {words.map((w, i) => {
-        const wStart = cursor;
+      {words.map(({ w, start: wStart }, i) => {
         const wEnd = wStart + w.length;
-        cursor = wEnd;
         const inItal = wStart < italEnd && wEnd > italStart;
         if (/^\s+$/.test(w)) return <Fragment key={i}>{" "}</Fragment>;
         const child = inItal ? (

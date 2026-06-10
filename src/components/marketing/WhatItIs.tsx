@@ -1,17 +1,38 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { siteConfig } from "@/lib/siteConfig";
 import { accentFor, fwF, fwT, type Palette } from "./palette";
 import { Reveal } from "./Reveal";
+import { useViewScrub } from "./hooks";
 
 /**
  * "Why we're building it" — studio-voice narrative between the stats and the
  * feature cards. Also carries the `#what` anchor the top-bar "What it is" link
  * points at (previously a dead link — no element had that id).
+ *
+ * The body copy is scroll-scrubbed word by word: the section writes a
+ * 0..1 `--p` as it travels up the viewport, each word carries its index
+ * as `--i`, and the CSS brightens words in sequence — so the paragraph
+ * "reads itself in" at the visitor's own scroll pace.
  */
 export function WhatItIs({ palette = "mint" }: { palette?: Palette }) {
   const acc = accentFor(palette);
   const { titlePre, titleItalic, body } = siteConfig.what;
+  // precision 2 — word opacities repaint the paragraph, so step at ~1%
+  const scrubRef = useViewScrub<HTMLDivElement>({
+    start: 0.92,
+    end: 0.38,
+    precision: 2,
+  });
+
+  // Pre-split paragraphs into words with a running index across both,
+  // so the brighten wave flows continuously from one into the next.
+  let wordIndex = 0;
+  const paragraphs = body.map((p) =>
+    p.split(/\s+/).map((w) => ({ w, i: wordIndex++ }))
+  );
+  const totalWords = wordIndex;
 
   return (
     <section
@@ -51,24 +72,41 @@ export function WhatItIs({ palette = "mint" }: { palette?: Palette }) {
               {titleItalic}
             </span>
           </h2>
-
-          {body.map((p, i) => (
-            <p
-              key={i}
-              style={{
-                fontFamily: fwF.ui,
-                fontSize: "clamp(15px, 1.4vw, 18px)",
-                lineHeight: 1.7,
-                color: "rgba(246,244,238,0.62)",
-                margin: i === 0 ? "26px auto 0" : "16px auto 0",
-                maxWidth: 640,
-              }}
-            >
-              {p}
-            </p>
-          ))}
         </div>
       </Reveal>
+
+      <div
+        ref={scrubRef}
+        className="fw-scrub"
+        style={{ "--n": totalWords } as CSSProperties}
+      >
+        {paragraphs.map((words, pi) => (
+          <p
+            key={pi}
+            style={{
+              fontFamily: fwF.ui,
+              fontSize: "clamp(17px, 1.9vw, 24px)",
+              lineHeight: 1.65,
+              color: fwT.ink,
+              margin: pi === 0 ? "30px auto 0" : "18px auto 0",
+              maxWidth: 680,
+              textAlign: "center",
+              fontWeight: 450,
+            }}
+          >
+            {words.map(({ w, i }, wi) => (
+              <span key={wi}>
+                <span
+                  className="fw-scrub-word"
+                  style={{ "--i": i } as CSSProperties}
+                >
+                  {w}
+                </span>{" "}
+              </span>
+            ))}
+          </p>
+        ))}
+      </div>
     </section>
   );
 }
