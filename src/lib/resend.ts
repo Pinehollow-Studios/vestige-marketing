@@ -123,3 +123,58 @@ export async function addToWaitlist(
     return { ok: false, error: "Something went wrong. Try again in a moment." };
   }
 }
+
+export type UnsubscribeResult = { ok: boolean; mode: "live" | "noop" };
+
+/**
+ * Mark a contact as unsubscribed. Contacts are global (Resend retired Audiences
+ * — see addToWaitlist), so this is a single PATCH /contacts/{email} setting
+ * `unsubscribed: true`; Resend then suppresses future broadcasts to them.
+ *
+ * Idempotent and tolerant: a missing contact (404) or an already-unsubscribed
+ * one is still a "success" from the user's point of view — they wanted out, and
+ * they're out. Only a genuine API failure returns ok:false (the /unsubscribe
+ * route then tells them to email us so we can remove them by hand).
+ *
+ * Without RESEND_API_KEY this is a logged no-op, mirroring addToWaitlist so the
+ * flow works end-to-end locally before Resend is wired up.
+ */
+export async function unsubscribeContact(
+  email: string
+): Promise<UnsubscribeResult> {
+  const apiKey = process.env.RESEND_API_KEY;
+
+  if (!apiKey) {
+    console.log("[unsubscribe:noop]", email);
+    return { ok: true, mode: "noop" };
+  }
+
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${apiKey}`,
+    "User-Agent": USER_AGENT,
+  };
+
+  try {
+    const res = await fetch(
+      `${RESEND_API}/contacts/${encodeURIComponent(email.trim().toLowerCase())}`,
+      {
+        method: "PATCH",
+        headers,
+        body: JSON.stringify({ unsubscribed: true }),
+      }
+    );
+
+    // 404 = we never had them (e.g. a noop-mode signup); treat as done.
+    if (!res.ok && res.status !== 404) {
+      const body = await res.text().catch(() => "");
+      console.error("[unsubscribe:error]", res.status, body);
+      return { ok: false, mode: "live" };
+    }
+
+    return { ok: true, mode: "live" };
+  } catch (err) {
+    console.error("[unsubscribe:exception]", err);
+    return { ok: false, mode: "live" };
+  }
+}

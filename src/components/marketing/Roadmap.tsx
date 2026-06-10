@@ -1,7 +1,7 @@
 "use client";
 
 import { siteConfig } from "@/lib/siteConfig";
-import { fwF } from "./palette";
+import { fwF, fwT } from "./palette";
 import { useViewScrub } from "./hooks";
 import { Reveal } from "./Reveal";
 
@@ -85,6 +85,9 @@ export function Roadmap() {
               <article className="fw-timeline-node">
                 <div className="fw-timeline-dot" />
                 <p className="fw-timeline-date">
+                  <span style={{ textTransform: "none", color: fwT.ink2, fontWeight: 600 }}>
+                    Targeting{" "}
+                  </span>
                   {m.month.toUpperCase()} · {m.year}
                 </p>
                 <h3 className="fw-timeline-label">{m.label}</h3>

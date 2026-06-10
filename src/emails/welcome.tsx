@@ -11,10 +11,19 @@ import { siteConfig } from "../lib/siteConfig";
 
 /**
  * Welcome email — fires from the joinWaitlist server action when a *new*
- * contact joins the waiting list. No personalisation (we only collect an
- * email). Tinker freely; preview with `npm run email`.
+ * contact joins the waiting list. The only personalisation is the per-recipient
+ * `unsubscribeUrl` (a signed one-click link minted in lib/email.tsx); previews
+ * render without it and fall back to the support mailto. Tinker freely; preview
+ * with `npm run email`.
  */
-export default function WelcomeEmail() {
+export default function WelcomeEmail({
+  unsubscribeUrl,
+}: {
+  unsubscribeUrl?: string;
+}) {
+  const unsubscribeHref =
+    unsubscribeUrl ??
+    `mailto:${siteConfig.contactEmail}?subject=Unsubscribe%20from%20Vestige`;
   return (
     <EmailShell
       preview={`You're on the ${siteConfig.brandName} waiting list — ${siteConfig.tagline}`}
@@ -23,7 +32,7 @@ export default function WelcomeEmail() {
           You&rsquo;re getting this because you joined the waiting list at{" "}
           {siteConfig.domain}. Joined by mistake?{" "}
           <Link
-            href={`mailto:${siteConfig.contactEmail}?subject=Unsubscribe%20from%20Vestige`}
+            href={unsubscribeHref}
             style={{ color: brand.ink2, textDecoration: "underline" }}
           >
             Unsubscribe
@@ -36,16 +45,33 @@ export default function WelcomeEmail() {
       <Heading style={h1Style}>You&rsquo;re on the list.</Heading>
 
       <Text style={pStyle}>
-        Thanks for joining the waiting list for {siteConfig.brandName} — the quiet
-        way to keep every golf course you&rsquo;ve played in England, and see how
-        your collection stands against your friends.
+        Thanks for joining the waiting list for {siteConfig.brandName} — the way to
+        keep every golf course you&rsquo;ve played in England, and see how your
+        collection stands against your friends.
       </Text>
+
+      <Section
+        style={{
+          margin: "20px 0 4px",
+          padding: "12px 16px",
+          borderLeft: `3px solid ${brand.accent}`,
+          backgroundColor: brand.card,
+          borderRadius: 6,
+        }}
+      >
+        <Text style={{ margin: 0, fontSize: 14, lineHeight: "21px", color: brand.ink2 }}>
+          Being on the list means a head start on building your collection. When
+          the public beta opens, waitlist members get an access code before anyone
+          else — and at full release it&rsquo;s open and free to all.
+        </Text>
+      </Section>
 
       <Text style={pStyle}>We&rsquo;re building it now. Here&rsquo;s the shape of things:</Text>
 
       <Section style={{ margin: "6px 0 2px" }}>
         {siteConfig.roadmap.milestones.map((m, i) => (
           <Text key={i} style={{ margin: "8px 0 0", fontSize: 14, lineHeight: "20px", color: brand.ink2 }}>
+            Targeting{" "}
             <span style={{ color: brand.accent, fontWeight: 700 }}>
               {m.month} {m.year}
             </span>
@@ -61,7 +87,7 @@ export default function WelcomeEmail() {
       </Text>
 
       <Text style={{ ...pStyle, color: brand.ink, marginTop: 22 }}>
-        — The {siteConfig.brandName} team
+        — Jack &amp; Tom
       </Text>
     </EmailShell>
   );

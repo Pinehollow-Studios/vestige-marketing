@@ -73,7 +73,7 @@ export default function LaunchEmail() {
       <Text style={{ ...pStyle, color: brand.ink, marginTop: 22 }}>
         See you on the first tee,
         <br />
-        The {siteConfig.brandName} team
+        Jack &amp; Tom
       </Text>
     </EmailShell>
   );

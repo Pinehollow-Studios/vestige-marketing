@@ -2,6 +2,7 @@ import "server-only";
 import { render } from "@react-email/render";
 import WelcomeEmail from "@/emails/welcome";
 import { siteConfig } from "@/lib/siteConfig";
+import { unsubscribeUrl } from "@/lib/unsubscribe";
 
 /**
  * Transactional email sends. Renders a React Email template to HTML + text at
@@ -18,10 +19,30 @@ export async function sendWelcomeEmail(email: string): Promise<void> {
   if (!apiKey) return; // dev/no-key: silently skip
 
   try {
+    // Per-recipient signed one-click unsubscribe link (see lib/unsubscribe.ts).
+    // Always present here — sendWelcomeEmail and unsubscribeUrl share the same
+    // key fallback — but guarded so a misconfig degrades to the mailto instead
+    // of advertising a one-click header we can't honour.
+    const unsub = unsubscribeUrl(email);
+
     const [html, text] = await Promise.all([
-      render(<WelcomeEmail />),
-      render(<WelcomeEmail />, { plainText: true }),
+      render(<WelcomeEmail unsubscribeUrl={unsub ?? undefined} />),
+      render(<WelcomeEmail unsubscribeUrl={unsub ?? undefined} />, {
+        plainText: true,
+      }),
     ]);
+
+    // List-Unsubscribe powers the mail client's native unsubscribe button.
+    // With a signed URL we also send List-Unsubscribe-Post for RFC 8058
+    // one-click (Gmail/Apple POST it and we unsubscribe with no further click).
+    const unsubHeaders: Record<string, string> = unsub
+      ? {
+          "List-Unsubscribe": `<${unsub}>, <mailto:${siteConfig.contactEmail}?subject=Unsubscribe>`,
+          "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+        }
+      : {
+          "List-Unsubscribe": `<mailto:${siteConfig.contactEmail}?subject=Unsubscribe>`,
+        };
 
     const res = await fetch(`${RESEND_API}/emails`, {
       method: "POST",
@@ -37,9 +58,7 @@ export async function sendWelcomeEmail(email: string): Promise<void> {
         subject: `You're on the list — welcome to ${siteConfig.brandName}`,
         html,
         text,
-        headers: {
-          "List-Unsubscribe": `<mailto:${siteConfig.contactEmail}?subject=Unsubscribe>`,
-        },
+        headers: unsubHeaders,
       }),
     });
 

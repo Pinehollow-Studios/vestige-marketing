@@ -204,7 +204,7 @@ export const siteConfig: SiteConfig = {
     },
     {
       q: "When can I actually use it?",
-      a: "A friends-and-family beta this autumn, a wider public beta early 2027, and the App Store next summer.",
+      a: "A friends-and-family beta this autumn, then a public beta in early 2027 — waitlist members get an access code before anyone else — and the free App Store release next summer.",
     },
   ],
 
@@ -249,7 +249,7 @@ export const siteConfig: SiteConfig = {
         month: "Feb",
         year: "2027",
         label: "Beta two",
-        body: "Public TestFlight. A wider trial.",
+        body: "Public beta. Waitlist members get a code first.",
       },
       {
         month: "Summer",
