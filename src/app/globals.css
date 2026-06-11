@@ -1854,6 +1854,100 @@ html {
   .fw-prog-shot-sub { margin-left: 0; }
 }
 
+/* ─── Homepage snapshot — the map + the numbers, one way through ── */
+.fw-peek {
+  position: relative;
+  z-index: 2;
+  padding: clamp(60px, 8vw, 140px) clamp(20px, 5vw, 80px);
+}
+.fw-peek-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-areas:
+    "head"
+    "map"
+    "body";
+}
+.fw-peek-head {
+  grid-area: head;
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.fw-peek-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(32px, 4.2vw, 64px);
+  letter-spacing: -2px;
+  line-height: 1.05;
+  margin: 16px 0 0;
+  color: #f6f4ee;
+  text-wrap: balance;
+}
+.fw-peek-ital {
+  background: linear-gradient(120deg, #5be4c3, #8fe85b, #5be4c3);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fw-italic-shimmer 6s linear infinite;
+}
+.fw-peek-sub {
+  font-family: var(--font-ui);
+  font-size: clamp(15px, 1.4vw, 19px);
+  color: rgba(246, 244, 238, 0.65);
+  margin-top: 20px;
+  line-height: 1.55;
+}
+.fw-peek .fw-catlas { grid-area: map; }
+.fw-peek-body { grid-area: body; }
+.fw-peek-more {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  margin: 24px auto 0;
+  padding: 12px 26px;
+  border-radius: 999px;
+  border: 1px solid rgba(91, 228, 195, 0.35);
+  color: #5be4c3;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+.fw-peek-more:hover {
+  border-color: rgba(91, 228, 195, 0.7);
+  transform: translateY(-1px);
+}
+/* The map's fill-in is keyframe-driven and would play on page load,
+   three viewports before anyone sees it — hold every animation on its
+   first frame until PeekFrame flips data-shown on scroll arrival. */
+.fw-peek .fw-catlas-base,
+.fw-peek .fw-catlas-done path,
+.fw-peek .fw-catlas-legend {
+  animation-play-state: paused;
+}
+.fw-peek[data-shown="1"] .fw-catlas-base,
+.fw-peek[data-shown="1"] .fw-catlas-done path,
+.fw-peek[data-shown="1"] .fw-catlas-legend {
+  animation-play-state: running;
+}
+@media (min-width: 1000px) {
+  .fw-peek-inner {
+    grid-template-columns: minmax(0, 1fr) clamp(340px, 34vw, 420px);
+    grid-template-areas:
+      "head head"
+      "body map";
+    column-gap: clamp(40px, 5vw, 64px);
+    align-items: center;
+  }
+  .fw-peek-head { margin-bottom: clamp(16px, 2.5vw, 32px); }
+  .fw-peek .fw-catlas { width: 100%; }
+  .fw-peek-more { margin-left: 0; }
+}
+
 /* ─── One way in ───────────────────────────────────────────── */
 .fw-prog-cta {
   margin-top: clamp(52px, 11vw, 96px);

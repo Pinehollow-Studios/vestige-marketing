@@ -64,8 +64,8 @@ export const progressConfig = {
    * and point at it; set to null to fall back to the placeholder.
    */
   screenshot: {
-    src: "/progress/app-home.jpg",
-    alt: "The Vestige home screen on the closed beta — Your England: a county map with the collection filling in, 11 of 942 courses played, Surrey closest to complete at 9 of 68.",
+    src: "/progress/app-home-2.png",
+    alt: "The Vestige home screen on the closed beta — a county map of England with the collection filling in, 11 of 942 courses played, Surrey within reach at 9 of 68.",
   } as { src: string; alt: string } | null,
 } as const;
 

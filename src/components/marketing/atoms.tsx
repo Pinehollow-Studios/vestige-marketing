@@ -157,7 +157,11 @@ type FwLockupProps = {
   gap?: number;
   /** Caption to the right of the mark. Defaults to siteConfig.brandName. */
   label?: string;
-  /** Show the gradient brand mark to the left of the wordmark. */
+  /**
+   * Show the gradient brand mark to the left of the wordmark. Off by
+   * default — the FwMark square is a placeholder, and until the real
+   * logo exists the lockup is wordmark-only everywhere.
+   */
   showMark?: boolean;
 };
 
@@ -167,7 +171,7 @@ export function FwLockup({
   color,
   gap = 10,
   label = "VESTIGE",
-  showMark = true,
+  showMark = false,
 }: FwLockupProps) {
   return (
     <span style={{ display: "inline-flex", alignItems: "center", gap }}>

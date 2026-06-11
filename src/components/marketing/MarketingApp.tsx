@@ -41,7 +41,18 @@ const HERO_MODE: HeroMode = "aurora";
 
 type LiveCount = { total: number; weekly: number };
 
-export function MarketingApp({ liveCount }: { liveCount: LiveCount | null }) {
+export function MarketingApp({
+  liveCount,
+  progressPeek,
+}: {
+  liveCount: LiveCount | null;
+  /**
+   * The server-rendered /progress snapshot (ProgressPeek), passed in
+   * as a node so its ~6,000 points of county geometry never enter
+   * this client bundle.
+   */
+  progressPeek?: React.ReactNode;
+}) {
   const acc = accentFor(PALETTE);
   const [pre, ital, post] = siteConfig.hero.headline;
   useMouseParallax();
@@ -101,7 +112,7 @@ export function MarketingApp({ liveCount }: { liveCount: LiveCount | null }) {
 
         {/* Top bar */}
         <div className="fw-topbar fw-intro-stage" style={stage(80)}>
-          <FwLockup palette={PALETTE} showMark={false} label={siteConfig.brandName.toUpperCase()} />
+          <FwLockup palette={PALETTE} label={siteConfig.brandName.toUpperCase()} />
           {/* links in page order: features → what-it-is → closing CTA */}
           <nav className="fw-topbar-nav">
             <a href="#features">Inside</a>
@@ -258,6 +269,9 @@ export function MarketingApp({ liveCount }: { liveCount: LiveCount | null }) {
 
       {/* ═══ WHY / WHAT IT IS ══════════════════════════════ */}
       <WhatItIs palette={PALETTE} />
+
+      {/* ═══ PROGRESS SNAPSHOT ═════════════════════════════ */}
+      {progressPeek}
 
       {/* ═══ ROADMAP ═══════════════════════════════════════ */}
       <Roadmap />

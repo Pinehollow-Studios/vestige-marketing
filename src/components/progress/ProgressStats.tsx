@@ -54,9 +54,10 @@ function StatRow({
 
 /**
  * The ledger under the map — both headline fractions with their
- * progress bars, and the last-updated stamp. Numbers count up and the
- * bars draw once the card scrolls into view, same choreography as the
- * homepage StatsStrip.
+ * progress bars, and (when given) the last-updated stamp. Numbers
+ * count up and the bars draw once the card scrolls into view, same
+ * choreography as the homepage StatsStrip. The homepage snapshot
+ * omits `lastUpdated`; the full /progress page carries it.
  */
 export function ProgressStats({
   counties,
@@ -65,17 +66,19 @@ export function ProgressStats({
 }: {
   counties: Stat;
   courses: Stat;
-  lastUpdated: string;
+  lastUpdated?: string;
 }) {
   const [ref, revealed] = useScrollReveal<HTMLDivElement>({ threshold: 0.25 });
   return (
     <div ref={ref} className="fw-prog-card">
       <StatRow stat={counties} revealed={revealed} delay={0} />
       <StatRow stat={courses} revealed={revealed} delay={120} />
-      <div className="fw-prog-stamp">
-        <span className="dot" aria-hidden="true" />
-        Last updated <b>{lastUpdated}</b>
-      </div>
+      {lastUpdated && (
+        <div className="fw-prog-stamp">
+          <span className="dot" aria-hidden="true" />
+          Last updated <b>{lastUpdated}</b>
+        </div>
+      )}
     </div>
   );
 }
