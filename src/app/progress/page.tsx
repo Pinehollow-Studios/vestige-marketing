@@ -51,13 +51,13 @@ export default function ProgressPage() {
             </div>
             <div style={{ marginTop: 26 }}>
               {/* capped so "England, filling in." holds a single line in
-                  both the phone column and the desktop hero cell — bigger
-                  sizes orphan the "in." */}
+                  both the phone column and the desktop hero cell — at
+                  43px+ a 375px phone orphans the "in." */}
               <RevealHeadline
                 pre="England, "
                 ital="filling in"
                 post="."
-                fontSize="clamp(44px, 11vw, 68px)"
+                fontSize="clamp(40px, 10.5vw, 68px)"
                 lineHeight="0.97"
                 letterSpacing="clamp(-2.6px, -0.3vw, -1.4px)"
               />

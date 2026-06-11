@@ -954,6 +954,14 @@ html {
 .fw-footer-meta {
   display: inline-flex;
   align-items: center;
+  gap: 22px;
+  flex-wrap: wrap;
+  row-gap: 10px;
+}
+/* pages / studio clusters — each wraps to its own row on phones */
+.fw-footer-group {
+  display: inline-flex;
+  align-items: center;
   gap: 14px;
   flex-wrap: wrap;
   row-gap: 8px;
@@ -1234,8 +1242,9 @@ html {
     padding: 7px 7px 7px 15px;
     max-width: calc(100vw - 20px);
   }
-  .fw-sticky-link { font-size: 12px; }
-  .fw-sticky-cta { font-size: 12px; padding: 8px 13px; }
+  /* taller link padding = comfortable thumb targets */
+  .fw-sticky-link { font-size: 12px; padding: 10px 4px; }
+  .fw-sticky-cta { font-size: 12px; padding: 10px 14px; }
 }
 @media (max-width: 600px) {
   .fw-sticky { gap: 10px; padding-left: 9px; }

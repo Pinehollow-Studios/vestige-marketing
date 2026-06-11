@@ -9,13 +9,22 @@ import { useMagnetic } from "./hooks";
 
 /**
  * Floating glass pill nav — the site's tab chooser now that the story
- * is split across pages (home / the app / progress). On the homepage
- * it slides in with a spring once the visitor scrolls past the hero —
- * the hero's own topbar owns the first viewport — and on every other
- * page it springs in on arrival and stays. The active page is marked
- * off the pathname, and the magnetic "Join" CTA always leads back to
- * the homepage signup. Stays visible on phones: it's the only way our
- * (mostly mobile) visitors move between the pages.
+ * is split across pages (home / the app / progress). The active page
+ * is marked off the pathname, and the magnetic "Join" CTA always
+ * leads back to the homepage signup.
+ *
+ * Surfacing is tuned for reading on a phone, where the pill is the
+ * only navigation but also covers a meaningful slice of the screen:
+ *
+ *   - The homepage holds it back until the visitor scrolls past the
+ *     hero (the hero's own topbar owns the first viewport), then
+ *     springs it in and pins it for a beat — announcing it exists —
+ *     before the scroll rules below take over.
+ *   - Subpages spring it in on arrival, and it stays while you're
+ *     near the top.
+ *   - Everywhere else it tucks away while you scroll down to read
+ *     and returns on the first upward gesture — chrome only when
+ *     wanted, never while reading.
  */
 export function StickyNav({ palette = "mint" }: { palette?: Palette }) {
   const acc = accentFor(palette);
@@ -25,17 +34,51 @@ export function StickyNav({ palette = "mint" }: { palette?: Palette }) {
   const ctaRef = useMagnetic<HTMLAnchorElement>(0.3, ".fw-sticky");
 
   useEffect(() => {
-    // Subpages get the pill straight away — a frame after mount, so the
-    // hidden state paints first and the data-shown spring plays. The
-    // homepage gates it on scrolling past the hero instead.
-    if (!onHome) {
-      const raf = requestAnimationFrame(() => setShown(true));
-      return () => cancelAnimationFrame(raf);
-    }
-    const fn = () => setShown(window.scrollY > window.innerHeight * 0.72);
-    fn();
-    window.addEventListener("scroll", fn, { passive: true });
-    return () => window.removeEventListener("scroll", fn);
+    let lastY = window.scrollY;
+    let down = 0; // px scrolled down since the last direction change
+    let up = 0; //   px scrolled up   "
+    let visible = true;
+    let wasSurfaced = false;
+    let graceUntil = 0;
+
+    const apply = () => {
+      const y = Math.max(0, window.scrollY); // iOS rubber-band guard
+      const surfaced = !onHome || y > window.innerHeight * 0.72;
+      // First time past the hero: pin the pill for a beat even though
+      // the visitor is mid-downward-scroll, so its arrival is seen.
+      if (surfaced && !wasSurfaced && onHome) {
+        graceUntil = performance.now() + 1600;
+      }
+      wasSurfaced = surfaced;
+
+      const d = y - lastY;
+      lastY = y;
+      if (d > 0) {
+        down += d;
+        up = 0;
+      } else if (d < 0) {
+        up -= d;
+        down = 0;
+      }
+
+      // Hysteresis: a deliberate stretch of downward reading hides it;
+      // any real upward gesture brings it back. The 28px floor keeps
+      // few-px layout-shift corrections from flashing it in mid-read.
+      if (y < 90 || performance.now() < graceUntil) visible = true;
+      else if (down > 160) visible = false;
+      else if (up > 28) visible = true;
+
+      setShown(surfaced && visible);
+    };
+
+    // A frame after mount, so the hidden state paints first and the
+    // data-shown spring plays on pages that show it immediately.
+    const raf = requestAnimationFrame(apply);
+    window.addEventListener("scroll", apply, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", apply);
+    };
   }, [onHome]);
 
   return (
