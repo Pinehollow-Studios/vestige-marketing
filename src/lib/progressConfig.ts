@@ -61,10 +61,12 @@ export const progressConfig = {
 
   /**
    * One real screenshot of the app. Drop the file in public/progress/
-   * and point at it — e.g. { src: "/progress/atlas.png", alt: "The
-   * Vestige atlas, mid-collection" }. null renders the placeholder.
+   * and point at it; set to null to fall back to the placeholder.
    */
-  screenshot: null as { src: string; alt: string } | null,
+  screenshot: {
+    src: "/progress/app-home.jpg",
+    alt: "The Vestige home screen on the closed beta — Your England: a county map with the collection filling in, 11 of 942 courses played, Surrey closest to complete at 9 of 68.",
+  } as { src: string; alt: string } | null,
 } as const;
 
 /** Ceremonial counties of England (City of London within Greater London). */

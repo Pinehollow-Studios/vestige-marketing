@@ -1543,10 +1543,49 @@ html {
 }
 .fw-prog-home:hover { color: #f6f4ee; }
 
-/* ─── Header ───────────────────────────────────────────────── */
-.fw-prog-head {
+/* ─── Hero — intro / map / ledger ──────────────────────────── */
+/* Phone-first: one column, intro → map → ledger. From 1000px the
+   map takes a full-height right-hand cell and the page owns the
+   width the way the homepage does. */
+.fw-prog-hero {
+  display: grid;
+  grid-template-areas:
+    "intro"
+    "map"
+    "ledger";
+}
+.fw-prog-intro {
+  grid-area: intro;
   text-align: center;
   padding-top: clamp(40px, 9vw, 72px);
+}
+.fw-prog-hero .fw-catlas { grid-area: map; }
+.fw-prog-hero .fw-prog-card { grid-area: ledger; }
+@media (min-width: 1000px) {
+  .fw-prog-main { max-width: 1080px; }
+  .fw-prog-hero {
+    grid-template-columns: minmax(0, 1fr) clamp(340px, 34vw, 420px);
+    grid-template-areas:
+      "intro map"
+      "ledger map";
+    column-gap: clamp(40px, 5vw, 64px);
+    align-items: start;
+  }
+  .fw-prog-intro {
+    text-align: left;
+    padding-top: clamp(48px, 6vw, 80px);
+  }
+  .fw-prog-intro .fw-lede {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .fw-prog-hero .fw-catlas {
+    align-self: center;
+    width: 100%;
+  }
+  /* the lower sections stay reading-width, centered in the wider page */
+  .fw-prog-now { max-width: 760px; margin-left: auto; margin-right: auto; }
+  .fw-prog-duo { max-width: 920px; margin-left: auto; margin-right: auto; }
 }
 
 .fw-prog-eyebrow {
@@ -1824,7 +1863,7 @@ html {
 .fw-prog-cta h2 {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(38px, 10vw, 72px);
+  font-size: clamp(38px, 10vw, 84px);
   letter-spacing: clamp(-2.6px, -0.3vw, -1.4px);
   line-height: 1;
   color: #f6f4ee;

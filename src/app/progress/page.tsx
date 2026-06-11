@@ -48,32 +48,31 @@ export default function ProgressPage() {
           </Link>
         </div>
 
-        {/* ─── Header ──────────────────────────────────────── */}
-        <header className="fw-prog-head">
-          <div className="fw-prog-enter" style={{ "--enter-d": "120ms" } as React.CSSProperties}>
-            <LiveEyebrow label="Building in the open" />
+        {/* ─── Hero: intro + ledger beside the map on desktop ─ */}
+        <section className="fw-prog-hero" aria-label="Progress so far">
+          <div className="fw-prog-intro">
+            <div className="fw-prog-enter" style={{ "--enter-d": "120ms" } as React.CSSProperties}>
+              <LiveEyebrow label="Building in the open" />
+            </div>
+            <div style={{ marginTop: 26 }}>
+              {/* capped so "England, filling in." holds a single line in
+                  both the phone column and the desktop hero cell — bigger
+                  sizes orphan the "in." */}
+              <RevealHeadline
+                pre="England, "
+                ital="filling in"
+                post="."
+                fontSize="clamp(44px, 11vw, 68px)"
+                lineHeight="0.97"
+                letterSpacing="clamp(-2.6px, -0.3vw, -1.4px)"
+              />
+            </div>
+            <p className="fw-lede fw-prog-enter" style={{ "--enter-d": "420ms" } as React.CSSProperties}>
+              Vestige is an iPhone app that puts every golf course in England
+              on one map — and keeps the ones you&rsquo;ve played. We&rsquo;re
+              building it in the open. This is how far the map has come.
+            </p>
           </div>
-          <div style={{ marginTop: 26 }}>
-            {/* capped so "England, filling in." holds a single line within
-                the 680px column at every width — 92px orphans the "in." */}
-            <RevealHeadline
-              pre="England, "
-              ital="filling in"
-              post="."
-              fontSize="clamp(44px, 11vw, 68px)"
-              lineHeight="0.97"
-              letterSpacing="clamp(-2.6px, -0.3vw, -1.4px)"
-            />
-          </div>
-          <p className="fw-lede fw-prog-enter" style={{ "--enter-d": "420ms" } as React.CSSProperties}>
-            Vestige is an iPhone app that puts every golf course in England on
-            one map — and keeps the ones you&rsquo;ve played. We&rsquo;re
-            building it in the open. This is how far the map has come.
-          </p>
-        </header>
-
-        {/* ─── The map + the numbers ───────────────────────── */}
-        <section aria-label="Progress so far">
           <CountyAtlas completed={completedCounties} />
           <ProgressStats
             counties={{
