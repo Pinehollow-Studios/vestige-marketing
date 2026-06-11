@@ -74,7 +74,6 @@ export type SiteConfig = {
    * top, then the `features` cards, then one way into the waiting list.
    */
   appPage: {
-    eyebrow: string;
     /** Three-part headline: [pre, italicWord, post]. */
     headline: readonly [string, string, string];
     lede: string;
@@ -186,7 +185,6 @@ export const siteConfig: SiteConfig = {
   ],
 
   appPage: {
-    eyebrow: "Inside the app",
     headline: ["Three small ideas, ", "kept simple", "."],
     lede:
       "No swing analysis. No data dashboards. Just a quiet way to keep the places you have played, mark a score if you like, and see how your collection stands.",

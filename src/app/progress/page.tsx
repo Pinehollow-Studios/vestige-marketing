@@ -9,7 +9,7 @@ import { PageMotion } from "@/components/marketing/PageMotion";
 import { StickyNav } from "@/components/marketing/StickyNav";
 import { SiteFooter } from "@/components/marketing/SiteFooter";
 import { Reveal } from "@/components/marketing/Reveal";
-import { LiveEyebrow, RevealHeadline } from "@/components/marketing/atoms";
+import { RevealHeadline } from "@/components/marketing/atoms";
 import { ENGLAND_PATH } from "@/components/marketing/england";
 
 /**
@@ -46,22 +46,17 @@ export default function ProgressPage() {
         {/* ─── Hero: intro + ledger beside the map on desktop ─ */}
         <section className="fw-prog-hero" aria-label="Progress so far">
           <div className="fw-prog-intro">
-            <div className="fw-page-enter" style={{ "--enter-d": "120ms" } as React.CSSProperties}>
-              <LiveEyebrow label="Building in the open" />
-            </div>
-            <div style={{ marginTop: 26 }}>
-              {/* capped so "England, filling in." holds a single line in
-                  both the phone column and the desktop hero cell — at
-                  43px+ a 375px phone orphans the "in." */}
-              <RevealHeadline
-                pre="England, "
-                ital="filling in"
-                post="."
-                fontSize="clamp(40px, 10.5vw, 68px)"
-                lineHeight="0.97"
-                letterSpacing="clamp(-2.6px, -0.3vw, -1.4px)"
-              />
-            </div>
+            {/* capped so "England, filling in." holds a single line in
+                both the phone column and the desktop hero cell — at
+                43px+ a 375px phone orphans the "in." */}
+            <RevealHeadline
+              pre="England, "
+              ital="filling in"
+              post="."
+              fontSize="clamp(40px, 10.5vw, 68px)"
+              lineHeight="0.97"
+              letterSpacing="clamp(-2.6px, -0.3vw, -1.4px)"
+            />
             <p className="fw-lede fw-page-enter" style={{ "--enter-d": "420ms" } as React.CSSProperties}>
               Vestige is an iPhone app that puts every golf course in England
               on one map — and keeps the ones you&rsquo;ve played. We&rsquo;re

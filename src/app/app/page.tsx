@@ -3,7 +3,7 @@ import Link from "next/link";
 import { siteConfig } from "@/lib/siteConfig";
 import { FeatureCard } from "@/components/marketing/Features";
 import { Reveal } from "@/components/marketing/Reveal";
-import { LiveEyebrow, RevealHeadline } from "@/components/marketing/atoms";
+import { RevealHeadline } from "@/components/marketing/atoms";
 import { PageMotion } from "@/components/marketing/PageMotion";
 import { StickyNav } from "@/components/marketing/StickyNav";
 import { SiteFooter } from "@/components/marketing/SiteFooter";
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 };
 
 export default function AppPage() {
-  const { eyebrow, headline, lede, cta } = siteConfig.appPage;
+  const { headline, lede, cta } = siteConfig.appPage;
   const [pre, ital, post] = headline;
 
   return (
@@ -39,19 +39,14 @@ export default function AppPage() {
       <main className="fw-app-main">
         {/* ─── Hero: the page's one idea, stated ───────────── */}
         <section className="fw-app-hero" aria-label="Inside the app">
-          <div className="fw-page-enter">
-            <LiveEyebrow label={eyebrow} />
-          </div>
-          <div style={{ marginTop: 26 }}>
-            <RevealHeadline
-              pre={pre}
-              ital={ital}
-              post={post}
-              fontSize="clamp(38px, 9.5vw, 72px)"
-              lineHeight="1.02"
-              letterSpacing="clamp(-2.4px, -0.3vw, -1.2px)"
-            />
-          </div>
+          <RevealHeadline
+            pre={pre}
+            ital={ital}
+            post={post}
+            fontSize="clamp(38px, 9.5vw, 72px)"
+            lineHeight="1.02"
+            letterSpacing="clamp(-2.4px, -0.3vw, -1.2px)"
+          />
           <p
             className="fw-lede fw-page-enter"
             style={{ "--enter-d": "420ms" } as React.CSSProperties}

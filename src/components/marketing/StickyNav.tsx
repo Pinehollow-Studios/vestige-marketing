@@ -13,18 +13,12 @@ import { useMagnetic } from "./hooks";
  * is marked off the pathname, and the magnetic "Join" CTA always
  * leads back to the homepage signup.
  *
- * Surfacing is tuned for reading on a phone, where the pill is the
- * only navigation but also covers a meaningful slice of the screen:
- *
- *   - The homepage holds it back until the visitor scrolls past the
- *     hero (the hero's own topbar owns the first viewport), then
- *     springs it in and pins it for a beat — announcing it exists —
- *     before the scroll rules below take over.
- *   - Subpages spring it in on arrival, and it stays while you're
- *     near the top.
- *   - Everywhere else it tucks away while you scroll down to read
- *     and returns on the first upward gesture — chrome only when
- *     wanted, never while reading.
+ * Surfacing: the homepage holds it back until the visitor scrolls
+ * past the hero — the hero's own topbar owns the first viewport —
+ * and from there it stays put; it only leaves if you scroll back up
+ * into the hero. Subpages spring it in on arrival and keep it for
+ * the whole visit. (An earlier hide-on-scroll-down pass read as the
+ * nav glitching away mid-read on phones, so: always present.)
  */
 export function StickyNav({ palette = "mint" }: { palette?: Palette }) {
   const acc = accentFor(palette);
@@ -34,43 +28,8 @@ export function StickyNav({ palette = "mint" }: { palette?: Palette }) {
   const ctaRef = useMagnetic<HTMLAnchorElement>(0.3, ".fw-sticky");
 
   useEffect(() => {
-    let lastY = window.scrollY;
-    let down = 0; // px scrolled down since the last direction change
-    let up = 0; //   px scrolled up   "
-    let visible = true;
-    let wasSurfaced = false;
-    let graceUntil = 0;
-
-    const apply = () => {
-      const y = Math.max(0, window.scrollY); // iOS rubber-band guard
-      const surfaced = !onHome || y > window.innerHeight * 0.72;
-      // First time past the hero: pin the pill for a beat even though
-      // the visitor is mid-downward-scroll, so its arrival is seen.
-      if (surfaced && !wasSurfaced && onHome) {
-        graceUntil = performance.now() + 1600;
-      }
-      wasSurfaced = surfaced;
-
-      const d = y - lastY;
-      lastY = y;
-      if (d > 0) {
-        down += d;
-        up = 0;
-      } else if (d < 0) {
-        up -= d;
-        down = 0;
-      }
-
-      // Hysteresis: a deliberate stretch of downward reading hides it;
-      // any real upward gesture brings it back. The 28px floor keeps
-      // few-px layout-shift corrections from flashing it in mid-read.
-      if (y < 90 || performance.now() < graceUntil) visible = true;
-      else if (down > 160) visible = false;
-      else if (up > 28) visible = true;
-
-      setShown(surfaced && visible);
-    };
-
+    const apply = () =>
+      setShown(!onHome || window.scrollY > window.innerHeight * 0.72);
     // A frame after mount, so the hidden state paints first and the
     // data-shown spring plays on pages that show it immediately.
     const raf = requestAnimationFrame(apply);
