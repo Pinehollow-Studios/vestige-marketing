@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, type CSSProperties } from "react";
+import Link from "next/link";
 import { siteConfig } from "@/lib/siteConfig";
 import { useGlobalProgress, useMouseParallax, useViewScrub } from "./hooks";
 import { accentFor, fwF } from "./palette";
@@ -14,17 +15,16 @@ import { GlassEmail } from "./GlassEmail";
 import { CourseMarquee } from "./CourseMarquee";
 import { StatsStrip } from "./StatsStrip";
 import { WhatItIs } from "./WhatItIs";
-import { FeatureCard } from "./Features";
 import { Faq } from "./Faq";
 import { ClosingCTA } from "./ClosingCTA";
 import { ScrollProgress } from "./ScrollProgress";
-import { Reveal } from "./Reveal";
 import { Roadmap } from "./Roadmap";
 import { Preloader } from "./Preloader";
 import { StickyNav } from "./StickyNav";
 import { MegaWordmark } from "./MegaWordmark";
 import { CourseTrail } from "./CourseTrail";
 import { AtlasMini } from "./AtlasMini";
+import { SiteFooter } from "./SiteFooter";
 
 /** Staggered entrance delay for hero children, gated on the intro. */
 const stage = (s: number): CSSProperties =>
@@ -113,10 +113,15 @@ export function MarketingApp({
         {/* Top bar */}
         <div className="fw-topbar fw-intro-stage" style={stage(80)}>
           <FwLockup palette={PALETTE} label={siteConfig.brandName.toUpperCase()} />
-          {/* links in page order: features → what-it-is → closing CTA */}
+          {/* the other pages, then the one in-page action */}
           <nav className="fw-topbar-nav">
-            <a href="#features">Inside</a>
-            <a href="#what">What it is</a>
+            {siteConfig.nav
+              .filter((l) => l.href !== "/")
+              .map((l) => (
+                <Link key={l.href} href={l.href}>
+                  {l.label}
+                </Link>
+              ))}
             <a href="#join">Get notified</a>
           </nav>
         </div>
@@ -229,45 +234,9 @@ export function MarketingApp({
       {/* ═══ STATS STRIP ═══════════════════════════════════ */}
       <StatsStrip />
 
-      {/* ═══ FEATURES ══════════════════════════════════════ */}
-      <section id="features" className="fw-features-section">
-        <Reveal>
-        <div className="fw-features-header">
-          <h2 className="fw-features-title">
-            {siteConfig.featuresHeader.titlePre}
-            <span
-              style={{
-                fontWeight: 500,
-                background: `linear-gradient(120deg, ${acc.a}, ${acc.b}, ${acc.a})`,
-                backgroundSize: "200% 100%",
-                WebkitBackgroundClip: "text",
-                backgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                animation: "fw-italic-shimmer 6s linear infinite",
-              }}
-            >
-              {siteConfig.featuresHeader.titleItalic}
-            </span>
-          </h2>
-          <p className="fw-features-sub">{siteConfig.featuresHeader.sub}</p>
-        </div>
-        </Reveal>
-        <div className="fw-features">
-          {siteConfig.features.map((f, i) => (
-            <Reveal key={i} delay={i * 120}>
-              <FeatureCard
-                kind={f.kind}
-                palette={PALETTE}
-                eyebrow={f.eyebrow}
-                title={f.title}
-                body={f.body}
-              />
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
       {/* ═══ WHY / WHAT IT IS ══════════════════════════════ */}
+      {/* The three feature cards live on /app now — WhatItIs closes
+          with the way through to them. */}
       <WhatItIs palette={PALETTE} />
 
       {/* ═══ PROGRESS SNAPSHOT ═════════════════════════════ */}
@@ -289,45 +258,7 @@ export function MarketingApp({
       <MegaWordmark />
 
       {/* ═══ FOOTER ════════════════════════════════════════ */}
-      <footer className="fw-footer">
-        <FwLockup palette={PALETTE} size={22} label={siteConfig.brandName.toUpperCase()} />
-        <div className="fw-footer-meta">
-          <a
-            className="fw-footer-mark"
-            href={siteConfig.footer.studio.website}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {siteConfig.footer.studio.name}
-          </a>
-          <span className="fw-footer-sep" aria-hidden>
-            ·
-          </span>
-          <a
-            className="fw-footer-link"
-            href={`mailto:${siteConfig.footer.studio.email}`}
-          >
-            {siteConfig.footer.studio.email}
-          </a>
-          <span className="fw-footer-sep" aria-hidden>
-            ·
-          </span>
-          <a
-            className="fw-footer-link"
-            href={siteConfig.footer.studio.website}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {siteConfig.footer.studio.websiteLabel}
-          </a>
-          <span className="fw-footer-sep" aria-hidden>
-            ·
-          </span>
-          <a className="fw-footer-link" href="/privacy">
-            Privacy
-          </a>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

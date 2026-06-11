@@ -537,34 +537,7 @@ html {
   .fw-stat .v.v-static { font-size: clamp(26px, 7vw, 34px); white-space: nowrap; }
 }
 
-/* ─── Feature row ──────────────────────────────────────────── */
-.fw-features-section {
-  position: relative;
-  z-index: 2;
-  padding: clamp(60px, 8vw, 140px) clamp(20px, 5vw, 80px);
-}
-.fw-features-header {
-  text-align: center;
-  margin: 0 auto clamp(40px, 5vw, 80px);
-  max-width: 760px;
-}
-.fw-features-title {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(32px, 4.2vw, 64px);
-  letter-spacing: -2px;
-  line-height: 1.05;
-  margin: 16px 0 0;
-  color: #F6F4EE;
-  text-wrap: balance;
-}
-.fw-features-sub {
-  font-family: var(--font-ui);
-  font-size: clamp(15px, 1.4vw, 19px);
-  color: rgba(246,244,238,0.65);
-  margin-top: 20px;
-  line-height: 1.55;
-}
+/* ─── Feature cards — the three small ideas, on /app ───────── */
 .fw-features {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1251,9 +1224,23 @@ html {
   transform: translate(calc(var(--mdx, 0) * 1px), calc(var(--mdy, 0) * 1px));
   transition: transform 0.25s ease;
 }
+/* Phones keep the full tab chooser — it's the only way our (mostly
+   mobile) visitors move between the pages. The pill compresses, and
+   below 600px the brand cedes its slot to the tabs (every page
+   carries the wordmark in its own content). */
 @media (max-width: 760px) {
-  .fw-sticky-link, .fw-sticky-rule { display: none; }
-  .fw-sticky { gap: 12px; }
+  .fw-sticky {
+    gap: 12px;
+    padding: 7px 7px 7px 15px;
+    max-width: calc(100vw - 20px);
+  }
+  .fw-sticky-link { font-size: 12px; }
+  .fw-sticky-cta { font-size: 12px; padding: 8px 13px; }
+}
+@media (max-width: 600px) {
+  .fw-sticky { gap: 10px; padding-left: 9px; }
+  .fw-sticky-brand, .fw-sticky-rule { display: none; }
+  .fw-sticky-link { padding: 6px 3px; }
 }
 
 /* ─── Scroll-scrubbed word reveal (WhatItIs narrative) ─────── */
@@ -1503,45 +1490,29 @@ html {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   /progress — building in the open. Phone-first: every measure is
-   set for a narrow screen and relaxes upward via clamp(); the only
-   breakpoint (880px) lets the screenshot duo sit side by side.
+   Subpage shell — shared by /app and /progress. Phone-first: every
+   measure is set for a narrow screen and relaxes upward via clamp().
+   The floating tab-chooser pill replaces a per-page topbar, so the
+   shell's top padding clears it.
    ═══════════════════════════════════════════════════════════════ */
 
-.fw-prog-main {
+.fw-page-main {
   position: relative;
   z-index: 1;
   max-width: 680px;
   margin: 0 auto;
-  padding: clamp(18px, 4vw, 32px) clamp(20px, 5vw, 32px) 0;
+  padding: clamp(76px, 10vw, 96px) clamp(20px, 5vw, 32px) 0;
 }
 
 /* ─── Load-in choreography — pure CSS, no preloader gate ───── */
-.fw-prog-enter {
+.fw-page-enter {
   opacity: 0;
-  animation: fw-prog-rise 900ms cubic-bezier(0.2, 0.8, 0.2, 1) var(--enter-d, 0ms) both;
+  animation: fw-page-rise 900ms cubic-bezier(0.2, 0.8, 0.2, 1) var(--enter-d, 0ms) both;
 }
-@keyframes fw-prog-rise {
+@keyframes fw-page-rise {
   from { opacity: 0; transform: translateY(22px); filter: blur(8px); }
   to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
 }
-
-/* ─── Top bar ──────────────────────────────────────────────── */
-.fw-prog-topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-}
-.fw-prog-home {
-  font-family: var(--font-ui);
-  font-size: 13px;
-  font-weight: 600;
-  color: rgba(246, 244, 238, 0.65);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.fw-prog-home:hover { color: #f6f4ee; }
 
 /* ─── Hero — intro / map / ledger ──────────────────────────── */
 /* Phone-first: one column, intro → map → ledger. From 1000px the
@@ -1562,7 +1533,7 @@ html {
 .fw-prog-hero .fw-catlas { grid-area: map; }
 .fw-prog-hero .fw-prog-card { grid-area: ledger; }
 @media (min-width: 1000px) {
-  .fw-prog-main { max-width: 1080px; }
+  .fw-page-main { max-width: 1080px; }
   .fw-prog-hero {
     grid-template-columns: minmax(0, 1fr) clamp(340px, 34vw, 420px);
     grid-template-areas:
@@ -1588,7 +1559,7 @@ html {
   .fw-prog-duo { max-width: 920px; margin-left: auto; margin-right: auto; }
 }
 
-.fw-prog-eyebrow {
+.fw-page-eyebrow {
   font-family: var(--font-ui);
   font-size: 11px;
   font-weight: 700;
@@ -1854,23 +1825,19 @@ html {
   .fw-prog-shot-sub { margin-left: 0; }
 }
 
-/* ─── Homepage snapshot — the map + the numbers, one way through ── */
+/* ─── Homepage snapshot — just the map, one way through ────── */
+/* The fractions, the screenshot and the rest of the build story
+   live on /progress; the homepage keeps the county map filling in. */
 .fw-peek {
   position: relative;
   z-index: 2;
   padding: clamp(60px, 8vw, 140px) clamp(20px, 5vw, 80px);
 }
 .fw-peek-inner {
-  max-width: 1080px;
+  max-width: 760px;
   margin: 0 auto;
-  display: grid;
-  grid-template-areas:
-    "head"
-    "map"
-    "body";
 }
 .fw-peek-head {
-  grid-area: head;
   text-align: center;
   max-width: 760px;
   margin: 0 auto;
@@ -1900,13 +1867,13 @@ html {
   margin-top: 20px;
   line-height: 1.55;
 }
-.fw-peek .fw-catlas { grid-area: map; }
-.fw-peek-body { grid-area: body; }
+/* roomier than the /progress hero cell — it's the section's centrepiece */
+.fw-peek .fw-catlas { width: min(100%, 460px); }
 .fw-peek-more {
   display: flex;
   width: fit-content;
   align-items: center;
-  margin: 24px auto 0;
+  margin: clamp(28px, 4vw, 40px) auto 0;
   padding: 12px 26px;
   border-radius: 999px;
   border: 1px solid rgba(91, 228, 195, 0.35);
@@ -1934,27 +1901,14 @@ html {
 .fw-peek[data-shown="1"] .fw-catlas-legend {
   animation-play-state: running;
 }
-@media (min-width: 1000px) {
-  .fw-peek-inner {
-    grid-template-columns: minmax(0, 1fr) clamp(340px, 34vw, 420px);
-    grid-template-areas:
-      "head head"
-      "body map";
-    column-gap: clamp(40px, 5vw, 64px);
-    align-items: center;
-  }
-  .fw-peek-head { margin-bottom: clamp(16px, 2.5vw, 32px); }
-  .fw-peek .fw-catlas { width: 100%; }
-  .fw-peek-more { margin-left: 0; }
-}
 
 /* ─── One way in ───────────────────────────────────────────── */
-.fw-prog-cta {
+.fw-page-cta {
   margin-top: clamp(52px, 11vw, 96px);
   padding-bottom: clamp(64px, 12vw, 110px);
   text-align: center;
 }
-.fw-prog-cta h2 {
+.fw-page-cta h2 {
   font-family: var(--font-display);
   font-weight: 500;
   font-size: clamp(38px, 10vw, 84px);
@@ -1963,7 +1917,7 @@ html {
   color: #f6f4ee;
   margin: 0;
 }
-.fw-prog-cta-ital {
+.fw-page-cta-ital {
   background: linear-gradient(120deg, #5be4c3, #8fe85b, #5be4c3);
   background-size: 200% 100%;
   -webkit-background-clip: text;
@@ -1971,7 +1925,7 @@ html {
   -webkit-text-fill-color: transparent;
   animation: fw-italic-shimmer 6s linear infinite;
 }
-.fw-prog-cta > p {
+.fw-page-cta > p {
   font-family: var(--font-ui);
   font-size: clamp(15px, 1.4vw, 18px);
   color: rgba(246, 244, 238, 0.65);
@@ -1980,7 +1934,7 @@ html {
   margin: 18px auto 0;
   text-wrap: pretty;
 }
-.fw-prog-cta-btn {
+.fw-page-cta-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1999,17 +1953,39 @@ html {
     0 12px 24px -4px rgba(91, 228, 195, 0.4);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
-.fw-prog-cta-btn:hover {
+.fw-page-cta-btn:hover {
   transform: translateY(-1px) scale(1.02);
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.45) inset,
     0 16px 32px -6px rgba(91, 228, 195, 0.5);
 }
-.fw-prog-cta-btn:active { transform: scale(0.98); }
-.fw-prog-cta > p.fw-prog-cta-meta {
+.fw-page-cta-btn:active { transform: scale(0.98); }
+.fw-page-cta > p.fw-page-cta-meta {
   font-size: 12px;
   color: rgba(246, 244, 238, 0.45);
   margin-top: 16px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   /app — the three small ideas. Same phone-first shell as
+   /progress, widened so the three cards can sit in a row on desktop.
+   ═══════════════════════════════════════════════════════════════ */
+
+.fw-app-main {
+  position: relative;
+  z-index: 1;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: clamp(76px, 10vw, 96px) clamp(20px, 5vw, 32px) 0;
+}
+.fw-app-hero {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+  padding-top: clamp(28px, 6vw, 56px);
+}
+.fw-app-cards {
+  margin-top: clamp(44px, 8vw, 80px);
 }
 
 /* Note: the prefers-reduced-motion: reduce override has been removed

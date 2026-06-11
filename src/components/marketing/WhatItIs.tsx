@@ -1,6 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
+import Link from "next/link";
 import { siteConfig } from "@/lib/siteConfig";
 import { accentFor, fwF, fwT, type Palette } from "./palette";
 import { Reveal } from "./Reveal";
@@ -107,6 +108,13 @@ export function WhatItIs({ palette = "mint" }: { palette?: Palette }) {
           </p>
         ))}
       </div>
+
+      {/* the three small ideas live on their own page now */}
+      <Reveal>
+        <Link href="/app" className="fw-peek-more">
+          Inside the app →
+        </Link>
+      </Reveal>
     </section>
   );
 }

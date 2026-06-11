@@ -16,6 +16,15 @@ export type SiteConfig = {
   appStoreUrl: string | null;
   contactEmail: string;
 
+  /**
+   * The site's pages, in tab order. The story is split across three
+   * pages — the homepage (the pitch), /app (the three small ideas) and
+   * /progress (the map so far) — and this list drives the floating
+   * tab chooser, the hero topbar and the footer, so adding a page is
+   * one entry here.
+   */
+  nav: ReadonlyArray<{ href: string; label: string }>;
+
   /** Hero composition — three-line serif stack with the italic word in the middle. */
   hero: {
     /** The live signup counter only surfaces once weekly signups exceed this. */
@@ -60,12 +69,23 @@ export type SiteConfig = {
     forwardNudge: string;
   };
 
-  /** Section labels for the features header. */
-  featuresHeader: {
+  /**
+   * /app — the three small ideas on their own page. The hero copy up
+   * top, then the `features` cards, then one way into the waiting list.
+   */
+  appPage: {
     eyebrow: string;
-    titlePre: string;
-    titleItalic: string;
-    sub: string;
+    /** Three-part headline: [pre, italicWord, post]. */
+    headline: readonly [string, string, string];
+    lede: string;
+    cta: {
+      headlinePre: string;
+      headlineItalic: string;
+      headlinePost: string;
+      body: string;
+      ctaLabel: string;
+      meta: string;
+    };
   };
 
   /** "Why we're building it" — studio-voice narrative. Carries the #what anchor. */
@@ -119,6 +139,12 @@ export const siteConfig: SiteConfig = {
   appStoreUrl: null,
   contactEmail: "hello@pinehollow.studio",
 
+  nav: [
+    { href: "/", label: "Home" },
+    { href: "/app", label: "The app" },
+    { href: "/progress", label: "Progress" },
+  ],
+
   hero: {
     liveCountMinWeekly: 100,
     liveEyebrowLabel: "joined the waiting list this week",
@@ -159,12 +185,20 @@ export const siteConfig: SiteConfig = {
     { kind: "static", value: "Summer ’27", label: "On the App Store" },
   ],
 
-  featuresHeader: {
+  appPage: {
     eyebrow: "Inside the app",
-    titlePre: "Three small ideas, ",
-    titleItalic: "kept simple.",
-    sub:
+    headline: ["Three small ideas, ", "kept simple", "."],
+    lede:
       "No swing analysis. No data dashboards. Just a quiet way to keep the places you have played, mark a score if you like, and see how your collection stands.",
+    cta: {
+      headlinePre: "Play it ",
+      headlineItalic: "first",
+      headlinePost: ".",
+      body:
+        "Join the waiting list — beta codes go to the list before anyone else, and the App Store release is free.",
+      ctaLabel: "Join the waiting list",
+      meta: "iPhone, iOS 18+ · Free at launch",
+    },
   },
 
   what: {

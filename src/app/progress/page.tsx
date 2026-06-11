@@ -5,19 +5,23 @@ import { siteConfig } from "@/lib/siteConfig";
 import { progressConfig, COUNTIES_TOTAL } from "@/lib/progressConfig";
 import { CountyAtlas } from "@/components/progress/CountyAtlas";
 import { ProgressStats } from "@/components/progress/ProgressStats";
-import { ProgressMotion } from "@/components/progress/ProgressMotion";
+import { PageMotion } from "@/components/marketing/PageMotion";
+import { StickyNav } from "@/components/marketing/StickyNav";
+import { SiteFooter } from "@/components/marketing/SiteFooter";
 import { Reveal } from "@/components/marketing/Reveal";
-import { FwLockup, LiveEyebrow, RevealHeadline } from "@/components/marketing/atoms";
+import { LiveEyebrow, RevealHeadline } from "@/components/marketing/atoms";
 import { ENGLAND_PATH } from "@/components/marketing/england";
 
 /**
  * /progress — the build, in the open. A reward for the waiting list
  * and a recruiting tool for the curious: the county map filling in,
  * the two honest fractions, what's happening right now, and one way
- * in. Numbers are hand-edited in src/lib/progressConfig.ts.
+ * in. The homepage carries only the map as a peek; everything else
+ * about the build lives here. Numbers are hand-edited in
+ * src/lib/progressConfig.ts.
  *
- * Deliberately absent: the roadmap (lives on the homepage), a second
- * signup form, a changelog. The page's power is its focus.
+ * Deliberately absent: the roadmap and FAQ (they live on the
+ * homepage), a second signup form, a changelog. One idea per page.
  */
 
 export const metadata: Metadata = {
@@ -34,24 +38,15 @@ export default function ProgressPage() {
 
   return (
     <div className="fw-root">
-      <ProgressMotion />
+      <PageMotion />
       <div className="fw-ambient" aria-hidden="true" />
+      <StickyNav />
 
-      <main className="fw-prog-main">
-        {/* ─── Top bar ─────────────────────────────────────── */}
-        <div className="fw-prog-topbar fw-prog-enter">
-          <Link href="/" style={{ textDecoration: "none" }} aria-label={`${siteConfig.brandName} home`}>
-            <FwLockup label={siteConfig.brandName.toUpperCase()} />
-          </Link>
-          <Link href="/" className="fw-prog-home">
-            {siteConfig.domain} →
-          </Link>
-        </div>
-
+      <main className="fw-page-main">
         {/* ─── Hero: intro + ledger beside the map on desktop ─ */}
         <section className="fw-prog-hero" aria-label="Progress so far">
           <div className="fw-prog-intro">
-            <div className="fw-prog-enter" style={{ "--enter-d": "120ms" } as React.CSSProperties}>
+            <div className="fw-page-enter" style={{ "--enter-d": "120ms" } as React.CSSProperties}>
               <LiveEyebrow label="Building in the open" />
             </div>
             <div style={{ marginTop: 26 }}>
@@ -67,7 +62,7 @@ export default function ProgressPage() {
                 letterSpacing="clamp(-2.6px, -0.3vw, -1.4px)"
               />
             </div>
-            <p className="fw-lede fw-prog-enter" style={{ "--enter-d": "420ms" } as React.CSSProperties}>
+            <p className="fw-lede fw-page-enter" style={{ "--enter-d": "420ms" } as React.CSSProperties}>
               Vestige is an iPhone app that puts every golf course in England
               on one map — and keeps the ones you&rsquo;ve played. We&rsquo;re
               building it in the open. This is how far the map has come.
@@ -93,7 +88,7 @@ export default function ProgressPage() {
         {/* ─── Right now ───────────────────────────────────── */}
         <Reveal>
           <section className="fw-prog-now">
-            <p className="fw-prog-eyebrow">Right now</p>
+            <p className="fw-page-eyebrow">Right now</p>
             <p className="fw-prog-now-line">{rightNow}</p>
           </section>
         </Reveal>
@@ -102,7 +97,7 @@ export default function ProgressPage() {
         <section className="fw-prog-duo">
           <Reveal>
             <div className="fw-prog-shot-copy">
-              <p className="fw-prog-eyebrow">From the build</p>
+              <p className="fw-page-eyebrow">From the build</p>
               <h2 className="fw-prog-shot-title">Proof, not promises.</h2>
               <p className="fw-prog-shot-sub">
                 A real screen from the closed TestFlight build — the atlas as
@@ -140,49 +135,24 @@ export default function ProgressPage() {
 
         {/* ─── One way in ──────────────────────────────────── */}
         <Reveal>
-          <section className="fw-prog-cta">
+          <section className="fw-page-cta">
             <h2>
-              Want{" "}
-              <span className="fw-prog-cta-ital">in</span>?
+              Want <span className="fw-page-cta-ital">in</span>?
             </h2>
             <p>
               Join the waiting list — beta codes go there first, along with the
               occasional update like this one. Nothing else.
             </p>
-            <Link href="/#join" className="fw-prog-cta-btn">
+            <Link href="/#join" className="fw-page-cta-btn">
               Join the waiting list
             </Link>
-            <p className="fw-prog-cta-meta">iPhone, iOS 18+ · Free at launch</p>
+            <p className="fw-page-cta-meta">iPhone, iOS 18+ · Free at launch</p>
           </section>
         </Reveal>
       </main>
 
       {/* ─── Footer ──────────────────────────────────────── */}
-      <footer className="fw-footer">
-        <FwLockup size={22} label={siteConfig.brandName.toUpperCase()} />
-        <div className="fw-footer-meta">
-          <Link className="fw-footer-link" href="/">
-            {siteConfig.domain}
-          </Link>
-          <span className="fw-footer-sep" aria-hidden>
-            ·
-          </span>
-          <a
-            className="fw-footer-mark"
-            href={siteConfig.footer.studio.website}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {siteConfig.footer.studio.name}
-          </a>
-          <span className="fw-footer-sep" aria-hidden>
-            ·
-          </span>
-          <a className="fw-footer-link" href="/privacy">
-            Privacy
-          </a>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

@@ -52,6 +52,10 @@ export default function RootLayout({
     <html
       lang="en-GB"
       className={`${inter.variable} ${manrope.variable}`}
+      // Tells Next the smooth scrolling in globals.css is intentional, so
+      // it can suspend it during route transitions — without this, moving
+      // between the pages would smooth-scroll to the top of each one.
+      data-scroll-behavior="smooth"
     >
       <body>
         {children}

@@ -1,23 +1,23 @@
 import Link from "next/link";
-import { progressConfig, COUNTIES_TOTAL } from "@/lib/progressConfig";
+import { progressConfig } from "@/lib/progressConfig";
 import { CountyAtlas } from "./CountyAtlas";
-import { ProgressStats } from "./ProgressStats";
 import { PeekFrame } from "./PeekFrame";
 
 /**
- * The homepage snapshot of /progress — the county map filling in and
- * the two headline fractions, nothing else, with one quiet way
- * through to the full page. A server component for the same reason as
- * the page it previews: the county geometry renders to HTML once and
- * ships no client JavaScript.
+ * The homepage's window onto /progress — just the county map filling
+ * in, and one way through to the full page. The fractions, the
+ * "right now" note and the screenshot all live on /progress itself;
+ * the homepage keeps only the map. A server component for the same
+ * reason as the page it previews: the county geometry renders to HTML
+ * once and ships no client JavaScript.
  */
 export function ProgressPeek() {
-  const { coursesMapped, coursesTotal, completedCounties } = progressConfig;
+  const { completedCounties } = progressConfig;
 
   return (
     <PeekFrame>
       <div className="fw-peek-head">
-        <p className="fw-prog-eyebrow">Building in the open</p>
+        <p className="fw-page-eyebrow">Building in the open</p>
         <h2 className="fw-peek-title">
           The map, <span className="fw-peek-ital">so far</span>.
         </h2>
@@ -27,24 +27,9 @@ export function ProgressPeek() {
         </p>
       </div>
       <CountyAtlas completed={completedCounties} />
-      <div className="fw-peek-body">
-        <ProgressStats
-          counties={{
-            label: "Counties mapped",
-            value: completedCounties.length,
-            total: COUNTIES_TOTAL,
-          }}
-          courses={{
-            label: "Courses mapped",
-            value: coursesMapped,
-            total: coursesTotal,
-            approx: true,
-          }}
-        />
-        <Link href="/progress" className="fw-peek-more">
-          See more →
-        </Link>
-      </div>
+      <Link href="/progress" className="fw-peek-more">
+        See the full progress →
+      </Link>
     </PeekFrame>
   );
 }

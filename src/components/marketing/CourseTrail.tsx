@@ -22,8 +22,8 @@ type Geom = { w: number; h: number; top: number; d: string; flags: Flag[] };
 /** Sections the trail bends beside, in page order. */
 const ANCHORS = [
   ".fw-stats",
-  "#features",
   "#what",
+  ".fw-peek",
   "#roadmap",
   ".fw-faq-section",
   "#join",
