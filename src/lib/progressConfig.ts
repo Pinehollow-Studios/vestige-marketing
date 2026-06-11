@@ -1,0 +1,71 @@
+/**
+ * Hand-edited values for the public /progress page.
+ *
+ * When progress moves on, update the three things that change —
+ * `coursesMapped`, `completedCounties`, and `lastUpdated` — and you're
+ * done; the county count, fractions, percentages and map fills all
+ * derive from them. County names must match counties.ts exactly
+ * (the build fails loudly on a typo, so a mistake can't ship silently).
+ *
+ * These may later be wired to a live read-only Supabase count — keep
+ * this shape stable so the swap is just a fetch returning the same
+ * object. For now the page has no database dependency, by design.
+ */
+
+export const progressConfig = {
+  /** Courses in the database so far. */
+  coursesMapped: 1010,
+  /** Approximate total — always rendered with a "~". */
+  coursesTotal: 2500,
+
+  /**
+   * Counties fully mapped, filled mint on the map. 47 ceremonial
+   * counties in total — the City of London is counted within Greater
+   * London, matching the homepage's "47 ceremonial counties" stat.
+   */
+  completedCounties: [
+    "Bedfordshire",
+    "Berkshire",
+    "Bristol",
+    "Buckinghamshire",
+    "Cambridgeshire",
+    "Cornwall",
+    "Devon",
+    "Dorset",
+    "East Sussex",
+    "Essex",
+    "Gloucestershire",
+    "Greater London",
+    "Hampshire",
+    "Hertfordshire",
+    "Isle of Wight",
+    "Kent",
+    "Norfolk",
+    "Northamptonshire",
+    "Oxfordshire",
+    "Somerset",
+    "Suffolk",
+    "Surrey",
+    "Warwickshire",
+    "West Midlands",
+    "West Sussex",
+    "Wiltshire",
+    "Worcestershire",
+  ],
+
+  lastUpdated: "10 June 2026",
+
+  /** Honest, present-tense — rewrite it whenever the work changes. */
+  rightNow:
+    "Tom's grinding through bugs and improvements on our closed TestFlight beta; Jack's expanding the course database, county by county.",
+
+  /**
+   * One real screenshot of the app. Drop the file in public/progress/
+   * and point at it — e.g. { src: "/progress/atlas.png", alt: "The
+   * Vestige atlas, mid-collection" }. null renders the placeholder.
+   */
+  screenshot: null as { src: string; alt: string } | null,
+} as const;
+
+/** Ceremonial counties of England (City of London within Greater London). */
+export const COUNTIES_TOTAL = 47;
