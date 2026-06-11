@@ -1,11 +1,25 @@
 "use client";
 
-import { useActionState, useEffect, useRef } from "react";
+import { useActionState, useSyncExternalStore } from "react";
 import { joinWaitlist, type JoinWaitlistState } from "@/app/actions";
 import { accentFor, type Palette } from "./palette";
 import { useMagnetic } from "./hooks";
 
 const initial: JoinWaitlistState = { status: "idle" };
+
+// The `?from=` tag never changes within a page's lifetime, so the "store"
+// never notifies; the snapshot is read once per render and the string
+// compares stably. (try/catch: URLSearchParams on a hostile search string.)
+const subscribeNever = () => () => {};
+const readSourceTagServer = () => "";
+const readSourceTag = () => {
+  try {
+    const from = new URLSearchParams(window.location.search).get("from");
+    return from ? from.trim().toLowerCase().slice(0, 40) : "";
+  } catch {
+    return "";
+  }
+};
 
 type GlassEmailProps = {
   palette?: Palette;
@@ -29,21 +43,17 @@ export function GlassEmail({
   const [state, action, pending] = useActionState(joinWaitlist, initial);
 
   // Where did this visitor come from? Read the `?from=` tag off the URL and
-  // ride it along with the signup via a hidden field. We write straight to the
-  // input's DOM value in an effect rather than through React state: the tag is
-  // client-only, so this avoids a hydration mismatch (and a cascading render).
+  // ride it along with the signup via a hidden field. The tag is client-only
+  // (server snapshot is ""; React re-renders with the real value right after
+  // hydration — no mismatch). It must flow through React as the input's value,
+  // not be written straight to the DOM: React 19 re-asserts <form action>
+  // input values after hydration, wiping anything written behind its back.
   // Empty/unknown is normalised to "organic" server-side. See src/lib/sources.ts.
-  const sourceRef = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    try {
-      const from = new URLSearchParams(window.location.search).get("from");
-      if (from && sourceRef.current) {
-        sourceRef.current.value = from.trim().toLowerCase().slice(0, 40);
-      }
-    } catch {
-      /* no-op: source is optional and falls back to "organic" server-side */
-    }
-  }, []);
+  const source = useSyncExternalStore(
+    subscribeNever,
+    readSourceTag,
+    readSourceTagServer
+  );
   const sent = state.status === "ok";
   const error = state.status === "error" ? state.message : null;
   const tall = size === "lg" ? 64 : 54;
@@ -56,7 +66,7 @@ export function GlassEmail({
       className={`fw-email fw-email-${size}`}
       data-sent={sent ? "1" : "0"}
     >
-      <input type="hidden" name="source" defaultValue="" ref={sourceRef} />
+      <input type="hidden" name="source" value={source} readOnly />
       <div
         className="fw-email-glow"
         style={{
