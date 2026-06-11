@@ -82,8 +82,9 @@ export default function WelcomeEmail({
       </Section>
 
       <Text style={pStyle}>
-        We&rsquo;ll only email you when it matters — a note the moment the app is
-        ready, and little else. Promise.
+        We&rsquo;ll keep you posted as we build it — the odd note for now,
+        picking up as launch nears, and first word the moment it&rsquo;s ready to
+        play. No noise in between, promise.
       </Text>
 
       <Text style={{ ...pStyle, color: brand.ink, marginTop: 22 }}>

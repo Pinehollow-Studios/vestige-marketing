@@ -264,7 +264,7 @@ export const siteConfig: SiteConfig = {
     eyebrowLabel: "already on the list",
     headlinePre: "Be among the ",
     headlineItalic: "first.",
-    sub: "We'll only email when it matters — and little else, we promise.",
+    sub: "We'll keep you posted as we build — more as launch nears, and never any noise. Promise.",
     ctaLabel: "Count me in",
     forwardNudge:
       "P.S. Know a golfer who'd swear blind they've played more? Forward them this.",
