@@ -110,6 +110,13 @@ export function useScrollReveal<T extends HTMLElement = HTMLElement>({
  *                `start` (viewport fraction, 0.9 = near bottom) to `end`.
  * mode "exit"  — p maps absolute scrollY across ~0.85 viewport heights;
  *                used by the hero, which is pinned at the document top.
+ *
+ * While a form field inside the element holds focus, p is frozen at its
+ * current value: mobile browsers auto-scroll the page to keep a focused
+ * input above the keyboard, and that scroll is indistinguishable from a
+ * real one — without the freeze, tapping the hero's email input fades
+ * out the very form being typed into. Resumes (and lerps to the true
+ * value) on blur.
  */
 export function useViewScrub<T extends HTMLElement = HTMLElement>({
   start = 0.9,
@@ -137,7 +144,23 @@ export function useViewScrub<T extends HTMLElement = HTMLElement>({
     let raf = 0;
     let cur = -1;
     let lastWritten = "";
+    let focusHeld = false;
+    const isFormField = (t: EventTarget | null) =>
+      t instanceof HTMLElement &&
+      (t.matches("input, textarea, select") || t.isContentEditable);
+    const onFocusIn = (e: FocusEvent) => {
+      if (isFormField(e.target)) focusHeld = true;
+    };
+    const onFocusOut = () => {
+      focusHeld = false;
+    };
+    el.addEventListener("focusin", onFocusIn);
+    el.addEventListener("focusout", onFocusOut);
     const loop = () => {
+      if (focusHeld) {
+        raf = requestAnimationFrame(loop);
+        return;
+      }
       const vh = window.innerHeight || 1;
       let p: number;
       if (mode === "exit") {
@@ -158,7 +181,11 @@ export function useViewScrub<T extends HTMLElement = HTMLElement>({
       raf = requestAnimationFrame(loop);
     };
     raf = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(raf);
+      el.removeEventListener("focusin", onFocusIn);
+      el.removeEventListener("focusout", onFocusOut);
+    };
   }, [start, end, smooth, varName, mode, precision]);
   return ref;
 }
