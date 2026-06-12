@@ -154,7 +154,7 @@ export const siteConfig: SiteConfig = {
     lede:
       "England has over 2,500 golf courses — from Open Championship links to your local nine-holer. Vestige keeps the ones you've played, fills in your map of the country, and shows how your collection compares with your friends'.",
     waitlistNote:
-      "Beta codes go to the list first — play it months before launch.",
+      "Beta codes go to the waiting list first — play it months before launch.",
     metaStrip: ["iPhone, iOS 18+", "Free at launch", "Summer 2027"],
   },
 
