@@ -10,6 +10,7 @@ import {
   FwLockup,
   LiveEyebrow,
   RevealHeadline,
+  StaticEyebrow,
 } from "./atoms";
 import { GlassEmail } from "./GlassEmail";
 import { CourseMarquee } from "./CourseMarquee";
@@ -135,13 +136,17 @@ export function MarketingApp({
 
         {/* Centred hero content */}
         <div className="fw-hero-content">
-          {liveCount && (
-            <div className="fw-intro-stage" style={{ marginBottom: 30, ...stage(150) }}>
+          {/* Live counter when signups warrant it; otherwise the static
+              anchor so "played what?" is answered before the headline. */}
+          <div className="fw-intro-stage" style={{ marginBottom: 30, ...stage(150) }}>
+            {liveCount ? (
               <LiveEyebrow palette={PALETTE} target={liveCount.weekly}>
                 {siteConfig.hero.liveEyebrowLabel}
               </LiveEyebrow>
-            </div>
-          )}
+            ) : (
+              <StaticEyebrow>{siteConfig.hero.staticEyebrow}</StaticEyebrow>
+            )}
+          </div>
 
           <RevealHeadline
             pre={pre}
@@ -160,6 +165,18 @@ export function MarketingApp({
 
           <div className="fw-intro-stage" style={stage(680)}>
             <GlassEmail palette={PALETTE} cta="Save my spot" />
+            {/* the carrot — why hand over an email when launch is a year out */}
+            <p
+              style={{
+                margin: "14px auto 0",
+                fontFamily: fwF.ui,
+                fontSize: 13,
+                color: "rgba(246,244,238,0.62)",
+                textAlign: "center",
+              }}
+            >
+              {siteConfig.hero.waitlistNote}
+            </p>
           </div>
 
           <div

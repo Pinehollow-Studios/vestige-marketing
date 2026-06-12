@@ -37,6 +37,8 @@ export type SiteConfig = {
     headline: readonly [string, string, string];
     /** Italic lede paragraph beneath the headline. */
     lede: string;
+    /** One line under the email field — what joining actually gets you. */
+    waitlistNote: string;
     /** Meta strip below the email field. */
     metaStrip: ReadonlyArray<string>;
   };
@@ -133,7 +135,7 @@ export const siteConfig: SiteConfig = {
   brandName: "Vestige",
   brandShortName: "Vestige",
   brandLowerName: "vestige",
-  tagline: "Every course in England, collected.",
+  tagline: "Every golf course in England, collected.",
   domain: "vestige.golf",
   appStoreUrl: null,
   contactEmail: "hello@pinehollow.studio",
@@ -147,10 +149,12 @@ export const siteConfig: SiteConfig = {
   hero: {
     liveCountMinWeekly: 100,
     liveEyebrowLabel: "joined the waiting list this week",
-    staticEyebrow: "Every course in England",
+    staticEyebrow: "Every golf course in England",
     headline: ["How many have you ", "played", "?"],
     lede:
-      "England has over 2,500 courses — from Open Championship links to your local nine-holer. Vestige keeps the ones you've played, fills in your map of the country, and shows how your collection compares with your friends'.",
+      "England has over 2,500 golf courses — from Open Championship links to your local nine-holer. Vestige keeps the ones you've played, fills in your map of the country, and shows how your collection compares with your friends'.",
+    waitlistNote:
+      "Beta codes go to the list first — play it months before launch.",
     metaStrip: ["iPhone, iOS 18+", "Free at launch", "Summer 2027"],
   },
 
@@ -206,6 +210,7 @@ export const siteConfig: SiteConfig = {
     body: [
       "Every golfer has played somewhere they can't quite picture any more — and argued, on the first tee, about who's played more. There was never a simple way to keep the list.",
       "So we're building one: every course in England on a single map, the ones you've played marked with a tap, and a friendly tally of who's collected the most. No swing analysis, no dashboards — just the places, kept. England first; the rest of the British Isles to follow.",
+      "The name? A vestige is the trace something leaves behind. Every round leaves one.",
     ],
   },
 
