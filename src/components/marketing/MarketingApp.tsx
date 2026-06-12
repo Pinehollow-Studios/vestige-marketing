@@ -78,6 +78,13 @@ export function MarketingApp({
     if (!el) return;
     let off: boolean | null = null;
     const fn = () => {
+      // Mirror useViewScrub's focus freeze: with the keyboard open, the
+      // mobile browser's auto-scroll (and shrunken innerHeight) can read
+      // as "past the hero" and blank the aurora mid-typing.
+      const ae = document.activeElement;
+      if (ae && el.contains(ae) && ae.matches("input, textarea, select")) {
+        return;
+      }
       const next = window.scrollY > window.innerHeight * 1.15;
       if (next !== off) {
         off = next;
