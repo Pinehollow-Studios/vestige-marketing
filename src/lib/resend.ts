@@ -29,7 +29,10 @@ const RESEND_API = "https://api.resend.com";
 const USER_AGENT = "vestige-marketing/1.0 (+https://vestige.golf)";
 
 export type WaitlistResult =
-  | { ok: true; mode: "live" | "noop"; isNew: boolean }
+  // isNew: contact didn't exist before this signup. rejoined: contact existed
+  // but had unsubscribed and is opting back in. Both deserve a welcome email;
+  // an active subscriber re-submitting (both false) does not.
+  | { ok: true; mode: "live" | "noop"; isNew: boolean; rejoined: boolean }
   | { ok: false; error: string };
 
 export async function addToWaitlist(
@@ -43,7 +46,7 @@ export async function addToWaitlist(
     // Local-dev / pre-Resend fallback: log the email and pretend it worked.
     // Switches to live mode the moment both env vars are populated.
     console.log("[waitlist:noop]", email, `source=${source}`);
-    return { ok: true, mode: "noop", isNew: true };
+    return { ok: true, mode: "noop", isNew: true, rejoined: false };
   }
 
   const headers = {
@@ -53,16 +56,26 @@ export async function addToWaitlist(
   };
 
   try {
-    // Has this email already joined? Used so the welcome email is sent only to
-    // genuinely new signups (GET 200 = exists; 404/anything else = treat as new
-    // — a possible double-welcome beats never welcoming anyone).
+    // Has this email already joined? Drives the welcome email: genuinely new
+    // signups get one, and so does an existing contact who had unsubscribed —
+    // they're opting back in, not duplicating an active subscription. (GET 200
+    // = exists, and the body says whether they're unsubscribed; 404/anything
+    // else = treat as new — a possible double-welcome beats never welcoming
+    // anyone.)
     let isNew = true;
+    let rejoined = false;
     try {
       const existing = await fetch(
         `${RESEND_API}/contacts/${encodeURIComponent(email)}`,
         { method: "GET", headers }
       );
-      isNew = !existing.ok;
+      if (existing.ok) {
+        isNew = false;
+        const body = (await existing.json().catch(() => null)) as {
+          unsubscribed?: boolean;
+        } | null;
+        rejoined = body?.unsubscribed === true;
+      }
     } catch {
       /* network blip — fall back to treating as new */
     }
@@ -117,7 +130,7 @@ export async function addToWaitlist(
       console.error("[waitlist:no-contact-id]", email);
     }
 
-    return { ok: true, mode: "live", isNew };
+    return { ok: true, mode: "live", isNew, rejoined };
   } catch (err) {
     console.error("[waitlist:exception]", err);
     return { ok: false, error: "Something went wrong. Try again in a moment." };

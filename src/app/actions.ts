@@ -28,10 +28,12 @@ export async function joinWaitlist(
   const result = await addToWaitlist(email, source);
   if (!result.ok) return { status: "error", message: result.error };
 
-  // Welcome only genuinely-new signups, and only when the contact was actually
-  // saved (live mode). sendWelcomeEmail swallows its own errors, so a failed
-  // send never turns a successful signup into an error.
-  if (result.mode === "live" && result.isNew) {
+  // Welcome genuinely-new signups and returning contacts who had unsubscribed
+  // (they're opting back in) — but not active subscribers re-submitting. Only
+  // when the contact was actually saved (live mode). sendWelcomeEmail swallows
+  // its own errors, so a failed send never turns a successful signup into an
+  // error.
+  if (result.mode === "live" && (result.isNew || result.rejoined)) {
     await sendWelcomeEmail(email);
   }
 
