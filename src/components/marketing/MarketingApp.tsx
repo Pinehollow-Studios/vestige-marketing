@@ -10,7 +10,6 @@ import {
   FwLockup,
   LiveEyebrow,
   RevealHeadline,
-  StaticEyebrow,
 } from "./atoms";
 import { GlassEmail } from "./GlassEmail";
 import { CourseMarquee } from "./CourseMarquee";
@@ -136,17 +135,15 @@ export function MarketingApp({
 
         {/* Centred hero content */}
         <div className="fw-hero-content">
-          {/* Live counter when signups warrant it; otherwise the static
-              anchor so "played what?" is answered before the headline. */}
-          <div className="fw-intro-stage" style={{ marginBottom: 30, ...stage(150) }}>
-            {liveCount ? (
+          {/* The headline's "2,500 courses" carries the context, so the
+              eyebrow slot only appears once the live count earns it. */}
+          {liveCount && (
+            <div className="fw-intro-stage" style={{ marginBottom: 30, ...stage(150) }}>
               <LiveEyebrow palette={PALETTE} target={liveCount.weekly}>
                 {siteConfig.hero.liveEyebrowLabel}
               </LiveEyebrow>
-            ) : (
-              <StaticEyebrow>{siteConfig.hero.staticEyebrow}</StaticEyebrow>
-            )}
-          </div>
+            </div>
+          )}
 
           <RevealHeadline
             pre={pre}
@@ -159,8 +156,9 @@ export function MarketingApp({
             play={introDone}
           />
 
+          {/* the one line that travels everywhere — bio, OG title, hero */}
           <p className="fw-lede fw-intro-stage" style={stage(520)}>
-            {siteConfig.hero.lede}
+            {siteConfig.tagline}
           </p>
 
           <div className="fw-intro-stage" style={stage(680)}>

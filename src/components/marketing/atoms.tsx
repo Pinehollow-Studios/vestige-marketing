@@ -269,35 +269,6 @@ export function LiveEyebrow({
   );
 }
 
-// ─── Static eyebrow ─────────────────────────────────────────
-// Same pill as LiveEyebrow, minus the pulse — anchors the question
-// headline ("played what?") when there's no live count to show.
-
-export function StaticEyebrow({ children }: { children: React.ReactNode }) {
-  return (
-    <span
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        padding: "7px 14px",
-        background: "rgba(255,255,255,0.05)",
-        border: "1px solid rgba(255,255,255,0.10)",
-        borderRadius: 999,
-        fontFamily: fwF.ui,
-        fontSize: 12,
-        fontWeight: 600,
-        color: fwT.ink2,
-        letterSpacing: 0.4,
-        textTransform: "uppercase",
-        backdropFilter: "blur(12px)",
-        WebkitBackdropFilter: "blur(12px)",
-      }}
-    >
-      {children}
-    </span>
-  );
-}
-
 // ─── Footer mark ────────────────────────────────────────────
 
 export function FooterMark({

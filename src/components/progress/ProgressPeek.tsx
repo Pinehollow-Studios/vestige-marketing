@@ -17,7 +17,7 @@ export function ProgressPeek() {
   return (
     <PeekFrame>
       <div className="fw-peek-head">
-        <p className="fw-page-eyebrow">Building in the open</p>
+        <p className="fw-page-eyebrow">Progress</p>
         <h2 className="fw-peek-title">
           The map, <span className="fw-peek-ital">so far</span>.
         </h2>

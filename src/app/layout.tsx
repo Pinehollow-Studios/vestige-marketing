@@ -27,10 +27,10 @@ export const metadata: Metadata = {
     default: `${siteConfig.brandName} — ${siteConfig.tagline}`,
     template: `%s · ${siteConfig.brandName}`,
   },
-  description: siteConfig.hero.lede,
+  description: siteConfig.description,
   openGraph: {
     title: `${siteConfig.brandName} — ${siteConfig.tagline}`,
-    description: siteConfig.hero.lede,
+    description: siteConfig.description,
     url: `https://${siteConfig.domain}`,
     siteName: siteConfig.brandName,
     locale: "en_GB",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: `${siteConfig.brandName} — ${siteConfig.tagline}`,
-    description: siteConfig.hero.lede,
+    description: siteConfig.description,
   },
   // Pre-launch: don't get indexed before we want to be found.
   robots: { index: false, follow: false },
