@@ -207,7 +207,7 @@ export const siteConfig: SiteConfig = {
     titlePre: "The list nobody was ",
     titleItalic: "keeping.",
     body: [
-      "Every golfer has played somewhere they can't quite picture any more — and argued, on the first tee, about who's played more. There was never a simple way to keep the list.",
+      "Ask a golfer how many courses they've played and you'll get a guess, a frown, and a story about a links in Cornwall. What you won't get is a number. Nobody keeps the list.",
       "So we're building one: every course in England on a single map, the ones you've played marked with a tap, and a friendly tally of who's collected the most. No swing analysis, no dashboards — just the places, kept. England first; the rest of the British Isles to follow.",
       "The name? A vestige is the trace something leaves behind. Every round leaves one.",
     ],
