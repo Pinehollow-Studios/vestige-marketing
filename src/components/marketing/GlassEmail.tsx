@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useSyncExternalStore } from "react";
+import { useActionState, useEffect, useRef, useSyncExternalStore } from "react";
 import { joinWaitlist, type JoinWaitlistState } from "@/app/actions";
 import { accentFor, type Palette } from "./palette";
 import { useMagnetic } from "./hooks";
@@ -60,8 +60,23 @@ export function GlassEmail({
   // CTA leans toward the cursor while the pointer roams the pill.
   const magRef = useMagnetic<HTMLButtonElement>(0.22, ".fw-email");
 
+  // On a successful submit the on-screen keyboard has pushed the page down,
+  // and on mobile closing it can leave the page scrolled — which fades the
+  // hero behind its scroll-exit effect. Dismiss the keyboard and re-center
+  // the form so the success message sits where the field was.
+  const formRef = useRef<HTMLFormElement>(null);
+  useEffect(() => {
+    if (!sent) return;
+    (document.activeElement as HTMLElement | null)?.blur?.();
+    const t = setTimeout(() => {
+      formRef.current?.scrollIntoView({ block: "center", behavior: "smooth" });
+    }, 250);
+    return () => clearTimeout(t);
+  }, [sent]);
+
   return (
     <form
+      ref={formRef}
       action={action}
       className={`fw-email fw-email-${size}`}
       data-sent={sent ? "1" : "0"}

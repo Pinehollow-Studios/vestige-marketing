@@ -167,7 +167,7 @@ export function useViewScrub<T extends HTMLElement = HTMLElement>({
       releaseTimer = setTimeout(() => {
         focusHeld = false;
         releaseTimer = undefined;
-      }, 600);
+      }, 800);
     };
     el.addEventListener("focusin", onFocusIn);
     el.addEventListener("focusout", onFocusOut);
