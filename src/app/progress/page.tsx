@@ -26,7 +26,7 @@ import { ENGLAND_PATH } from "@/components/marketing/england";
 
 export const metadata: Metadata = {
   title: "Progress",
-  description: `How far ${siteConfig.brandName} has come — counties mapped, courses collected, and what we're working on right now.`,
+  description: `How far ${siteConfig.brandName} has come: counties mapped, courses collected, and what we're working on right now.`,
   // Pre-launch: inherited from the root layout, restated so nobody
   // "fixes" the layout and indexes this page by accident.
   robots: { index: false, follow: false },
@@ -59,7 +59,7 @@ export default function ProgressPage() {
             />
             <p className="fw-lede fw-page-enter" style={{ "--enter-d": "420ms" } as React.CSSProperties}>
               Vestige is an iPhone app that puts every golf course in England
-              on one map — and keeps the ones you&rsquo;ve played. We&rsquo;re
+              on one map, and keeps the ones you&rsquo;ve played. We&rsquo;re
               partway through building it. This is how far the map has come.
             </p>
           </div>
@@ -95,7 +95,7 @@ export default function ProgressPage() {
               <p className="fw-page-eyebrow">From the build</p>
               <h2 className="fw-prog-shot-title">What it looks like today.</h2>
               <p className="fw-prog-shot-sub">
-                A real screen from the closed TestFlight build — the app as it
+                A real screen from the closed TestFlight build: the app as it
                 stands this week, still taking shape.
               </p>
             </div>
@@ -135,7 +135,7 @@ export default function ProgressPage() {
               Want <span className="fw-page-cta-ital">in</span>?
             </h2>
             <p>
-              Join the waiting list — beta codes go there first, along with the
+              Join the waiting list. Beta codes go there first, along with the
               occasional update like this one. Nothing else.
             </p>
             <Link href="/#join" className="fw-page-cta-btn">
