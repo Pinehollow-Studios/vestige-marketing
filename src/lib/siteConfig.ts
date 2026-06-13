@@ -228,7 +228,7 @@ export const siteConfig: SiteConfig = {
     },
     {
       q: "Which courses are in it?",
-      a: "Every course in England — all 2,500-odd, from Open Championship links to nine-hole village greens.",
+      a: "Every course in England — all 2,500-odd, from Open Championship links to your local nine-hole pitch & putt.",
     },
     {
       q: "Is it England only?",
@@ -250,7 +250,7 @@ export const siteConfig: SiteConfig = {
       eyebrow: "The atlas",
       title: "Every course in England.",
       body:
-        "All 2,500+ of them — championship links to nine-hole village greens, complete on the day we launch.",
+        "All 2,500+ of them — championship links to your local nine-hole pitch & putt, complete on the day we launch.",
     },
     {
       kind: "tap",
