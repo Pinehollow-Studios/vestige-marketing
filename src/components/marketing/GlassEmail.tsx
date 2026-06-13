@@ -119,6 +119,22 @@ export function GlassEmail({
           {error}
         </p>
       )}
+      {sent && (
+        <p
+          role="status"
+          style={{
+            marginTop: 12,
+            fontFamily: "var(--font-ui)",
+            fontSize: 12.5,
+            lineHeight: 1.5,
+            color: "rgba(246,244,238,0.6)",
+            textAlign: "center",
+          }}
+        >
+          Check your junk or spam folder for our welcome email, and mark it
+          “not spam” so we land in your inbox.
+        </p>
+      )}
     </form>
   );
 }
