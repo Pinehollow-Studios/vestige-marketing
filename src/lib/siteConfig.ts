@@ -181,7 +181,7 @@ export const siteConfig: SiteConfig = {
   ],
 
   stats: [
-    { kind: "number", target: 2500, suffix: "+", label: "Courses, top to bottom" },
+    { kind: "number", target: 2500, suffix: "+", label: "Courses" },
     { kind: "number", target: 47, label: "Ceremonial counties" },
     { kind: "number", target: 0, prefix: "£", label: "Cost at launch" },
     { kind: "static", value: "Summer ’27", label: "On the App Store" },
