@@ -89,16 +89,18 @@ export function GlassEmail({
         }}
       />
       <div className="fw-email-shell" style={{ height: tall }}>
-        <input
-          type="email"
-          name="email"
-          required
-          autoComplete="email"
-          placeholder={
-            sent ? "You’re on the list — speak soon." : placeholder
-          }
-          disabled={sent || pending}
-        />
+        {sent ? (
+          <span className="fw-email-sent-msg">You’re on the list.</span>
+        ) : (
+          <input
+            type="email"
+            name="email"
+            required
+            autoComplete="email"
+            placeholder={placeholder}
+            disabled={pending}
+          />
+        )}
         <button
           ref={magRef}
           type="submit"
@@ -115,7 +117,7 @@ export function GlassEmail({
           }}
         >
           <span className="fw-email-cta-text">
-            {sent ? "✓ On the list" : pending ? "Joining…" : cta}
+            {sent ? "✓ Joined" : pending ? "Joining…" : cta}
           </span>
           {!sent && !pending && <span className="fw-email-shimmer" />}
         </button>
