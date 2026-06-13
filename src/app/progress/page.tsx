@@ -60,7 +60,7 @@ export default function ProgressPage() {
             <p className="fw-lede fw-page-enter" style={{ "--enter-d": "420ms" } as React.CSSProperties}>
               Vestige is an iPhone app that puts every golf course in England
               on one map — and keeps the ones you&rsquo;ve played. We&rsquo;re
-              building it in the open. This is how far the map has come.
+              partway through building it. This is how far the map has come.
             </p>
           </div>
           <CountyAtlas completed={completedCounties} />
@@ -93,10 +93,10 @@ export default function ProgressPage() {
           <Reveal>
             <div className="fw-prog-shot-copy">
               <p className="fw-page-eyebrow">From the build</p>
-              <h2 className="fw-prog-shot-title">Proof, not promises.</h2>
+              <h2 className="fw-prog-shot-title">What it looks like today.</h2>
               <p className="fw-prog-shot-sub">
-                A real screen from the closed TestFlight build — the atlas as
-                it looks this week, bugs and all.
+                A real screen from the closed TestFlight build — the app as it
+                stands this week, still taking shape.
               </p>
             </div>
           </Reveal>

@@ -57,7 +57,7 @@ export const progressConfig = {
 
   /** Honest, present-tense — rewrite it whenever the work changes. */
   rightNow:
-    "Tom's grinding through bugs and improvements on our closed TestFlight beta; Jack's expanding the course database, county by county.",
+    "Tom's polishing the app's main flows and squashing beta feedback ahead of a wider release; Jack's expanding the course database, county by county.",
 
   /**
    * One real screenshot of the app. Drop the file in public/progress/

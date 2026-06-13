@@ -9,8 +9,12 @@ export type SiteConfig = {
   brandName: string;
   brandShortName: string;
   brandLowerName: string;
-  /** Used in OG / page-title fallback. */
+  /** Used in OG / page-title fallback. Also the hero's support line —
+   *  one declarative sentence that works everywhere: bio, ads, hero. */
   tagline: string;
+  /** Meta/OG description — fuller than the tagline so title and
+   *  description don't duplicate in search results and link previews. */
+  description: string;
   domain: string;
   /** Null until live. When set, swap waitlist UI for App Store CTA. */
   appStoreUrl: string | null;
@@ -30,13 +34,9 @@ export type SiteConfig = {
     /** The live signup counter only surfaces once weekly signups exceed this. */
     liveCountMinWeekly: number;
     liveEyebrowLabel: string;
-    /** Static eyebrow above the headline — shown when there's no live count to
-     *  show. Anchors the question headline ("played what?") with context. */
-    staticEyebrow: string;
-    /** Three-part headline: [pre, italicWord, post]. */
+    /** Three-part headline: [pre, italicWord, post]. The number carries
+     *  the scale hook, so no eyebrow is needed beneath the threshold. */
     headline: readonly [string, string, string];
-    /** Italic lede paragraph beneath the headline. */
-    lede: string;
     /** One line under the email field — what joining actually gets you. */
     waitlistNote: string;
     /** Meta strip below the email field. */
@@ -136,6 +136,8 @@ export const siteConfig: SiteConfig = {
   brandShortName: "Vestige",
   brandLowerName: "vestige",
   tagline: "Every golf course in England, collected.",
+  description:
+    "England has over 2,500 golf courses — from Open Championship links to your local nine-holer. Vestige keeps the ones you've played, fills in your map of the country, and shows how your collection compares with your friends'.",
   domain: "vestige.golf",
   appStoreUrl: null,
   contactEmail: "hello@pinehollow.studio",
@@ -149,10 +151,7 @@ export const siteConfig: SiteConfig = {
   hero: {
     liveCountMinWeekly: 100,
     liveEyebrowLabel: "joined the waiting list this week",
-    staticEyebrow: "Every golf course in England",
-    headline: ["How many have you ", "played", "?"],
-    lede:
-      "England has over 2,500 golf courses — from Open Championship links to your local nine-holer. Vestige keeps the ones you've played, fills in your map of the country, and shows how your collection compares with your friends'.",
+    headline: ["2,500 courses. How many have you ", "played", "?"],
     waitlistNote:
       "Beta codes go to the waiting list first — play it months before launch.",
     metaStrip: ["iPhone, iOS 18+", "Free at launch", "Summer 2027"],
