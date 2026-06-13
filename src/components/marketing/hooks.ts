@@ -145,14 +145,29 @@ export function useViewScrub<T extends HTMLElement = HTMLElement>({
     let cur = -1;
     let lastWritten = "";
     let focusHeld = false;
+    let releaseTimer: ReturnType<typeof setTimeout> | undefined;
     const isFormField = (t: EventTarget | null) =>
       t instanceof HTMLElement &&
       (t.matches("input, textarea, select") || t.isContentEditable);
     const onFocusIn = (e: FocusEvent) => {
-      if (isFormField(e.target)) focusHeld = true;
+      if (isFormField(e.target)) {
+        if (releaseTimer) {
+          clearTimeout(releaseTimer);
+          releaseTimer = undefined;
+        }
+        focusHeld = true;
+      }
     };
     const onFocusOut = () => {
-      focusHeld = false;
+      // Don't resume the instant the field blurs. On mobile, closing the
+      // keyboard (e.g. on submit) unwinds its scroll over a few hundred ms,
+      // and that motion would otherwise read as a real scroll and fade the
+      // hero. Stay frozen briefly so the page settles back first.
+      if (releaseTimer) clearTimeout(releaseTimer);
+      releaseTimer = setTimeout(() => {
+        focusHeld = false;
+        releaseTimer = undefined;
+      }, 600);
     };
     el.addEventListener("focusin", onFocusIn);
     el.addEventListener("focusout", onFocusOut);
@@ -183,6 +198,7 @@ export function useViewScrub<T extends HTMLElement = HTMLElement>({
     raf = requestAnimationFrame(loop);
     return () => {
       cancelAnimationFrame(raf);
+      if (releaseTimer) clearTimeout(releaseTimer);
       el.removeEventListener("focusin", onFocusIn);
       el.removeEventListener("focusout", onFocusOut);
     };

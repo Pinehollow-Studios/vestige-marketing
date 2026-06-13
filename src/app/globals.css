@@ -407,7 +407,9 @@ html {
   outline: 0;
   color: #F6F4EE;
   font-family: inherit;
-  font-size: clamp(14px, 1.1vw, 16px);
+  /* Must stay >= 16px: iOS Safari auto-zooms (and pans the page sideways)
+     when focusing an input smaller than 16px. */
+  font-size: 16px;
   font-weight: 500;
   padding: 12px 0;
   min-width: 0;
