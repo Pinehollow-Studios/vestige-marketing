@@ -216,7 +216,7 @@ export const siteConfig: SiteConfig = {
   faq: [
     {
       q: "Is it really free?",
-      a: "Yes, completely free. The whole app, the whole collection, no premium tier and no catch.",
+      a: "Yes. The full app and your whole collection are free, and always will be. You will never pay to map a course, fill in your collection, or see where you stand. A paid tier may come later for a few extras, but only ever on top of the free app, never a gate in front of it.",
     },
     {
       q: "Does it track my score or handicap?",
@@ -236,7 +236,7 @@ export const siteConfig: SiteConfig = {
     },
     {
       q: "What do you do with my data?",
-      a: "As little as possible. No ads, and we never sell your personal data. Your collection is yours, and you can export or delete it whenever you like.",
+      a: "As little as possible, and no ads. We will never sell your personal data: no names, nothing that ties back to you. Further down the line we may sell broad, anonymised trends to golf clubs, the patterns across thousands of rounds, but never your individual record. Your collection is yours, and you can export or delete it whenever you like.",
     },
     {
       q: "When can I actually use it?",
