@@ -461,6 +461,11 @@ html {
 @media (max-width: 540px) {
   .fw-email-shell { padding: 5px 5px 5px 18px; }
   .fw-email-shell button { padding: 0 16px; }
+  /* The pill is near full-width here, so an 18px glow halo spreads into
+     the page padding and gets clipped flat by .fw-root's overflow-x:
+     hidden (a hard vertical edge, visible when focus brightens it).
+     Tighten the blur so the halo stays clear of the screen edge. */
+  .fw-email-glow { inset: 0; filter: blur(10px); }
 }
 
 /* ─── Marquee ──────────────────────────────────────────────── */
