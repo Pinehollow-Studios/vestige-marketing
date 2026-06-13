@@ -137,7 +137,7 @@ export const siteConfig: SiteConfig = {
   brandLowerName: "vestige",
   tagline: "Every golf course in England, collected.",
   description:
-    "England has over 2,500 golf courses — from Open Championship links to your local nine-holer. Vestige keeps the ones you've played, fills in your map of the country, and shows how your collection compares with your friends'.",
+    "England has over 2,500 golf courses — from Open Championship links to your local pitch & putt. Vestige keeps the ones you've played, fills in your map of the country, and shows how your collection compares with your friends'.",
   domain: "vestige.golf",
   appStoreUrl: null,
   contactEmail: "hello@pinehollow.studio",
