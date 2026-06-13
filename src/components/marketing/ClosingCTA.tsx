@@ -93,7 +93,7 @@ export function ClosingCTA({
           color: "rgba(246,244,238,0.45)",
         }}
       >
-        No spam — just {siteConfig.brandName}. Unsubscribe anytime ·{" "}
+        No spam. Just {siteConfig.brandName}. Unsubscribe anytime ·{" "}
         <a
           href="/privacy"
           style={{

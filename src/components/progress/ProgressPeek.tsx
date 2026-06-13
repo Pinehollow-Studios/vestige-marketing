@@ -23,7 +23,7 @@ export function ProgressPeek() {
         </h2>
         <p className="fw-peek-sub">
           We&rsquo;re putting every course in England on the map, county by
-          county — and you can watch it happen.
+          county, and you can watch it happen.
         </p>
       </div>
       <CountyAtlas completed={completedCounties} />

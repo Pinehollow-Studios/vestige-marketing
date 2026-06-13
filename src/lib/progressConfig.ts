@@ -65,7 +65,7 @@ export const progressConfig = {
    */
   screenshot: {
     src: "/progress/app-home-2.png",
-    alt: "The Vestige home screen on the closed beta — a county map of England with the collection filling in, 11 of 942 courses played, Surrey within reach at 9 of 68.",
+    alt: "The Vestige home screen on the closed beta: a county map of England with the collection filling in, 11 of 942 courses played, Surrey within reach at 9 of 68.",
   } as { src: string; alt: string } | null,
 } as const;
 
