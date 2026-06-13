@@ -264,7 +264,7 @@ export const siteConfig: SiteConfig = {
       eyebrow: "Your circle",
       title: "A polite competition.",
       body:
-        "See whose collection runs deepest: your friends, and the whole country. No strangers in your feed.",
+        "See whose collection runs deepest among your friends, and where you rank across the country. First-tee bragging rights, finally settled.",
     },
   ],
 
