@@ -41,8 +41,6 @@ export const metadata: Metadata = {
     title: `${siteConfig.brandName} — ${siteConfig.tagline}`,
     description: siteConfig.description,
   },
-  // Pre-launch: don't get indexed before we want to be found.
-  robots: { index: false, follow: false },
 };
 
 export default function RootLayout({

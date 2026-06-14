@@ -1,13 +1,13 @@
 import type { MetadataRoute } from "next";
 
 /**
- * Pre-launch: keep the site out of search indexes.
+ * Live: allow search engines to crawl and index the site.
  *
- * When the App Store name lands and you're ready to be discoverable, flip
- * `allow` to `"/"` and remove the meta-robots noindex from RootLayout.
+ * `/unsubscribe` is a GET action handler, not a page — keep crawlers out of
+ * it so a bot can't trip the endpoint or list it in results.
  */
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: [{ userAgent: "*", disallow: "/" }],
+    rules: [{ userAgent: "*", allow: "/", disallow: "/unsubscribe" }],
   };
 }
