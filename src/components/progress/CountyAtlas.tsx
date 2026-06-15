@@ -113,17 +113,6 @@ export function CountyAtlas({
           </g>
         )}
       </svg>
-      {latestShape && (
-        <span
-          className="fw-catlas-beacon-label"
-          style={{
-            left: `${(latestShape.cx / COUNTY_VIEW.w) * 100}%`,
-            top: `${(latestShape.cy / COUNTY_VIEW.h) * 100}%`,
-          }}
-        >
-          Just added
-        </span>
-      )}
       <figcaption className="fw-catlas-legend" aria-hidden="true">
         <span>
           <i data-kind="done" /> Mapped
