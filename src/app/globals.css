@@ -1669,52 +1669,42 @@ html {
   box-shadow: 0 0 6px rgba(91, 228, 195, 0.7);
 }
 .fw-catlas-legend i[data-kind="latest"] {
-  background: linear-gradient(135deg, #5be4c3, #8fe85b);
+  background: #38a6ff;
   border: 0;
+  box-shadow: 0 0 6px rgba(56, 166, 255, 0.85);
   animation: fw-pulse-dot 1.8s ease-in-out infinite;
 }
 
 /* ─── Most-recent addition beacon ──────────────────────────── */
-/* Lands once the fill sweep has settled (--beacon-delay, set inline on
-   .fw-catlas from the county count). A steady dot marks the spot, a ring
-   pings a few times to catch the eye, and a label names it. */
+/* A bright blue dot that flashes on the newest county, with a radar ping
+   around it — a clear "look here" that contrasts the mint map. Both wait
+   out the fill sweep (--beacon-delay, set inline on .fw-catlas from the
+   county count) before they appear. */
 .fw-catlas-beacon-dot {
-  fill: #f6f4ee;
+  fill: #38a6ff;
   opacity: 0;
-  filter: drop-shadow(0 0 5px rgba(91, 228, 195, 0.95));
-  animation: fw-catlas-fade 500ms ease var(--beacon-delay, 2800ms) both;
+  transform-box: fill-box;
+  transform-origin: center;
+  filter: drop-shadow(0 0 6px rgba(56, 166, 255, 0.95));
+  animation: fw-catlas-flash 1200ms ease-in-out var(--beacon-delay, 2800ms) infinite;
 }
 .fw-catlas-ping {
   fill: none;
-  stroke: #5be4c3;
+  stroke: #38a6ff;
   stroke-width: 1.4;
   opacity: 0;
   transform-box: fill-box;
   transform-origin: center;
-  animation: fw-catlas-ping 1500ms ease-out var(--beacon-delay, 2800ms) 3;
+  animation: fw-catlas-ping 1600ms ease-out var(--beacon-delay, 2800ms) infinite;
 }
 @keyframes fw-catlas-ping {
   0%   { transform: scale(0.5); opacity: 0.7; }
   70%  { opacity: 0; }
-  100% { transform: scale(2.8); opacity: 0; }
+  100% { transform: scale(2.9); opacity: 0; }
 }
-.fw-catlas-beacon-label {
-  position: absolute;
-  transform: translate(-50%, calc(-100% - 9px));
-  padding: 3px 9px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #5be4c3, #8fe85b);
-  color: #06090e;
-  font-family: var(--font-ui);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  white-space: nowrap;
-  pointer-events: none;
-  opacity: 0;
-  box-shadow: 0 5px 16px -5px rgba(91, 228, 195, 0.85);
-  animation: fw-catlas-fade 600ms ease var(--beacon-delay, 2800ms) both;
+@keyframes fw-catlas-flash {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.3; transform: scale(0.72); }
 }
 
 /* ─── The ledger — fractions, bars, the date stamp ─────────── */
@@ -1813,7 +1803,7 @@ html {
 }
 /* "Just added" line above the date stamp; the stamp then sits directly
    under it without a second divider. */
-.fw-prog-latest b { color: #8fe85b; }
+.fw-prog-latest b { color: #38a6ff; }
 .fw-prog-stamp-plain {
   margin-top: 9px;
   padding-top: 0;
@@ -1980,7 +1970,6 @@ html {
 .fw-peek .fw-catlas-done path,
 .fw-peek .fw-catlas-ping,
 .fw-peek .fw-catlas-beacon-dot,
-.fw-peek .fw-catlas-beacon-label,
 .fw-peek .fw-catlas-legend {
   animation-play-state: paused;
 }
@@ -1988,12 +1977,9 @@ html {
 .fw-peek[data-shown="1"] .fw-catlas-done path,
 .fw-peek[data-shown="1"] .fw-catlas-ping,
 .fw-peek[data-shown="1"] .fw-catlas-beacon-dot,
-.fw-peek[data-shown="1"] .fw-catlas-beacon-label,
 .fw-peek[data-shown="1"] .fw-catlas-legend {
   animation-play-state: running;
 }
-/* The peek is small — keep the beacon's pulse + dot, drop the text label. */
-.fw-peek .fw-catlas-beacon-label { display: none; }
 
 /* ─── One way in ───────────────────────────────────────────── */
 .fw-page-cta {
