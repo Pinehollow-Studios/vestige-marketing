@@ -62,10 +62,13 @@ function StatRow({
 export function ProgressStats({
   counties,
   courses,
+  latest,
   lastUpdated,
 }: {
   counties: Stat;
   courses: Stat;
+  /** Most recently mapped county — named in a "Just added" ledger line. */
+  latest?: string;
   lastUpdated?: string;
 }) {
   const [ref, revealed] = useScrollReveal<HTMLDivElement>({ threshold: 0.25 });
@@ -73,8 +76,14 @@ export function ProgressStats({
     <div ref={ref} className="fw-prog-card">
       <StatRow stat={counties} revealed={revealed} delay={0} />
       <StatRow stat={courses} revealed={revealed} delay={120} />
+      {latest && (
+        <div className="fw-prog-stamp fw-prog-latest">
+          <span className="dot" aria-hidden="true" />
+          Just added <b>{latest}</b>
+        </div>
+      )}
       {lastUpdated && (
-        <div className="fw-prog-stamp">
+        <div className={`fw-prog-stamp${latest ? " fw-prog-stamp-plain" : ""}`}>
           <span className="dot" aria-hidden="true" />
           Last updated <b>{lastUpdated}</b>
         </div>

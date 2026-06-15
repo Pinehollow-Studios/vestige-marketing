@@ -1668,6 +1668,54 @@ html {
   border: 0;
   box-shadow: 0 0 6px rgba(91, 228, 195, 0.7);
 }
+.fw-catlas-legend i[data-kind="latest"] {
+  background: linear-gradient(135deg, #5be4c3, #8fe85b);
+  border: 0;
+  animation: fw-pulse-dot 1.8s ease-in-out infinite;
+}
+
+/* ─── Most-recent addition beacon ──────────────────────────── */
+/* Lands once the fill sweep has settled (--beacon-delay, set inline on
+   .fw-catlas from the county count). A steady dot marks the spot, a ring
+   pings a few times to catch the eye, and a label names it. */
+.fw-catlas-beacon-dot {
+  fill: #f6f4ee;
+  opacity: 0;
+  filter: drop-shadow(0 0 5px rgba(91, 228, 195, 0.95));
+  animation: fw-catlas-fade 500ms ease var(--beacon-delay, 2800ms) both;
+}
+.fw-catlas-ping {
+  fill: none;
+  stroke: #5be4c3;
+  stroke-width: 1.4;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: fw-catlas-ping 1500ms ease-out var(--beacon-delay, 2800ms) 3;
+}
+@keyframes fw-catlas-ping {
+  0%   { transform: scale(0.5); opacity: 0.7; }
+  70%  { opacity: 0; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+.fw-catlas-beacon-label {
+  position: absolute;
+  transform: translate(-50%, calc(-100% - 9px));
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #5be4c3, #8fe85b);
+  color: #06090e;
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  box-shadow: 0 5px 16px -5px rgba(91, 228, 195, 0.85);
+  animation: fw-catlas-fade 600ms ease var(--beacon-delay, 2800ms) both;
+}
 
 /* ─── The ledger — fractions, bars, the date stamp ─────────── */
 .fw-prog-card {
@@ -1762,6 +1810,14 @@ html {
   border-radius: 999px;
   background: #5be4c3;
   animation: fw-pulse-dot 1.8s ease-in-out infinite;
+}
+/* "Just added" line above the date stamp; the stamp then sits directly
+   under it without a second divider. */
+.fw-prog-latest b { color: #8fe85b; }
+.fw-prog-stamp-plain {
+  margin-top: 9px;
+  padding-top: 0;
+  border-top: 0;
 }
 
 /* ─── Right now ────────────────────────────────────────────── */
@@ -1922,14 +1978,22 @@ html {
    first frame until PeekFrame flips data-shown on scroll arrival. */
 .fw-peek .fw-catlas-base,
 .fw-peek .fw-catlas-done path,
+.fw-peek .fw-catlas-ping,
+.fw-peek .fw-catlas-beacon-dot,
+.fw-peek .fw-catlas-beacon-label,
 .fw-peek .fw-catlas-legend {
   animation-play-state: paused;
 }
 .fw-peek[data-shown="1"] .fw-catlas-base,
 .fw-peek[data-shown="1"] .fw-catlas-done path,
+.fw-peek[data-shown="1"] .fw-catlas-ping,
+.fw-peek[data-shown="1"] .fw-catlas-beacon-dot,
+.fw-peek[data-shown="1"] .fw-catlas-beacon-label,
 .fw-peek[data-shown="1"] .fw-catlas-legend {
   animation-play-state: running;
 }
+/* The peek is small — keep the beacon's pulse + dot, drop the text label. */
+.fw-peek .fw-catlas-beacon-label { display: none; }
 
 /* ─── One way in ───────────────────────────────────────────── */
 .fw-page-cta {

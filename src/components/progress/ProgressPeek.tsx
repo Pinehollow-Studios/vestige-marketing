@@ -12,7 +12,7 @@ import { PeekFrame } from "./PeekFrame";
  * once and ships no client JavaScript.
  */
 export function ProgressPeek() {
-  const { completedCounties } = progressConfig;
+  const { completedCounties, latestCounty } = progressConfig;
 
   return (
     <PeekFrame>
@@ -26,7 +26,7 @@ export function ProgressPeek() {
           county, and you can watch it happen.
         </p>
       </div>
-      <CountyAtlas completed={completedCounties} />
+      <CountyAtlas completed={completedCounties} latest={latestCounty} />
       <Link href="/progress" className="fw-peek-more">
         See the full progress →
       </Link>

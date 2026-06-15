@@ -13,7 +13,13 @@ import { COUNTY_SHAPES, COUNTY_VIEW } from "./counties";
  * with all 47, once mint in the overlay — so each fade-in simply
  * reveals the overlay over an already-complete map.
  */
-export function CountyAtlas({ completed }: { completed: ReadonlyArray<string> }) {
+export function CountyAtlas({
+  completed,
+  latest,
+}: {
+  completed: ReadonlyArray<string>;
+  latest?: string;
+}) {
   const known = new Set(COUNTY_SHAPES.map((s) => s.name));
   const unknown = completed.filter((n) => !known.has(n));
   if (unknown.length) {
@@ -34,11 +40,26 @@ export function CountyAtlas({ completed }: { completed: ReadonlyArray<string> })
     (a, b) => b.cy - a.cy
   );
 
+  // The most recent addition gets a "Just added" beacon anchored to its
+  // centroid. It waits out the south->north fill sweep, then pulses — the
+  // delay is derived from the county count so it always lands just after the
+  // last county fills, however many there are. (Mirrors the done-path timing
+  // in globals.css: 620ms + i*55ms, 500ms each.)
+  const latestShape = latest ? done.find((s) => s.name === latest) : undefined;
+  const beaconDelay = 1120 + Math.max(0, done.length - 1) * 55 + 200;
+
   return (
     <figure
       className="fw-catlas"
       role="img"
-      aria-label={`Map of England: ${completed.length} of ${COUNTY_SHAPES.length} counties mapped so far`}
+      aria-label={`Map of England: ${completed.length} of ${COUNTY_SHAPES.length} counties mapped so far${
+        latestShape ? `, most recently ${latestShape.name}` : ""
+      }`}
+      style={
+        latestShape
+          ? ({ "--beacon-delay": `${beaconDelay}ms` } as CSSProperties)
+          : undefined
+      }
     >
       <svg viewBox={`0 0 ${COUNTY_VIEW.w} ${COUNTY_VIEW.h}`} width="100%">
         <defs>
@@ -69,15 +90,49 @@ export function CountyAtlas({ completed }: { completed: ReadonlyArray<string> })
               fillRule="evenodd"
               style={{ "--i": i } as CSSProperties}
             >
-              <title>{`${s.name} — mapped`}</title>
+              <title>{`${s.name} — ${
+                s.name === latest ? "just added" : "mapped"
+              }`}</title>
             </path>
           ))}
         </g>
+        {latestShape && (
+          <g className="fw-catlas-beacon" aria-hidden="true">
+            <circle
+              className="fw-catlas-ping"
+              cx={latestShape.cx}
+              cy={latestShape.cy}
+              r="7"
+            />
+            <circle
+              className="fw-catlas-beacon-dot"
+              cx={latestShape.cx}
+              cy={latestShape.cy}
+              r="3.2"
+            />
+          </g>
+        )}
       </svg>
+      {latestShape && (
+        <span
+          className="fw-catlas-beacon-label"
+          style={{
+            left: `${(latestShape.cx / COUNTY_VIEW.w) * 100}%`,
+            top: `${(latestShape.cy / COUNTY_VIEW.h) * 100}%`,
+          }}
+        >
+          Just added
+        </span>
+      )}
       <figcaption className="fw-catlas-legend" aria-hidden="true">
         <span>
           <i data-kind="done" /> Mapped
         </span>
+        {latestShape && (
+          <span>
+            <i data-kind="latest" /> Just added
+          </span>
+        )}
         <span>
           <i /> Still to come
         </span>
