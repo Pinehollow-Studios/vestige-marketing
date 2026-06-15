@@ -95,3 +95,26 @@ Claret      #E2664E
 Gradient    linear-gradient(135deg, #5BE4C3, #8FE85B)
 Fonts       Manrope (display/wordmark), Inter (UI)
 ```
+
+---
+
+## 5. App context (design brief)
+
+Vestige is an iPhone app for golfers in England. It's a personal *collection*:
+every golf course in the country on one map, and you mark the ones you've played
+with a tap, watching your map of England fill in over time. It's not a scorecard
+or a swing tracker — the point is the places, kept. There's a quiet social side
+too: see how your collection compares with friends, and where you rank across
+the country.
+
+The name means a *vestige* — a trace or mark left behind. Every round leaves one.
+The brand is calm, elegant and understated rather than loud or sporty: a deep
+near-black canvas, warm cream text, and a single mint-to-lime gradient
+(`#5BE4C3 → #8FE85B`) as the one pop of colour. Think premium and map-like —
+closer to a fine atlas or a members' club than a fitness app.
+
+**Looking for:** app icon / logo concepts. Motifs worth exploring — the map or
+silhouette of England, a flag or pin marking a course, a route/trail line, a
+"collected/ticked" mark, or something abstract from the idea of a trace left
+behind. It needs to read clearly at small size as an iOS home-screen icon, and
+ideally work as a solid mint shape as well as with the gradient.
