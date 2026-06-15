@@ -98,11 +98,10 @@ export function CountyAtlas({
         </g>
         {latestShape && (
           <g className="fw-catlas-beacon" aria-hidden="true">
-            <circle
-              className="fw-catlas-ping"
-              cx={latestShape.cx}
-              cy={latestShape.cy}
-              r="7"
+            <path
+              className="fw-catlas-latest-outline"
+              d={latestShape.d}
+              fillRule="evenodd"
             />
             <circle
               className="fw-catlas-beacon-dot"
