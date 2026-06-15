@@ -415,6 +415,18 @@ html {
   min-width: 0;
 }
 .fw-email-shell input::placeholder { color: rgba(246,244,238,0.45); }
+/* Chrome/Safari paint an opaque box behind an autofilled field (desktop
+   only) — over the transparent glass input that shows as a white block.
+   The ~indefinite background-color transition defers that paint forever,
+   so the pill keeps showing through; text-fill-color keeps the text light. */
+.fw-email-shell input:-webkit-autofill,
+.fw-email-shell input:-webkit-autofill:hover,
+.fw-email-shell input:-webkit-autofill:focus,
+.fw-email-shell input:-webkit-autofill:active {
+  -webkit-text-fill-color: #F6F4EE;
+  caret-color: #F6F4EE;
+  transition: background-color 100000s ease-in-out 0s;
+}
 /* Success confirmation that replaces the input once joined — full
    brightness and ellipsis-safe, where the old state reused the faint,
    truncated input placeholder. */
