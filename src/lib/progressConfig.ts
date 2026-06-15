@@ -14,7 +14,7 @@
 
 export const progressConfig = {
   /** Courses in the database so far. */
-  coursesMapped: 1010,
+  coursesMapped: 1021,
   /** Approximate total — always rendered with a "~". */
   coursesTotal: 2500,
 
@@ -37,6 +37,7 @@ export const progressConfig = {
     "Gloucestershire",
     "Greater London",
     "Hampshire",
+    "Herefordshire",
     "Hertfordshire",
     "Isle of Wight",
     "Kent",
@@ -53,7 +54,7 @@ export const progressConfig = {
     "Worcestershire",
   ],
 
-  lastUpdated: "10 June 2026",
+  lastUpdated: "15 June 2026",
 
   /** Honest, present-tense — rewrite it whenever the work changes. */
   rightNow:
