@@ -97,7 +97,7 @@ export default function ProgressPage() {
               <h2 className="fw-prog-shot-title">What it looks like today.</h2>
               <p className="fw-prog-shot-sub">
                 A real screen from the closed TestFlight build: the app as it
-                stands this week, still taking shape.
+                stands, still taking shape.
               </p>
             </div>
           </Reveal>
