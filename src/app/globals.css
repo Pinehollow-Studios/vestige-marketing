@@ -1681,25 +1681,17 @@ html {
   box-shadow: 0 0 6px rgba(91, 228, 195, 0.7);
 }
 .fw-catlas-legend i[data-kind="latest"] {
-  background: #ffb938;
-  border: 0;
-  box-shadow: 0 0 6px rgba(255, 185, 56, 0.85);
+  background: transparent;
+  border: 1.5px solid #5be4c3;
+  box-shadow: 0 0 5px rgba(91, 228, 195, 0.7);
   animation: fw-pulse-dot 1.8s ease-in-out infinite;
 }
 
 /* ─── Most-recent addition beacon ──────────────────────────── */
-/* A flashing gold dot marks the newest county, with a pulsing mint border
-   tracing its outline — a warm "look here" against the mint map. Both wait
-   out the fill sweep (--beacon-delay, set inline on .fw-catlas from the
-   county count) before they appear. */
-.fw-catlas-beacon-dot {
-  fill: #ffb938;
-  opacity: 0;
-  transform-box: fill-box;
-  transform-origin: center;
-  filter: drop-shadow(0 0 6px rgba(255, 185, 56, 0.95));
-  animation: fw-catlas-flash 1200ms ease-in-out var(--beacon-delay, 2800ms) infinite;
-}
+/* A pulsing mint border traces the newest county's outline — a "look
+   here" in the same mint as the map fill. Waits out the fill sweep
+   (--beacon-delay, set inline on .fw-catlas from the county count)
+   before it appears. */
 .fw-catlas-latest-outline {
   fill: none;
   stroke: #5be4c3;
@@ -1712,10 +1704,6 @@ html {
 @keyframes fw-catlas-outline-pulse {
   0%, 100% { opacity: 0.95; stroke-width: 1.4; }
   50%      { opacity: 0.3;  stroke-width: 2.4; }
-}
-@keyframes fw-catlas-flash {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%      { opacity: 0.3; transform: scale(0.72); }
 }
 
 /* ─── The ledger — fractions, bars, the date stamp ─────────── */
@@ -1814,7 +1802,7 @@ html {
 }
 /* "Just added" line above the date stamp; the stamp then sits directly
    under it without a second divider. */
-.fw-prog-latest b { color: #ffb938; }
+.fw-prog-latest b { color: #5be4c3; }
 .fw-prog-stamp-plain {
   margin-top: 9px;
   padding-top: 0;
@@ -1980,14 +1968,12 @@ html {
 .fw-peek .fw-catlas-base,
 .fw-peek .fw-catlas-done path,
 .fw-peek .fw-catlas-latest-outline,
-.fw-peek .fw-catlas-beacon-dot,
 .fw-peek .fw-catlas-legend {
   animation-play-state: paused;
 }
 .fw-peek[data-shown="1"] .fw-catlas-base,
 .fw-peek[data-shown="1"] .fw-catlas-done path,
 .fw-peek[data-shown="1"] .fw-catlas-latest-outline,
-.fw-peek[data-shown="1"] .fw-catlas-beacon-dot,
 .fw-peek[data-shown="1"] .fw-catlas-legend {
   animation-play-state: running;
 }

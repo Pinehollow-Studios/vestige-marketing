@@ -103,12 +103,6 @@ export function CountyAtlas({
               d={latestShape.d}
               fillRule="evenodd"
             />
-            <circle
-              className="fw-catlas-beacon-dot"
-              cx={latestShape.cx}
-              cy={latestShape.cy}
-              r="3.2"
-            />
           </g>
         )}
       </svg>
