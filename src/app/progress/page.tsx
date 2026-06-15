@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 };
 
 export default function ProgressPage() {
-  const { coursesMapped, coursesTotal, completedCounties, lastUpdated, rightNow, screenshot } =
+  const { coursesMapped, coursesTotal, completedCounties, latestCounty, lastUpdated, rightNow, screenshot } =
     progressConfig;
 
   return (
@@ -63,7 +63,7 @@ export default function ProgressPage() {
               partway through building it. This is how far the map has come.
             </p>
           </div>
-          <CountyAtlas completed={completedCounties} />
+          <CountyAtlas completed={completedCounties} latest={latestCounty} />
           <ProgressStats
             counties={{
               label: "Counties mapped",
@@ -76,6 +76,7 @@ export default function ProgressPage() {
               total: coursesTotal,
               approx: true,
             }}
+            latest={latestCounty}
             lastUpdated={lastUpdated}
           />
         </section>

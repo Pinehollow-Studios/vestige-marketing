@@ -54,6 +54,10 @@ export const progressConfig = {
     "Worcestershire",
   ],
 
+  /** The most recently mapped county — gets the "Just added" beacon on the
+   *  atlas and the ledger line. Must be one of completedCounties above. */
+  latestCounty: "Herefordshire",
+
   lastUpdated: "15 June 2026",
 
   /** Honest, present-tense — rewrite it whenever the work changes. */
