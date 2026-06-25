@@ -64,7 +64,7 @@ export const progressConfig = {
    *  atlas and the ledger line. Must be one of completedCounties above. */
   latestCounty: "Nottinghamshire",
 
-  lastUpdated: "16 June 2026",
+  lastUpdated: "25 June 2026",
 
   /** Honest, present-tense — rewrite it whenever the work changes. */
   rightNow:
