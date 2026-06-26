@@ -116,6 +116,32 @@ export type SiteConfig = {
     }>;
   };
 
+  /**
+   * Progress update — the content for a periodic "here's where we are" email
+   * sent as a Resend broadcast to the waitlist (see src/emails/update.tsx).
+   * This is the one block you edit per send: drop in the latest figures and
+   * highlights, refresh the broadcast, send. Everything else (shell, roadmap
+   * reminder, unsubscribe) is wired up already.
+   */
+  progress: {
+    /** Email subject line + preview text. */
+    subject: string;
+    /** Small uppercase label above the headline. */
+    eyebrow: string;
+    /** The headline for this update. */
+    headline: string;
+    /** Opening paragraph(s) — the "where we are" framing. */
+    intro: ReadonlyArray<string>;
+    /** Headline figures, rendered as a stat list (e.g. courses, counties). */
+    figures: ReadonlyArray<{ value: string; label: string }>;
+    /** What's new this update — a short titled bullet each. */
+    highlights: ReadonlyArray<{ title: string; body: string }>;
+    /** Show the roadmap reminder block (pulled from `roadmap.milestones`). */
+    showRoadmap: boolean;
+    /** Sign-off line above the names. */
+    signoff: string;
+  };
+
   footer: {
     /** Studio attribution + contact, shown to the right of the wordmark. */
     studio: {
@@ -294,6 +320,33 @@ export const siteConfig: SiteConfig = {
         body: "On the App Store. Free for everyone.",
       },
     ],
+  },
+
+  // PLACEHOLDER CONTENT — swap in real figures/highlights before sending.
+  progress: {
+    subject: "Vestige progress — the map's filling in",
+    eyebrow: "Progress update",
+    headline: "The map's filling in.",
+    intro: [
+      "A quick note from the workshop. Since you joined the waiting list we've been heads-down mapping England, county by county — here's where things stand.",
+    ],
+    figures: [
+      { value: "0,000", label: "Courses mapped" },
+      { value: "0 of 47", label: "Counties covered" },
+      { value: "0,000", label: "On the waiting list" },
+    ],
+    highlights: [
+      {
+        title: "Placeholder highlight one",
+        body: "A county or region just finished — say a line about it here.",
+      },
+      {
+        title: "Placeholder highlight two",
+        body: "A marquee course added, or a feature taking shape. One or two lines.",
+      },
+    ],
+    showRoadmap: true,
+    signoff: "More soon,",
   },
 
   closingCta: {
