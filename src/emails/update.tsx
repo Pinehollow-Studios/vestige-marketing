@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Heading, Section, Text } from "@react-email/components";
+import { Heading, Img, Section, Text } from "@react-email/components";
 import {
   EmailShell,
   brand,
@@ -8,6 +8,11 @@ import {
   pStyle,
 } from "../lib/emailShell";
 import { siteConfig } from "../lib/siteConfig";
+import { progressConfig, COUNTIES_TOTAL } from "../lib/progressConfig";
+
+/** Where the build-progress-map script writes the snapshot, relative to the
+ *  site root. Referenced absolutely below so it resolves in the inbox. */
+const MAP_IMAGE_PATH = "/progress/atlas-current.png";
 
 /**
  * Progress update — a periodic "here's where we are" email sent as a Resend
@@ -23,6 +28,24 @@ import { siteConfig } from "../lib/siteConfig";
  */
 export default function UpdateEmail() {
   const { progress, roadmap } = siteConfig;
+
+  // Figures derive from the same source the website uses, so the email can
+  // never disagree with /progress. Update them in src/lib/progressConfig.ts.
+  const figures: ReadonlyArray<{ value: string; label: string }> = [
+    {
+      value: `${progressConfig.coursesMapped.toLocaleString(
+        "en-GB"
+      )} of ~${progressConfig.coursesTotal.toLocaleString("en-GB")}`,
+      label: "Courses mapped",
+    },
+    {
+      value: `${progressConfig.completedCounties.length} of ${COUNTIES_TOTAL}`,
+      label: "Counties covered",
+    },
+  ];
+
+  const mapSrc = `https://${siteConfig.domain}${MAP_IMAGE_PATH}`;
+
   return (
     <EmailShell
       preview={progress.subject}
@@ -49,8 +72,21 @@ export default function UpdateEmail() {
         </Text>
       ))}
 
+      {/* Coverage-map snapshot — a static PNG built from the same data as the
+          website's /progress map (see scripts/build-progress-map.ts). */}
+      {progress.map.enabled && (
+        <Section style={{ margin: "24px 0 4px", textAlign: "center" }}>
+          <Img
+            src={mapSrc}
+            alt={progress.map.alt}
+            width={440}
+            style={{ width: "100%", maxWidth: 440, height: "auto", margin: "0 auto" }}
+          />
+        </Section>
+      )}
+
       {/* Headline figures — a compact stat list. */}
-      {progress.figures.length > 0 && (
+      {figures.length > 0 && (
         <Section
           style={{
             margin: "22px 0 4px",
@@ -60,7 +96,7 @@ export default function UpdateEmail() {
             borderRadius: 10,
           }}
         >
-          {progress.figures.map((f, i) => (
+          {figures.map((f, i) => (
             <Text
               key={i}
               style={{
@@ -70,7 +106,7 @@ export default function UpdateEmail() {
                 lineHeight: "20px",
                 color: brand.ink2,
                 borderBottom:
-                  i < progress.figures.length - 1
+                  i < figures.length - 1
                     ? `1px solid ${brand.border}`
                     : undefined,
               }}
