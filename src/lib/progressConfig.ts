@@ -14,7 +14,7 @@
 
 export const progressConfig = {
   /** Courses in the database so far. */
-  coursesMapped: 1231,
+  coursesMapped: 1253,
   /** Approximate total — always rendered with a "~". */
   coursesTotal: 2500,
 
@@ -33,6 +33,7 @@ export const progressConfig = {
     "Derbyshire",
     "Devon",
     "Dorset",
+    "East Riding of Yorkshire",
     "East Sussex",
     "Essex",
     "Gloucestershire",
@@ -63,9 +64,9 @@ export const progressConfig = {
 
   /** The most recently mapped county — gets the "Just added" beacon on the
    *  atlas and the ledger line. Must be one of completedCounties above. */
-  latestCounty: "Lincolnshire",
+  latestCounty: "East Riding of Yorkshire",
 
-  lastUpdated: "28 June 2026",
+  lastUpdated: "29 June 2026",
 
   /** Honest, present-tense — rewrite it whenever the work changes. */
   rightNow:
