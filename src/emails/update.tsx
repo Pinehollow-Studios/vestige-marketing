@@ -2,8 +2,8 @@ import * as React from "react";
 import { Heading, Img, Section, Text } from "@react-email/components";
 import {
   EmailShell,
+  Eyebrow,
   brand,
-  eyebrowStyle,
   h1Style,
   pStyle,
 } from "../lib/emailShell";
@@ -63,7 +63,7 @@ export default function UpdateEmail() {
         </>
       }
     >
-      <Text style={eyebrowStyle}>{progress.eyebrow}</Text>
+      <Eyebrow>{progress.eyebrow}</Eyebrow>
       <Heading style={h1Style}>{progress.headline}</Heading>
 
       {progress.intro.map((para, i) => (
@@ -114,9 +114,11 @@ export default function UpdateEmail() {
               <span
                 style={{
                   color: brand.accent,
-                  fontWeight: 700,
+                  fontWeight: 600,
                   fontSize: 18,
-                  fontFamily: brand.serif,
+                  fontFamily: brand.display,
+                  fontVariantNumeric: "tabular-nums",
+                  letterSpacing: "-0.3px",
                 }}
               >
                 {f.value}
@@ -154,9 +156,7 @@ export default function UpdateEmail() {
             borderRadius: 6,
           }}
         >
-          <Text style={{ margin: 0, fontSize: 12, letterSpacing: 1, textTransform: "uppercase", color: brand.accent, fontWeight: 700 }}>
-            {roadmap.eyebrow}
-          </Text>
+          <Eyebrow>{roadmap.eyebrow}</Eyebrow>
           {roadmap.milestones.map((m, i) => (
             <Text key={i} style={{ margin: "8px 0 0", fontSize: 14, lineHeight: "20px", color: brand.ink2 }}>
               <span style={{ color: brand.accent, fontWeight: 700 }}>

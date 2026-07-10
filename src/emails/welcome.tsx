@@ -2,8 +2,8 @@ import * as React from "react";
 import { Heading, Link, Section, Text } from "@react-email/components";
 import {
   EmailShell,
+  Eyebrow,
   brand,
-  eyebrowStyle,
   h1Style,
   pStyle,
 } from "../lib/emailShell";
@@ -41,7 +41,7 @@ export default function WelcomeEmail({
         </>
       }
     >
-      <Text style={eyebrowStyle}>The waiting list</Text>
+      <Eyebrow>The waiting list</Eyebrow>
       <Heading style={h1Style}>You&rsquo;re on the list.</Heading>
 
       <Text style={pStyle}>
