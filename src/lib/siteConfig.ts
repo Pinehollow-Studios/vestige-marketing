@@ -140,6 +140,21 @@ export type SiteConfig = {
      * (Headline figures are derived live from progressConfig — see update.tsx.)
      */
     map: { enabled: boolean; alt: string };
+    /**
+     * Optional standout course, pinned on the coverage map (a glowing mint
+     * marker at the county's centroid) and named in a caption beneath it. The
+     * `county` must match a county in counties.ts exactly — the map build fails
+     * loudly on a typo. Set enabled:false to omit both pin and caption.
+     */
+    spotlight: {
+      enabled: boolean;
+      /** County the pin sits in (must match counties.ts). */
+      county: string;
+      /** Course name shown in the caption, e.g. "Woodhall Spa". */
+      name: string;
+      /** Short editorial note, e.g. "home of England Golf". */
+      note: string;
+    };
     /** What's new this update — a short titled bullet each. */
     highlights: ReadonlyArray<{ title: string; body: string }>;
     /** Show the roadmap reminder block (pulled from `roadmap.milestones`). */
@@ -338,7 +353,13 @@ export const siteConfig: SiteConfig = {
     ],
     map: {
       enabled: true,
-      alt: "Map of England with the mapped counties filled in mint, the collection climbing south to north.",
+      alt: "Map of England with the mapped counties filled in mint, the collection climbing south to north, and a glowing pin marking Woodhall Spa in Lincolnshire.",
+    },
+    spotlight: {
+      enabled: true,
+      county: "Lincolnshire",
+      name: "Woodhall Spa",
+      note: "home of England Golf",
     },
     highlights: [
       {

@@ -19,6 +19,7 @@ import { dirname, resolve } from "node:path";
 import { Resvg } from "@resvg/resvg-js";
 import { COUNTY_SHAPES, COUNTY_VIEW } from "../src/components/progress/counties.ts";
 import { progressConfig } from "../src/lib/progressConfig.ts";
+import { siteConfig } from "../src/lib/siteConfig.ts";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const OUT = resolve(here, "../public/progress/atlas-current.png");
@@ -59,6 +60,23 @@ const latestOutline = latestShape
   ? `<path d="${latestShape.d}" fill="none" stroke="#EAFBF5" stroke-width="1.3" stroke-linejoin="round" fill-rule="evenodd"/>`
   : "";
 
+// Optional standout-course pin — a glowing mint marker at the county's
+// centroid (a "played course" pin, §11 — distinct from the county fill, which
+// is reserved for 100% complete). Named in the email caption, not on the map.
+const spot = siteConfig.progress.spotlight;
+let spotlightPin = "";
+if (spot.enabled) {
+  const spotShape = COUNTY_SHAPES.find((s) => s.name === spot.county);
+  if (!spotShape) {
+    throw new Error(
+      `progress.spotlight.county "${spot.county}" is not a county in counties.ts — names must match exactly.`
+    );
+  }
+  spotlightPin =
+    `<circle cx="${spotShape.cx}" cy="${spotShape.cy}" r="15" fill="url(#pinGlow)"/>` +
+    `<circle cx="${spotShape.cx}" cy="${spotShape.cy}" r="3.4" fill="#5BE4C3" stroke="#EAFBF5" stroke-width="0.7"/>`;
+}
+
 const { w, h } = COUNTY_VIEW;
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">
   <defs>
@@ -70,11 +88,16 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" wid
       <stop offset="0%" stop-color="#5BE4C3" stop-opacity="0.12"/>
       <stop offset="70%" stop-color="#5BE4C3" stop-opacity="0"/>
     </radialGradient>
+    <radialGradient id="pinGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#5BE4C3" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#5BE4C3" stop-opacity="0"/>
+    </radialGradient>
   </defs>
   <rect x="0" y="0" width="${w}" height="${h}" fill="url(#halo)"/>
   <g>${basePaths}</g>
   <g>${donePaths}</g>
   ${latestOutline}
+  ${spotlightPin}
 </svg>`;
 
 const resvg = new Resvg(svg, {
@@ -87,6 +110,7 @@ mkdirSync(dirname(OUT), { recursive: true });
 writeFileSync(OUT, png);
 
 const done = progressConfig.completedCounties.length;
+const pinNote = spot.enabled ? `, pin: ${spot.name} (${spot.county})` : "";
 console.log(
-  `Wrote ${OUT}\n  ${done} counties filled${latest ? ` (latest: ${latest})` : ""}, ${png.length} bytes`
+  `Wrote ${OUT}\n  ${done} counties filled${latest ? ` (latest: ${latest})` : ""}${pinNote}, ${png.length} bytes`
 );

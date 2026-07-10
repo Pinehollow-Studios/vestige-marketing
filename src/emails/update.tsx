@@ -82,6 +82,25 @@ export default function UpdateEmail() {
             width={440}
             style={{ width: "100%", maxWidth: 440, height: "auto", margin: "0 auto" }}
           />
+          {/* Caption for the standout-course pin baked into the map above. */}
+          {progress.spotlight.enabled && (
+            <Text
+              style={{
+                margin: "10px auto 0",
+                maxWidth: 400,
+                fontSize: 12.5,
+                lineHeight: "18px",
+                color: brand.ink2,
+                textAlign: "center",
+              }}
+            >
+              The pin in {progress.spotlight.county} is{" "}
+              <span style={{ color: brand.ink, fontWeight: 600 }}>
+                {progress.spotlight.name}
+              </span>{" "}
+              &mdash; {progress.spotlight.note}.
+            </Text>
+          )}
         </Section>
       )}
 
