@@ -363,12 +363,12 @@ export const siteConfig: SiteConfig = {
     },
     highlights: [
       {
-        title: "Placeholder highlight one",
-        body: "A county or region just finished — say a line about it here.",
+        title: "The Midlands are nearly joined up",
+        body: "Nottinghamshire went in this month, so that's thirty-four counties down and the belt across the middle of England almost solid mint.",
       },
       {
-        title: "Placeholder highlight two",
-        body: "A marquee course added, or a feature taking shape. One or two lines.",
+        title: "Every course, checked by hand",
+        body: "No scraped lists or guesswork — each of the 1,181 courses on the map has been verified one by one. It's slow, and that's the point.",
       },
     ],
     showRoadmap: true,
