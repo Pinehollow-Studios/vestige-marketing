@@ -303,24 +303,24 @@ export const siteConfig: SiteConfig = {
   roadmap: {
     eyebrow: "Road to launch",
     titlePre: "From here, to ",
-    titleItalic: "summer",
+    titleItalic: "spring",
     titlePost: ".",
     sub: "Three steps between now and the App Store.",
     milestones: [
       {
-        month: "Oct",
+        month: "Sep",
         year: "2026",
         label: "Beta one",
         body: "Friends and family. The first look.",
       },
       {
-        month: "Feb",
+        month: "Jan",
         year: "2027",
         label: "Beta two",
         body: "Public beta. Waitlist members get a code first.",
       },
       {
-        month: "Summer",
+        month: "Mar",
         year: "2027",
         label: "Launch day",
         body: "On the App Store. Free for everyone.",
