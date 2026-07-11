@@ -54,10 +54,6 @@ const donePaths = COUNTY_SHAPES.filter((s) => doneSet.has(s.name))
   .join("");
 
 const { w, h } = COUNTY_VIEW;
-// Extra canvas below the map for the spotlight's leader line to land in, where
-// the email's HTML callout continues it. Kept transparent (the card shows).
-const BAND = 110;
-const H = h + BAND;
 
 const spot = siteConfig.progress.spotlight;
 
@@ -71,10 +67,10 @@ const latestOutline =
     ? `<path d="${latestShape.d}" fill="none" stroke="#EAFBF5" stroke-width="1.3" stroke-linejoin="round" fill-rule="evenodd"/>`
     : "";
 
-// Optional standout-course spotlight: a played-course pin (§11 — a marker, not
-// a county fill) with a dotted leader line curving down to the bottom-centre of
-// the canvas, where the email's HTML callout picks it up. The pin carries a dark
-// ring so it stays legible whether or not its county is filled mint.
+// Optional standout-course pin — a played-course marker (§11 — a marker, not a
+// county fill) that just marks where the course sits; the email names it in a
+// highlight. A bright cream halo + mint core over a soft glow keeps it legible
+// whether or not its county is filled mint.
 let spotlight = "";
 if (spot.enabled) {
   const spotShape = COUNTY_SHAPES.find((s) => s.name === spot.county);
@@ -85,22 +81,13 @@ if (spot.enabled) {
   }
   const px = spotShape.cx;
   const py = spotShape.cy;
-  const lx = w / 2; // leader ends at bottom-centre so the centred caption aligns
-  const ly = H - 6;
-  const leader = `M ${px} ${py} C ${px} ${py + 48}, ${lx} ${(py + ly) / 2}, ${lx} ${ly}`;
   spotlight =
-    // dark casing under a light dotted leader, so it reads over mint or dark
-    `<path d="${leader}" fill="none" stroke="#06231C" stroke-width="2.8" stroke-linecap="round" opacity="0.4"/>` +
-    `<path d="${leader}" fill="none" stroke="#EAFBF5" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="0.1 6" opacity="0.9"/>` +
-    `<circle cx="${lx}" cy="${ly}" r="2.4" fill="#EAFBF5"/>` +
-    // the pin itself, on top: a bright cream halo around a mint core, over a
-    // soft glow — luminous, and pops whether its county is filled mint or dark
     `<circle cx="${px}" cy="${py}" r="16" fill="url(#pinGlow)"/>` +
     `<circle cx="${px}" cy="${py}" r="4.6" fill="#EAFBF5"/>` +
     `<circle cx="${px}" cy="${py}" r="2.8" fill="#5BE4C3"/>`;
 }
 
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${H}" width="${w}" height="${H}">
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">
   <defs>
     <linearGradient id="mint" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="${w}" y2="${h}">
       <stop offset="0%" stop-color="#5BE4C3"/>

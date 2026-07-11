@@ -141,21 +141,17 @@ export type SiteConfig = {
      */
     map: { enabled: boolean; alt: string };
     /**
-     * Optional standout course, pinned on the coverage map (a glowing mint
-     * marker at the county's centroid) and named in a caption beneath it. The
-     * `county` must match a county in counties.ts exactly — the map build fails
-     * loudly on a typo. Set enabled:false to omit both pin and caption.
+     * Optional standout course, marked with a glowing pin on the coverage map
+     * at the county's centroid (name it in a highlight below). The `county`
+     * must match a county in counties.ts exactly — the map build fails loudly
+     * on a typo. Set enabled:false to omit the pin.
      */
     spotlight: {
       enabled: boolean;
       /** County the pin sits in (must match counties.ts). */
       county: string;
-      /** Course name shown in the callout, e.g. "Woodhall Spa". */
+      /** Course the pin marks — used in the map's alt text. */
       name: string;
-      /** Short epithet under the name, e.g. "home of England Golf". */
-      note: string;
-      /** A sentence or two on why it's the standout, shown in the callout. */
-      blurb: string;
     };
     /** What's new this update — a short titled bullet each. */
     highlights: ReadonlyArray<{ title: string; body: string }>;
@@ -361,13 +357,15 @@ export const siteConfig: SiteConfig = {
       enabled: true,
       county: "Lincolnshire",
       name: "Woodhall Spa",
-      note: "home of England Golf",
-      blurb: "The Hotchkin is one of the country's great heathland courses — and the standout as we open up Lincolnshire.",
     },
     highlights: [
       {
         title: "The North opens up",
         body: "Three slices of Yorkshire, Greater Manchester and Lincolnshire have joined the map — the collection's reached well beyond the Midlands now.",
+      },
+      {
+        title: "Woodhall Spa is on",
+        body: "That glowing pin up in Lincolnshire is Woodhall Spa — the Hotchkin, home of England Golf and one of the country's great heathland courses.",
       },
     ],
     showRoadmap: true,

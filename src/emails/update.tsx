@@ -82,38 +82,6 @@ export default function UpdateEmail() {
             width={440}
             style={{ width: "100%", maxWidth: 440, height: "auto", margin: "0 auto" }}
           />
-          {/* Standout-course callout — continues the leader line baked into the
-              map above (it lands at bottom-centre, so this stays centred). */}
-          {progress.spotlight.enabled && (
-            <>
-              <Text
-                style={{
-                  margin: "2px 0 0",
-                  fontFamily: brand.display,
-                  fontSize: 16,
-                  fontWeight: 600,
-                  letterSpacing: "-0.2px",
-                  color: brand.ink,
-                }}
-              >
-                {progress.spotlight.name}
-              </Text>
-              <Text style={{ margin: "2px 0 0", fontSize: 12, lineHeight: "17px", color: brand.ink2 }}>
-                {progress.spotlight.county} &middot; {progress.spotlight.note}
-              </Text>
-              <Text
-                style={{
-                  margin: "7px auto 0",
-                  maxWidth: 340,
-                  fontSize: 13,
-                  lineHeight: "19px",
-                  color: brand.ink2,
-                }}
-              >
-                {progress.spotlight.blurb}
-              </Text>
-            </>
-          )}
         </Section>
       )}
 

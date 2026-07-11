@@ -14,7 +14,7 @@
 
 export const progressConfig = {
   /** Courses in the database so far. */
-  coursesMapped: 1181,
+  coursesMapped: 1446,
   /** Approximate total — always rendered with a "~". */
   coursesTotal: 2500,
 
