@@ -93,9 +93,11 @@ if (spot.enabled) {
     `<path d="${leader}" fill="none" stroke="#06231C" stroke-width="2.8" stroke-linecap="round" opacity="0.4"/>` +
     `<path d="${leader}" fill="none" stroke="#EAFBF5" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="0.1 6" opacity="0.9"/>` +
     `<circle cx="${lx}" cy="${ly}" r="2.4" fill="#EAFBF5"/>` +
-    // the pin itself, on top: mint dot + soft glow + dark ring
-    `<circle cx="${px}" cy="${py}" r="15" fill="url(#pinGlow)"/>` +
-    `<circle cx="${px}" cy="${py}" r="3.7" fill="#5BE4C3" stroke="#06231C" stroke-width="1.1"/>`;
+    // the pin itself, on top: a bright cream halo around a mint core, over a
+    // soft glow — luminous, and pops whether its county is filled mint or dark
+    `<circle cx="${px}" cy="${py}" r="16" fill="url(#pinGlow)"/>` +
+    `<circle cx="${px}" cy="${py}" r="4.6" fill="#EAFBF5"/>` +
+    `<circle cx="${px}" cy="${py}" r="2.8" fill="#5BE4C3"/>`;
 }
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${H}" width="${w}" height="${H}">
@@ -109,7 +111,8 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${H}" wid
       <stop offset="70%" stop-color="#5BE4C3" stop-opacity="0"/>
     </radialGradient>
     <radialGradient id="pinGlow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#5BE4C3" stop-opacity="0.55"/>
+      <stop offset="0%" stop-color="#EAFBF5" stop-opacity="0.5"/>
+      <stop offset="45%" stop-color="#5BE4C3" stop-opacity="0.45"/>
       <stop offset="100%" stop-color="#5BE4C3" stop-opacity="0"/>
     </radialGradient>
   </defs>

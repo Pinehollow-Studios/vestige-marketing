@@ -369,10 +369,6 @@ export const siteConfig: SiteConfig = {
         title: "The North opens up",
         body: "Three slices of Yorkshire, Greater Manchester and Lincolnshire have joined the map — the collection's reached well beyond the Midlands now.",
       },
-      {
-        title: "Every course, checked by hand",
-        body: "No scraped lists or guesswork — each one is verified by hand before it goes on the map. It's slow, and that's the point.",
-      },
     ],
     showRoadmap: true,
     signoff: "More soon,",
