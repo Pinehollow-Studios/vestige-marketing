@@ -123,7 +123,7 @@ export default function UpdateEmail() {
               >
                 {f.value}
               </span>
-              {"  —  "}
+              {"  ·  "}
               <span style={{ color: brand.ink }}>{f.label}</span>
             </Text>
           ))}
@@ -162,7 +162,7 @@ export default function UpdateEmail() {
               <span style={{ color: brand.accent, fontWeight: 700 }}>
                 {m.month} {m.year}
               </span>
-              {"  —  "}
+              {"  ·  "}
               <span style={{ color: brand.ink }}>{m.label}.</span> {m.body}
             </Text>
           ))}

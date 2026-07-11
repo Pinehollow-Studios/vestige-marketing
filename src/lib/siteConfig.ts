@@ -343,11 +343,11 @@ export const siteConfig: SiteConfig = {
 
   // PLACEHOLDER CONTENT — swap in real figures/highlights before sending.
   progress: {
-    subject: "Vestige progress — the map's filling in",
+    subject: "The map's filling in",
     eyebrow: "Progress update",
     headline: "The map's filling in.",
     intro: [
-      "A quick note from the workshop. Since you joined the waiting list we've been heads-down mapping England, county by county — here's where things stand.",
+      "A quick note from the workshop. Since you joined the waiting list, we've been mapping England county by county. Here's where things stand.",
     ],
     map: {
       enabled: true,
@@ -361,11 +361,11 @@ export const siteConfig: SiteConfig = {
     highlights: [
       {
         title: "The North opens up",
-        body: "Three slices of Yorkshire, Greater Manchester and Lincolnshire have joined the map — the collection's reached well beyond the Midlands now.",
+        body: "Three slices of Yorkshire, plus Greater Manchester and Lincolnshire, have joined the map. We're well beyond the Midlands now.",
       },
       {
         title: "Woodhall Spa is on",
-        body: "That glowing pin up in Lincolnshire is Woodhall Spa — the Hotchkin, home of England Golf and one of the country's great heathland courses.",
+        body: "That glowing pin in Lincolnshire is Woodhall Spa, home of England Golf. The Hotchkin there is one of the country's great heathland courses.",
       },
     ],
     showRoadmap: true,
