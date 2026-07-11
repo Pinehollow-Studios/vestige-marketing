@@ -154,7 +154,7 @@ export const siteConfig: SiteConfig = {
     headline: ["2,500 courses. How many have you ", "played", "?"],
     waitlistNote:
       "Beta codes go to the waiting list first. Play it months before launch.",
-    metaStrip: ["iPhone, iOS 18+", "Free at launch", "Summer 2027"],
+    metaStrip: ["iPhone, iOS 18+", "Free at launch", "March 2027"],
   },
 
   marquee: [
@@ -184,7 +184,7 @@ export const siteConfig: SiteConfig = {
     { kind: "number", target: 2500, suffix: "+", label: "Courses" },
     { kind: "number", target: 47, label: "Ceremonial counties" },
     { kind: "number", target: 0, prefix: "£", label: "Cost at launch" },
-    { kind: "static", value: "Summer ’27", label: "On the App Store" },
+    { kind: "static", value: "March ’27", label: "On the App Store" },
   ],
 
   appPage: {
@@ -240,7 +240,7 @@ export const siteConfig: SiteConfig = {
     },
     {
       q: "When can I actually use it?",
-      a: "A friends-and-family beta this autumn, then a public beta in early 2027, then the free App Store release next summer. Waitlist members get an access code before anyone else.",
+      a: "A friends-and-family beta in September, then a public beta in early 2027, then the free App Store release in spring. Waitlist members get an access code before anyone else.",
     },
   ],
 
@@ -271,24 +271,24 @@ export const siteConfig: SiteConfig = {
   roadmap: {
     eyebrow: "Road to launch",
     titlePre: "From here, to ",
-    titleItalic: "summer",
+    titleItalic: "spring",
     titlePost: ".",
     sub: "Three steps between now and the App Store.",
     milestones: [
       {
-        month: "Oct",
+        month: "Sep",
         year: "2026",
         label: "Beta one",
         body: "Friends and family. The first look.",
       },
       {
-        month: "Feb",
+        month: "Jan",
         year: "2027",
         label: "Beta two",
         body: "Public beta. Waitlist members get a code first.",
       },
       {
-        month: "Summer",
+        month: "Mar",
         year: "2027",
         label: "Launch day",
         body: "On the App Store. Free for everyone.",
