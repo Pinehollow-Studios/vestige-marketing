@@ -150,10 +150,12 @@ export type SiteConfig = {
       enabled: boolean;
       /** County the pin sits in (must match counties.ts). */
       county: string;
-      /** Course name shown in the caption, e.g. "Woodhall Spa". */
+      /** Course name shown in the callout, e.g. "Woodhall Spa". */
       name: string;
-      /** Short editorial note, e.g. "home of England Golf". */
+      /** Short epithet under the name, e.g. "home of England Golf". */
       note: string;
+      /** A sentence or two on why it's the standout, shown in the callout. */
+      blurb: string;
     };
     /** What's new this update — a short titled bullet each. */
     highlights: ReadonlyArray<{ title: string; body: string }>;
@@ -360,15 +362,16 @@ export const siteConfig: SiteConfig = {
       county: "Lincolnshire",
       name: "Woodhall Spa",
       note: "home of England Golf",
+      blurb: "The Hotchkin is one of the country's great heathland courses — and the standout as we open up Lincolnshire.",
     },
     highlights: [
       {
-        title: "The Midlands are nearly joined up",
-        body: "Nottinghamshire went in this month, so that's thirty-four counties down and the belt across the middle of England almost solid mint.",
+        title: "The North opens up",
+        body: "Three slices of Yorkshire, Greater Manchester and Lincolnshire have joined the map — the collection's reached well beyond the Midlands now.",
       },
       {
         title: "Every course, checked by hand",
-        body: "No scraped lists or guesswork — each of the 1,181 courses on the map has been verified one by one. It's slow, and that's the point.",
+        body: "No scraped lists or guesswork — each one is verified by hand before it goes on the map. It's slow, and that's the point.",
       },
     ],
     showRoadmap: true,

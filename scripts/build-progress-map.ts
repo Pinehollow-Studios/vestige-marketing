@@ -53,18 +53,29 @@ const donePaths = COUNTY_SHAPES.filter((s) => doneSet.has(s.name))
   )
   .join("");
 
-// The most-recent county gets a soft light outline (the email's static stand-in
-// for the website's pulsing "just added" beacon).
-const latestShape = COUNTY_SHAPES.find((s) => s.name === latest && doneSet.has(s.name));
-const latestOutline = latestShape
-  ? `<path d="${latestShape.d}" fill="none" stroke="#EAFBF5" stroke-width="1.3" stroke-linejoin="round" fill-rule="evenodd"/>`
-  : "";
+const { w, h } = COUNTY_VIEW;
+// Extra canvas below the map for the spotlight's leader line to land in, where
+// the email's HTML callout continues it. Kept transparent (the card shows).
+const BAND = 110;
+const H = h + BAND;
 
-// Optional standout-course pin — a glowing mint marker at the county's
-// centroid (a "played course" pin, §11 — distinct from the county fill, which
-// is reserved for 100% complete). Named in the email caption, not on the map.
 const spot = siteConfig.progress.spotlight;
-let spotlightPin = "";
+
+// The most-recent county gets a soft light outline (the email's static stand-in
+// for the website's pulsing "just added" beacon). Skipped when it's also the
+// pinned county — the pin already marks it, and both together read as clutter.
+const drawBeacon = !(spot.enabled && spot.county === latest);
+const latestShape = COUNTY_SHAPES.find((s) => s.name === latest && doneSet.has(s.name));
+const latestOutline =
+  latestShape && drawBeacon
+    ? `<path d="${latestShape.d}" fill="none" stroke="#EAFBF5" stroke-width="1.3" stroke-linejoin="round" fill-rule="evenodd"/>`
+    : "";
+
+// Optional standout-course spotlight: a played-course pin (§11 — a marker, not
+// a county fill) with a dotted leader line curving down to the bottom-centre of
+// the canvas, where the email's HTML callout picks it up. The pin carries a dark
+// ring so it stays legible whether or not its county is filled mint.
+let spotlight = "";
 if (spot.enabled) {
   const spotShape = COUNTY_SHAPES.find((s) => s.name === spot.county);
   if (!spotShape) {
@@ -72,13 +83,22 @@ if (spot.enabled) {
       `progress.spotlight.county "${spot.county}" is not a county in counties.ts — names must match exactly.`
     );
   }
-  spotlightPin =
-    `<circle cx="${spotShape.cx}" cy="${spotShape.cy}" r="15" fill="url(#pinGlow)"/>` +
-    `<circle cx="${spotShape.cx}" cy="${spotShape.cy}" r="3.4" fill="#5BE4C3" stroke="#EAFBF5" stroke-width="0.7"/>`;
+  const px = spotShape.cx;
+  const py = spotShape.cy;
+  const lx = w / 2; // leader ends at bottom-centre so the centred caption aligns
+  const ly = H - 6;
+  const leader = `M ${px} ${py} C ${px} ${py + 48}, ${lx} ${(py + ly) / 2}, ${lx} ${ly}`;
+  spotlight =
+    // dark casing under a light dotted leader, so it reads over mint or dark
+    `<path d="${leader}" fill="none" stroke="#06231C" stroke-width="2.8" stroke-linecap="round" opacity="0.4"/>` +
+    `<path d="${leader}" fill="none" stroke="#EAFBF5" stroke-width="1.4" stroke-linecap="round" stroke-dasharray="0.1 6" opacity="0.9"/>` +
+    `<circle cx="${lx}" cy="${ly}" r="2.4" fill="#EAFBF5"/>` +
+    // the pin itself, on top: mint dot + soft glow + dark ring
+    `<circle cx="${px}" cy="${py}" r="15" fill="url(#pinGlow)"/>` +
+    `<circle cx="${px}" cy="${py}" r="3.7" fill="#5BE4C3" stroke="#06231C" stroke-width="1.1"/>`;
 }
 
-const { w, h } = COUNTY_VIEW;
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}">
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${H}" width="${w}" height="${H}">
   <defs>
     <linearGradient id="mint" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="${w}" y2="${h}">
       <stop offset="0%" stop-color="#5BE4C3"/>
@@ -97,7 +117,7 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" wid
   <g>${basePaths}</g>
   <g>${donePaths}</g>
   ${latestOutline}
-  ${spotlightPin}
+  ${spotlight}
 </svg>`;
 
 const resvg = new Resvg(svg, {
