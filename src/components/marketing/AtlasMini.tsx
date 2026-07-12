@@ -7,7 +7,7 @@ import { ENGLAND_PATH, COURSE_PINS } from "./england";
  * The atlas companion — a small fixed England map that rides along in
  * the corner and fills in as the visitor scrolls: the coastline draws
  * itself, course pins light one by one, and the counter ticks toward
- * 2,500. The product's promise ("your map of the country, filling in")
+ * 2,000. The product's promise ("your map of the country, filling in")
  * acted out by the page itself.
  *
  * Pin opacities and the outline draw are pure CSS off the global --gp
@@ -35,7 +35,7 @@ export function AtlasMini() {
       const target = max > 0 ? Math.max(0, Math.min(1, window.scrollY / max)) : 0;
       cur = cur < 0 ? target : cur + (target - cur) * 0.14;
       if (Math.abs(target - cur) < 0.0005) cur = target;
-      const n = Math.round(cur * 2500);
+      const n = Math.round(cur * 2000);
       // text writes dirty layout — only touch the DOM when the number moves
       if (n !== lastN && numRef.current) {
         numRef.current.textContent = n.toLocaleString("en-GB");
@@ -67,7 +67,7 @@ export function AtlasMini() {
       <div className="fw-atlasmini-meta">
         <span className="fw-atlasmini-count">
           <span ref={numRef}>0</span>
-          <span className="fw-atlasmini-of"> / 2,500</span>
+          <span className="fw-atlasmini-of"> / 2,000</span>
         </span>
         <span className="fw-atlasmini-label">collected</span>
       </div>

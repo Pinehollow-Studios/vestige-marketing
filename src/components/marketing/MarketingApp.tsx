@@ -135,7 +135,7 @@ export function MarketingApp({
 
         {/* Centred hero content */}
         <div className="fw-hero-content">
-          {/* The headline's "2,500 courses" carries the context, so the
+          {/* The headline's "2,000 courses" carries the context, so the
               eyebrow slot only appears once the live count earns it. */}
           {liveCount && (
             <div className="fw-intro-stage" style={{ marginBottom: 30, ...stage(150) }}>

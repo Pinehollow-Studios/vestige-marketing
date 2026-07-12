@@ -43,7 +43,7 @@ export default function LaunchEmail() {
 
       <Text style={pStyle}>
         The wait is over. {siteConfig.brandName} is on the App Store today — every
-        course in England, all 2,500+ of them, ready for you to start your
+        course in England, all 2,000+ of them, ready for you to start your
         collection. Free.
       </Text>
 

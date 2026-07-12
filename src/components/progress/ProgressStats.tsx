@@ -6,7 +6,7 @@ type Stat = {
   label: string;
   value: number;
   total: number;
-  /** Render the total as approximate ("~2,500"). */
+  /** Render the total as approximate ("~2,000"). */
   approx?: boolean;
 };
 
