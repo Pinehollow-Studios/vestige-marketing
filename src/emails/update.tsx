@@ -88,6 +88,7 @@ export default function UpdateEmail() {
       {/* Headline figures — a compact stat list. */}
       {figures.length > 0 && (
         <Section
+          className="vs-sunken"
           style={{
             margin: "22px 0 4px",
             padding: "4px 16px",
@@ -148,6 +149,7 @@ export default function UpdateEmail() {
       {/* Roadmap reminder — reused from the single source of truth. */}
       {progress.showRoadmap && (
         <Section
+          className="vs-card"
           style={{
             margin: "24px 0 4px",
             padding: "16px",

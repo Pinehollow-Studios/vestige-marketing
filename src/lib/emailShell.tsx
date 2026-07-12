@@ -126,12 +126,19 @@ export function EmailShell({
             __html:
               // @import must come first in a stylesheet, before other rules.
               "@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');" +
-              ":root{color-scheme:dark;supported-color-schemes:dark;}",
+              ":root{color-scheme:dark;supported-color-schemes:dark;}" +
+              // Outlook dark mode lightens dark backgrounds; it tags remapped
+              // elements with data-ogsb (background) / data-ogsc (text). Pin our
+              // surfaces so they stay the intended near-black.
+              ".vs-body,[data-ogsb] .vs-body{background-color:#070A10!important;}" +
+              ".vs-card,[data-ogsb] .vs-card{background-color:#0C1220!important;}" +
+              ".vs-sunken,[data-ogsb] .vs-sunken{background-color:#070A10!important;}",
           }}
         />
       </Head>
       <Preview>{preview}</Preview>
       <Body
+        className="vs-body"
         style={{
           backgroundColor: brand.bg,
           // Blue atmosphere (top glow + floor wash) — decorative progressive
@@ -160,6 +167,7 @@ export function EmailShell({
           </Section>
 
           <Section
+            className="vs-card"
             style={{
               backgroundColor: brand.card,
               border: `1px solid ${brand.border}`,
