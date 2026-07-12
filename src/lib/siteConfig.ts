@@ -213,7 +213,7 @@ export const siteConfig: SiteConfig = {
   brandLowerName: "vestige",
   tagline: "Every golf course in England, collected.",
   description:
-    "England has over 2,500 golf courses, from Open Championship links to your local pitch & putt. Vestige keeps the ones you've played, fills in your map of the country, and shows how your collection compares with your friends'.",
+    "England has over 2,000 golf courses, from Open Championship links to your local pitch & putt. Vestige keeps the ones you've played, fills in your map of the country, and shows how your collection compares with your friends'.",
   domain: "vestige.golf",
   appStoreUrl: null,
   contactEmail: "hello@pinehollow.studio",
@@ -227,7 +227,7 @@ export const siteConfig: SiteConfig = {
   hero: {
     liveCountMinWeekly: 100,
     liveEyebrowLabel: "joined the waiting list this week",
-    headline: ["2,500 courses. How many have you ", "played", "?"],
+    headline: ["2,000 courses. How many have you ", "played", "?"],
     waitlistNote:
       "Beta codes go to the waiting list first. Play it months before launch.",
     metaStrip: ["iPhone, iOS 18+", "Free at launch", "March 2027"],
@@ -257,7 +257,7 @@ export const siteConfig: SiteConfig = {
   ],
 
   stats: [
-    { kind: "number", target: 2500, suffix: "+", label: "Courses" },
+    { kind: "number", target: 2000, suffix: "+", label: "Courses" },
     { kind: "number", target: 47, label: "Ceremonial counties" },
     { kind: "number", target: 0, prefix: "£", label: "Cost at launch" },
     { kind: "static", value: "March ’27", label: "On the App Store" },
@@ -304,7 +304,7 @@ export const siteConfig: SiteConfig = {
     },
     {
       q: "Which courses are in it?",
-      a: "Every course in England: all 2,500-odd, from Open Championship links to your local nine-hole pitch & putt.",
+      a: "Every course in England: all 2,000-odd, from Open Championship links to your local nine-hole pitch & putt.",
     },
     {
       q: "Is it England only?",
@@ -326,7 +326,7 @@ export const siteConfig: SiteConfig = {
       eyebrow: "The atlas",
       title: "Every course in England.",
       body:
-        "All 2,500+ of them, championship links to your local nine-hole pitch & putt, complete on the day we launch.",
+        "All 2,000+ of them, championship links to your local nine-hole pitch & putt, complete on the day we launch.",
     },
     {
       kind: "tap",
