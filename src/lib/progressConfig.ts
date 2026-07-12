@@ -16,7 +16,7 @@ export const progressConfig = {
   /** Courses in the database so far. */
   coursesMapped: 1497,
   /** Approximate total — always rendered with a "~". */
-  coursesTotal: 2500,
+  coursesTotal: 2000,
 
   /**
    * Counties fully mapped, filled mint on the map. 47 ceremonial
