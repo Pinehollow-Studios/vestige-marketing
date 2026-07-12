@@ -402,19 +402,20 @@ export const siteConfig: SiteConfig = {
         "South Yorkshire",
         "West Yorkshire",
       ],
-      // PLACEHOLDER NUMBERS — the ranking site blocks scraping, so these are
-      // estimates. Verify topCount and every `rank` against
-      // top100golfcourses.com/golf-courses/britain-ireland/england before sending.
-      topCount: 85,
+      // Ranks + count from top100golfcourses.com England list (2025). 84 of the
+      // top 100 sit in completed counties; the 16 that don't are all in the
+      // not-yet-mapped links coast (Merseyside, Lancashire, Cumbria, etc.).
+      topCount: 84,
       courses: [
         {
           name: "Woodhall Spa",
           county: "Lincolnshire",
-          rank: 9,
+          rank: 12,
           note: "the pin above, and home of England Golf",
         },
-        { name: "Alwoodley", county: "West Yorkshire", rank: 30 },
-        { name: "Moortown", county: "West Yorkshire", rank: 55 },
+        { name: "Alwoodley", county: "West Yorkshire", rank: 19 },
+        { name: "Moortown", county: "West Yorkshire", rank: 39 },
+        { name: "Delamere Forest", county: "Cheshire", rank: 52 },
       ],
     },
     showRightNow: true,
