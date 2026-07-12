@@ -382,10 +382,10 @@ export const siteConfig: SiteConfig = {
     ],
     map: {
       enabled: true,
-      alt: "Map of England with the mapped counties filled in mint, the collection climbing south to north, and a glowing pin marking Woodhall Spa in Lincolnshire.",
+      alt: "Map of England with the mapped counties filled in mint, the collection climbing south to north.",
     },
     spotlight: {
-      enabled: true,
+      enabled: false,
       county: "Lincolnshire",
       name: "Woodhall Spa",
     },
@@ -411,7 +411,7 @@ export const siteConfig: SiteConfig = {
           name: "Woodhall Spa",
           county: "Lincolnshire",
           rank: 12,
-          note: "the pin above, and home of England Golf",
+          note: "home of England Golf",
         },
         { name: "Alwoodley", county: "West Yorkshire", rank: 19 },
         { name: "Moortown", county: "West Yorkshire", rank: 39 },
