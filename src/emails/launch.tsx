@@ -2,8 +2,9 @@ import * as React from "react";
 import { Button, Heading, Section, Text } from "@react-email/components";
 import {
   EmailShell,
+  Eyebrow,
+  accentGradient,
   brand,
-  eyebrowStyle,
   h1Style,
   pStyle,
 } from "../lib/emailShell";
@@ -37,7 +38,7 @@ export default function LaunchEmail() {
         </>
       }
     >
-      <Text style={eyebrowStyle}>It&rsquo;s here</Text>
+      <Eyebrow>It&rsquo;s here</Eyebrow>
       <Heading style={h1Style}>{siteConfig.brandName} is live.</Heading>
 
       <Text style={pStyle}>
@@ -50,7 +51,7 @@ export default function LaunchEmail() {
         <Button
           href={appUrl}
           style={{
-            backgroundColor: brand.accent,
+            ...accentGradient,
             color: brand.onAccent,
             fontSize: 15,
             fontWeight: 700,
