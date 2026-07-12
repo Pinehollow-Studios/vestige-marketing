@@ -392,8 +392,8 @@ export const siteConfig: SiteConfig = {
     highlights: [],
     justAdded: {
       enabled: true,
-      eyebrow: "Just added",
-      lead: "Six counties joined the map this update, the north filling in fast:",
+      eyebrow: "Recently added",
+      lead: "A few of the counties that have joined the map lately, the north filling in fast:",
       counties: [
         "Cheshire",
         "East Riding of Yorkshire",
