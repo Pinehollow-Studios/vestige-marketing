@@ -168,10 +168,21 @@ export type SiteConfig = {
       lead: string;
       /** County chip labels (order as you like). */
       counties: ReadonlyArray<string>;
-      /** Small heading above the course list. */
-      coursesLead: string;
-      /** Standout courses now on the map — name + its county. */
-      courses: ReadonlyArray<{ name: string; county: string }>;
+      /**
+       * How many of England's top 100 (top100golfcourses.com) are now on the
+       * map. Set to 0 to hide the "X of the top 100" line.
+       */
+      topCount: number;
+      /**
+       * Standout courses to feature — `rank` is their place in that top 100
+       * (omit/0 to hide the number), `note` an optional aside.
+       */
+      courses: ReadonlyArray<{
+        name: string;
+        county: string;
+        rank?: number;
+        note?: string;
+      }>;
     };
     /** Show the honest "what we're up to right now" note (from progressConfig). */
     showRightNow: boolean;
@@ -378,13 +389,7 @@ export const siteConfig: SiteConfig = {
       county: "Lincolnshire",
       name: "Woodhall Spa",
     },
-    highlights: [
-      {
-        title: "Woodhall Spa is on",
-        body: "That glowing pin in Lincolnshire is Woodhall Spa, home of England Golf. The Hotchkin there is one of the country's great heathland courses.",
-      },
-    ],
-    // PLACEHOLDER courses — swap for the standouts you want to shout about.
+    highlights: [],
     justAdded: {
       enabled: true,
       eyebrow: "Just added",
@@ -397,12 +402,19 @@ export const siteConfig: SiteConfig = {
         "South Yorkshire",
         "West Yorkshire",
       ],
-      coursesLead: "And some of the standouts that came with them:",
+      // PLACEHOLDER NUMBERS — the ranking site blocks scraping, so these are
+      // estimates. Verify topCount and every `rank` against
+      // top100golfcourses.com/golf-courses/britain-ireland/england before sending.
+      topCount: 85,
       courses: [
-        { name: "Alwoodley", county: "West Yorkshire" },
-        { name: "Moortown", county: "West Yorkshire" },
-        { name: "Delamere Forest", county: "Cheshire" },
-        { name: "Seacroft", county: "Lincolnshire" },
+        {
+          name: "Woodhall Spa",
+          county: "Lincolnshire",
+          rank: 9,
+          note: "the pin above, and home of England Golf",
+        },
+        { name: "Alwoodley", county: "West Yorkshire", rank: 30 },
+        { name: "Moortown", county: "West Yorkshire", rank: 55 },
       ],
     },
     showRightNow: true,

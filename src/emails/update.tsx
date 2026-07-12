@@ -177,17 +177,58 @@ export default function UpdateEmail() {
           </Section>
           {progress.justAdded.courses.length > 0 && (
             <>
-              <Text style={{ ...pStyle, marginTop: 14, marginBottom: 2 }}>
-                {progress.justAdded.coursesLead}
+              <Text style={{ ...pStyle, marginTop: 16, marginBottom: 4 }}>
+                {progress.justAdded.topCount > 0 ? (
+                  <>
+                    <span
+                      style={{
+                        color: brand.accent,
+                        fontWeight: 700,
+                        fontFamily: brand.display,
+                        fontVariantNumeric: "tabular-nums",
+                      }}
+                    >
+                      {progress.justAdded.topCount}
+                    </span>{" "}
+                    of England&rsquo;s top 100 are on the map now &mdash; including
+                    these newcomers:
+                  </>
+                ) : (
+                  <>A few of the standouts that came with them:</>
+                )}
               </Text>
               {progress.justAdded.courses.map((c, i) => (
                 <Text
                   key={i}
-                  style={{ margin: "6px 0 0", fontSize: 14, lineHeight: "20px", color: brand.ink2 }}
+                  style={{
+                    margin: "10px 0 0",
+                    fontSize: 15,
+                    lineHeight: "22px",
+                    color: brand.ink2,
+                  }}
                 >
+                  {c.rank ? (
+                    <span
+                      style={{
+                        display: "inline-block",
+                        minWidth: 34,
+                        color: brand.accent,
+                        fontWeight: 700,
+                        fontSize: 17,
+                        fontFamily: brand.display,
+                        fontVariantNumeric: "tabular-nums",
+                        letterSpacing: "-0.3px",
+                      }}
+                    >
+                      {c.rank}
+                    </span>
+                  ) : null}
                   <span style={{ color: brand.ink, fontWeight: 700 }}>{c.name}</span>
                   {"  ·  "}
                   {c.county}
+                  {c.note ? (
+                    <span style={{ color: brand.ink3 }}> &mdash; {c.note}</span>
+                  ) : null}
                 </Text>
               ))}
             </>
