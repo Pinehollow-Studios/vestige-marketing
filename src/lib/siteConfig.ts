@@ -155,6 +155,8 @@ export type SiteConfig = {
     };
     /** What's new this update — a short titled bullet each. */
     highlights: ReadonlyArray<{ title: string; body: string }>;
+    /** Show the honest "what we're up to right now" note (from progressConfig). */
+    showRightNow: boolean;
     /** Show the roadmap reminder block (pulled from `roadmap.milestones`). */
     showRoadmap: boolean;
     /** Sign-off line above the names. */
@@ -368,6 +370,7 @@ export const siteConfig: SiteConfig = {
         body: "That glowing pin in Lincolnshire is Woodhall Spa, home of England Golf. The Hotchkin there is one of the country's great heathland courses.",
       },
     ],
+    showRightNow: true,
     showRoadmap: true,
     signoff: "More soon,",
   },

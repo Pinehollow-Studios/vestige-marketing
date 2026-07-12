@@ -146,6 +146,14 @@ export default function UpdateEmail() {
         </Section>
       )}
 
+      {/* An honest "what we're up to right now" note, from the makers. */}
+      {progress.showRightNow && (
+        <Section style={{ margin: "26px 0 2px" }}>
+          <Eyebrow>Right now</Eyebrow>
+          <Text style={{ ...pStyle, marginTop: 10 }}>{progressConfig.rightNow}</Text>
+        </Section>
+      )}
+
       {/* Roadmap reminder — reused from the single source of truth. */}
       {progress.showRoadmap && (
         <Section
