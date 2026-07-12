@@ -116,10 +116,17 @@ export function EmailShell({
   return (
     <Html lang="en">
       <Head>
+        {/* Declare this as a dark-scheme email so clients render the dark
+            design as authored instead of force-inverting it (iOS Mail) or
+            washing the near-blacks to grey (Outlook dark mode). */}
+        <meta name="color-scheme" content="dark" />
+        <meta name="supported-color-schemes" content="dark" />
         <style
           dangerouslySetInnerHTML={{
             __html:
-              "@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');",
+              // @import must come first in a stylesheet, before other rules.
+              "@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');" +
+              ":root{color-scheme:dark;supported-color-schemes:dark;}",
           }}
         />
       </Head>
