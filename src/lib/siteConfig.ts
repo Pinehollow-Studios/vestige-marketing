@@ -155,6 +155,24 @@ export type SiteConfig = {
     };
     /** What's new this update — a short titled bullet each. */
     highlights: ReadonlyArray<{ title: string; body: string }>;
+    /**
+     * "Just added" beat: the newly-completed counties as mint chips, plus a few
+     * standout courses now on the map. Because those counties are complete,
+     * every course in them is in the database — so listing famous ones is safe.
+     * Set enabled:false to omit the whole block.
+     */
+    justAdded: {
+      enabled: boolean;
+      eyebrow: string;
+      /** One line of context above the county chips. */
+      lead: string;
+      /** County chip labels (order as you like). */
+      counties: ReadonlyArray<string>;
+      /** Small heading above the course list. */
+      coursesLead: string;
+      /** Standout courses now on the map — name + its county. */
+      courses: ReadonlyArray<{ name: string; county: string }>;
+    };
     /** Show the honest "what we're up to right now" note (from progressConfig). */
     showRightNow: boolean;
     /** Show the roadmap reminder block (pulled from `roadmap.milestones`). */
@@ -362,14 +380,31 @@ export const siteConfig: SiteConfig = {
     },
     highlights: [
       {
-        title: "The North opens up",
-        body: "Three slices of Yorkshire, plus Greater Manchester and Lincolnshire, have joined the map. We're well beyond the Midlands now.",
-      },
-      {
         title: "Woodhall Spa is on",
         body: "That glowing pin in Lincolnshire is Woodhall Spa, home of England Golf. The Hotchkin there is one of the country's great heathland courses.",
       },
     ],
+    // PLACEHOLDER courses — swap for the standouts you want to shout about.
+    justAdded: {
+      enabled: true,
+      eyebrow: "Just added",
+      lead: "Six counties joined the map this update, the north filling in fast:",
+      counties: [
+        "Cheshire",
+        "East Riding of Yorkshire",
+        "Greater Manchester",
+        "Lincolnshire",
+        "South Yorkshire",
+        "West Yorkshire",
+      ],
+      coursesLead: "And some of the standouts that came with them:",
+      courses: [
+        { name: "Alwoodley", county: "West Yorkshire" },
+        { name: "Moortown", county: "West Yorkshire" },
+        { name: "Delamere Forest", county: "Cheshire" },
+        { name: "Seacroft", county: "Lincolnshire" },
+      ],
+    },
     showRightNow: true,
     showRoadmap: true,
     signoff: "More soon,",

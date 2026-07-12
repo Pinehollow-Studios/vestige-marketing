@@ -146,6 +146,55 @@ export default function UpdateEmail() {
         </Section>
       )}
 
+      {/* "Just added" — the new counties as mint chips + a few standout courses. */}
+      {progress.justAdded.enabled && (
+        <Section style={{ margin: "26px 0 2px" }}>
+          <Eyebrow>{progress.justAdded.eyebrow}</Eyebrow>
+          <Text style={{ ...pStyle, marginTop: 10, marginBottom: 12 }}>
+            {progress.justAdded.lead}
+          </Text>
+          {/* County chips */}
+          <Section style={{ margin: 0 }}>
+            {progress.justAdded.counties.map((c, i) => (
+              <span
+                key={i}
+                style={{
+                  display: "inline-block",
+                  margin: "0 6px 8px 0",
+                  padding: "6px 12px",
+                  borderRadius: 999,
+                  backgroundColor: "rgba(91,228,195,0.12)",
+                  border: `1px solid rgba(91,228,195,0.22)`,
+                  color: brand.accent,
+                  fontSize: 12.5,
+                  fontWeight: 600,
+                  lineHeight: "16px",
+                }}
+              >
+                {c}
+              </span>
+            ))}
+          </Section>
+          {progress.justAdded.courses.length > 0 && (
+            <>
+              <Text style={{ ...pStyle, marginTop: 14, marginBottom: 2 }}>
+                {progress.justAdded.coursesLead}
+              </Text>
+              {progress.justAdded.courses.map((c, i) => (
+                <Text
+                  key={i}
+                  style={{ margin: "6px 0 0", fontSize: 14, lineHeight: "20px", color: brand.ink2 }}
+                >
+                  <span style={{ color: brand.ink, fontWeight: 700 }}>{c.name}</span>
+                  {"  ·  "}
+                  {c.county}
+                </Text>
+              ))}
+            </>
+          )}
+        </Section>
+      )}
+
       {/* An honest "what we're up to right now" note, from the makers. */}
       {progress.showRightNow && (
         <Section style={{ margin: "26px 0 2px" }}>
