@@ -1,6 +1,7 @@
 "use server";
 
 import { addToWaitlist } from "@/lib/resend";
+import { mirrorWaitlistToDb } from "@/lib/waitlistDb";
 import { sendWelcomeEmail } from "@/lib/email";
 import { normalizeSource } from "@/lib/sources";
 
@@ -27,6 +28,11 @@ export async function joinWaitlist(
 
   const result = await addToWaitlist(email, source);
   if (!result.ok) return { status: "error", message: result.error };
+
+  // Mirror into our own Supabase so the list is owned + sendable from the
+  // bunker. Best-effort — never blocks the signup (Resend is the primary
+  // capture).
+  await mirrorWaitlistToDb(email, source);
 
   // Welcome genuinely-new signups and returning contacts who had unsubscribed
   // (they're opting back in) — but not active subscribers re-submitting. Only

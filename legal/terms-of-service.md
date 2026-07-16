@@ -7,15 +7,15 @@
 **Effective date:** [EFFECTIVE DATE]
 
 These Terms of Service ("Terms") are a legal agreement between you and
-**Pinehollow Studios Limited** (company number **[COMPANY NUMBER]**, registered
-in England and Wales at **[COMPANY REGISTERED ADDRESS]**) ("Vestige", "we",
+**Pinehollow Studios Limited** (company number **[COMPANY NUMBER — from Companies House]**, registered
+in England and Wales at **82A James Carter Road, Mildenhall, Bury St. Edmunds, IP28 7DE, United Kingdom**) ("Vestige", "we",
 "us"), governing your use of the Vestige iPhone app and related services (the
 "Service"). By creating an account or using the Service, you agree to these
 Terms. If you do not agree, do not use the Service.
 
 ## 1. Eligibility
 
-You must be at least **[MINIMUM AGE]** years old to use Vestige. By using the
+You must be at least **17** years old to use Vestige. By using the
 Service you confirm that you are.
 
 ## 2. The Service
@@ -27,14 +27,56 @@ friends — is, and will remain, **free**. We do not show advertising.
 The Service currently covers **England only**. Scotland and Wales are shown as
 "coming soon". We may add, change, or remove features over time.
 
-## 3. Your account
+## 3. Vestige Pro (optional paid membership)
+
+Vestige Pro is an optional paid membership that adds extra features on top of
+the free Service. The free core described in section 2 stays free whether or
+not you subscribe — Pro only ever adds to it.
+
+**Plans and billing.** Pro is offered as an auto-renewing subscription (monthly
+or annual) and as a one-time lifetime purchase. All payment is handled by Apple
+through your App Store account; we never see or store your payment details.
+The price is always shown in the app before you buy and may vary by region.
+
+**Auto-renewal and cancellation.** Subscriptions renew automatically unless
+cancelled at least 24 hours before the end of the current period, and your App
+Store account is charged for renewal within 24 hours before the period ends.
+You can manage or cancel at any time in your App Store account settings
+(Settings → your name → Subscriptions on your device). Cancelling stops future
+renewals; you keep Pro until the end of the period you have already paid for.
+Deleting the app does not cancel a subscription.
+
+**Free trials and introductory offers.** Where a free trial or introductory
+offer applies, it converts to a paid subscription unless cancelled at least 24
+hours before the trial ends. Any unused portion of a free trial is forfeited
+when you purchase a subscription.
+
+**Lifetime and founding-member pricing.** The lifetime option is a one-time
+purchase that grants Pro for as long as we operate the Service. We may offer
+reduced pricing or free periods to particular groups (for example, founding
+members who joined during the beta); eligibility for such offers is determined
+by us.
+
+**Refunds.** Because purchases are made through Apple, refunds are handled by
+Apple under Apple's terms, not by us. You can request a refund from Apple at
+[reportaproblem.apple.com](https://reportaproblem.apple.com).
+
+**If Pro ends.** If your subscription lapses or is refunded, you lose access to
+Pro features but never to the free core of the Service or to any of your data.
+
+**Changes to Pro.** We may change Pro's price or what it includes over time.
+Price changes to an existing subscription follow Apple's notice and consent
+rules; material reductions to what Pro includes are treated as material changes
+under section 13.
+
+## 4. Your account
 
 You are responsible for the accuracy of your account information and for keeping
 your login credentials secure. You are responsible for activity that happens
-under your account. Tell us promptly at **[CONTACT EMAIL]** if you believe your
+under your account. Tell us promptly at **support@pinehollow.studio** if you believe your
 account has been compromised.
 
-## 4. Acceptable use
+## 5. Acceptable use
 
 You agree not to:
 
@@ -43,13 +85,13 @@ You agree not to:
   you do not have the right to share;
 - impersonate others or misrepresent your identity;
 - attempt to game leaderboards or other features through false records (see
-  section 7);
+  section 8);
 - scrape, harvest, or bulk-extract data from the Service, or use it to build a
   competing dataset;
 - interfere with, probe, or attempt to gain unauthorised access to the Service
   or its infrastructure.
 
-## 5. Your content
+## 6. Your content
 
 You keep ownership of the photos, notes, lists, and other content you create
 ("Your Content"). By submitting Your Content, you grant us a worldwide,
@@ -62,13 +104,13 @@ You are responsible for Your Content. We may remove content that breaches these
 Terms or the law, and we operate moderation and reporting tools, including the
 ability to block other users and report problems from within the app.
 
-## 6. Privacy
+## 7. Privacy
 
 Our [Privacy Policy](privacy-policy.md) explains how we handle your personal
 data, including the aggregated, anonymised insights we provide to golf clubs and
 your right to opt out. By using the Service you acknowledge that policy.
 
-## 7. Integrity and fair play
+## 8. Integrity and fair play
 
 We trust the rounds you log. To keep public leaderboards fair, we use automated,
 behind-the-scenes checks for unrealistic logging patterns. Where appropriate, we
@@ -76,13 +118,13 @@ may hide an account from public leaderboards, contact the user, or restrict or
 suspend an account. We will act proportionately and, where we can, transparently
 with the affected user.
 
-## 8. Editorial decisions
+## 9. Editorial decisions
 
 Course tiers, curated lists, and what counts as a "course" or a "played" course
 are editorial decisions made by Vestige. They are not user-configurable, and we
 make the final call.
 
-## 9. Intellectual property
+## 10. Intellectual property
 
 The Service, the Vestige and Vestige Golf names and branding, the app software,
 and the underlying course and county dataset are owned by us or our licensors
@@ -91,13 +133,13 @@ personal, non-transferable, revocable licence to use the Service for its
 intended purpose. You may not copy, modify, distribute, or create derivative
 works from the Service except as the law expressly permits.
 
-## 10. Third-party services
+## 11. Third-party services
 
 The Service relies on third parties including Apple, Google, Supabase, Mapbox,
 and Sentry. Your use of features provided through them may also be subject to
 their terms. We are not responsible for third-party services.
 
-## 11. App Store terms
+## 12. App Store terms
 
 You obtain Vestige through the Apple App Store, and your use is also subject to
 Apple's terms. Apple's standard Licensed Application End User Licence Agreement
@@ -106,7 +148,7 @@ applies to the extent it is not inconsistent with these Terms. You acknowledge
 that Apple is not responsible for the Service or for support, and is a
 third-party beneficiary of these Terms entitled to enforce them.
 
-## 12. Availability and changes
+## 13. Availability and changes
 
 We work to keep the Service available, but we provide it "as is" and do not
 guarantee it will be uninterrupted or error-free. We may modify, suspend, or
@@ -115,20 +157,20 @@ material change to these Terms, we will give you notice in the app or by email
 before it takes effect; continuing to use the Service after that means you
 accept the change.
 
-## 13. Disclaimers and liability
+## 14. Disclaimers and liability
 
 To the fullest extent permitted by law, the Service is provided without
 warranties of any kind. Nothing in these Terms limits liability that cannot be
 limited by law (including for death or personal injury caused by negligence, or
 for fraud). Subject to that, we are not liable for indirect or consequential
 loss, and our total liability arising out of or relating to the Service is
-limited to **[LIABILITY CAP — e.g. £100, or the amount you paid us in the prior
-12 months]**.
+limited to the greater of **£100** and the amounts you paid us in the 12 months
+before the event giving rise to the claim.
 
 Nothing in these Terms affects your statutory rights as a consumer under the laws
 of England and Wales.
 
-## 14. Termination
+## 15. Termination
 
 You may stop using the Service and delete your account at any time (Settings →
 Account → Delete account). We may suspend or terminate your access if you breach
@@ -136,14 +178,14 @@ these Terms or to protect the Service or other users. On termination, your right
 to use the Service ends; sections that by their nature should survive
 (ownership, disclaimers, liability, governing law) will survive.
 
-## 15. Governing law and disputes
+## 16. Governing law and disputes
 
 These Terms are governed by the laws of **England and Wales**, and the courts of
 England and Wales have exclusive jurisdiction, subject to any mandatory consumer
 protections in your country of residence.
 
-## 16. Contact
+## 17. Contact
 
 **Pinehollow Studios Limited**
-[COMPANY REGISTERED ADDRESS]
-Email: **[CONTACT EMAIL]**
+82A James Carter Road, Mildenhall, Bury St. Edmunds IP28 7DE, United Kingdom
+Email: **support@pinehollow.studio**

@@ -50,3 +50,15 @@
   before the export pipeline is built.
 - **Sub-processor list** — confirm the live set (Supabase, Sentry, Mapbox,
   Apple, Google, Vercel, Resend) and that DPAs are in place with each.
+
+## 2026-07-14 — pages built, Pro clause added
+
+- `terms-of-service.md` gained **§3 Vestige Pro** (subscriptions: auto-renewal,
+  trials, lifetime + founding pricing, Apple refunds) and had known facts
+  filled (address, contact, age 17, liability cap). Company number still a
+  placeholder — fill from Companies House.
+- Both documents now render as site pages: **`/terms`** (new) and
+  **`/privacy`** (rewritten to the full app policy from the iOS repo's
+  `docs/privacy-policy.md`, 10 July 2026, + a short "This website" section).
+  Keep page and markdown in step when either changes.
+- Solicitor-review status unchanged: still drafts until reviewed.

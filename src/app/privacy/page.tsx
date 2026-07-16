@@ -4,24 +4,43 @@ import Link from "next/link";
 import { siteConfig } from "@/lib/siteConfig";
 
 /**
- * Privacy notice — scoped to the *website* (the waiting list collects one
- * thing: an email). Written with the seriousness data deserves; the fuller app
- * privacy policy (drafted in /legal, pending solicitor review) ships with the
- * app at launch.
+ * Privacy policy — the full policy for the Vestige app (and, in its final
+ * section, this website's waiting list). Rendered from the publish-ready
+ * draft in the iOS repo (`docs/privacy-policy.md`, 10 July 2026); the two
+ * must be kept in step. Linked from the app (VestigePrivacyURL), the Pro
+ * paywall, and App Store Connect.
  */
 
 export const metadata: Metadata = {
   title: "Privacy",
-  description: `How ${siteConfig.brandName} collects, uses, and protects the email you give the waiting list.`,
+  description: `What ${siteConfig.brandName} collects, why, and the rights you hold over it — covering the app and this website.`,
 };
 
-const UPDATED = "10 June 2026";
+const UPDATED = "10 July 2026";
+const CONTACT = "support@pinehollow.studio";
 
 const link: React.CSSProperties = {
   color: "#5BE4C3",
   textDecoration: "underline",
   textUnderlineOffset: 2,
 };
+
+const para: React.CSSProperties = {
+  fontSize: 15,
+  lineHeight: 1.72,
+  color: "#A8B3C0",
+  margin: "12px 0 0",
+};
+
+const list: React.CSSProperties = {
+  fontSize: 15,
+  lineHeight: 1.72,
+  color: "#A8B3C0",
+  margin: "12px 0 0",
+  paddingLeft: 22,
+};
+
+const strong: React.CSSProperties = { color: "#DDE4EA", fontWeight: 600 };
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -38,24 +57,15 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
       >
         {title}
       </h2>
-      <p
-        style={{
-          fontSize: 15.5,
-          lineHeight: 1.78,
-          color: "#A8B3C0",
-          margin: "12px 0 0",
-        }}
-      >
-        {children}
-      </p>
+      {children}
     </section>
   );
 }
 
 export default function PrivacyPage() {
-  const { brandName, domain, contactEmail } = siteConfig;
+  const { brandName } = siteConfig;
   const studio = siteConfig.footer.studio.name;
-  const mailto = `mailto:${contactEmail}`;
+  const mailto = `mailto:${CONTACT}`;
 
   return (
     <main
@@ -100,67 +110,218 @@ export default function PrivacyPage() {
           Privacy
         </h1>
         <p style={{ color: "#5F6B7A", fontSize: 13, margin: "14px 0 40px" }}>
-          {domain} waiting list · Last updated {UPDATED}
+          The {brandName} app &amp; this website · Last updated {UPDATED}
         </p>
 
         <p style={{ fontSize: 17, lineHeight: 1.72, color: "rgba(246,244,238,0.85)", margin: 0 }}>
-          We take your privacy seriously and handle your information with care. This
-          notice sets out exactly what we collect when you join the {brandName} waiting
-          list, why we collect it, how we protect it, and the rights you hold over it.{" "}
-          {brandName} is operated by {studio}, which is the data controller responsible
-          for your information.
+          {brandName} (&ldquo;{brandName}&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;) is a
+          golf-course collection tracker for England, built by {studio}. This policy explains what
+          personal data we collect, why, and your rights over it. It covers the {brandName} iOS
+          app and, in its final section, this website.
         </p>
 
+        <Section title="The short version">
+          <ul style={list}>
+            <li>We collect only what the app needs to work, plus opt-out-able diagnostics.</li>
+            <li>
+              <span style={strong}>We never show ads and never sell your individual data.</span>{" "}
+              Both are permanent commitments.
+            </li>
+            <li>
+              We use your golf activity to build aggregated, anonymised insights that may be sold
+              to golf clubs — never anything that identifies you. You can opt out of contributing
+              entirely.
+            </li>
+            <li>
+              You can export everything we hold about you, and delete your account (and all of its
+              data) from inside the app at any time.
+            </li>
+          </ul>
+        </Section>
+
+        <Section title="Who we are">
+          <p style={para}>
+            The data controller is <span style={strong}>{studio}</span>. For any privacy question
+            or request, contact{" "}
+            <a href={mailto} style={link}>
+              {CONTACT}
+            </a>
+            .
+          </p>
+        </Section>
+
         <Section title="What we collect">
-          When you join the waiting list, we collect your email address — the only personal
-          information this website asks for or stores. We also use Vercel&rsquo;s
-          privacy-first analytics to count visits and page views; it sets no cookies, does
-          not identify you, and does not follow you across other sites. There is no
-          advertising here.
+          <p style={para}>
+            <span style={strong}>Account &amp; profile.</span> Your email address, username,
+            display name, and optionally your first name, home club, home county, a short bio, and
+            an avatar/cover photo. If you sign in with Apple and choose to hide your email, we
+            receive Apple&rsquo;s private relay address instead of your real one.
+          </p>
+          <p style={para}>
+            <span style={strong}>Your golf activity.</span> The courses you mark as played, rounds
+            you log (date, optional score, optional notes/reflections), the lists you create, and
+            your friend connections.
+          </p>
+          <p style={para}>
+            <span style={strong}>About you (optional).</span> During onboarding we ask a few
+            optional questions about you (such as your age band). You can skip them entirely. We
+            use these answers only in the aggregated club insights described below — never to
+            profile you individually.
+          </p>
+          <p style={para}>
+            <span style={strong}>Photos you upload.</span> Round photos, course photos, and
+            profile images. When you add a photo we extract its embedded metadata (capture time
+            and, if present, GPS location) and keep those details alongside the photo to associate
+            it with a round or course; the image copies we store are re-encoded, which strips the
+            embedded metadata from the stored files.
+          </p>
+          <p style={para}>
+            <span style={strong}>Location.</span> Only to show you golf courses near you (the
+            &ldquo;Near you&rdquo; suggestions on the home screen), and only while the app is open
+            — we take a single location reading at that moment. We never track your location in
+            the background.
+          </p>
+          <p style={para}>
+            <span style={strong}>Notifications.</span> If you enable push notifications, we store
+            your device&rsquo;s push token so Apple can deliver them. You can turn categories of
+            notification off in Settings, or revoke the permission entirely in iOS Settings.
+          </p>
+          <p style={para}>
+            <span style={strong}>Diagnostics.</span> Crash reports and basic
+            performance/diagnostic data (via Sentry, hosted in the EU, and Apple&rsquo;s
+            MetricKit), to find and fix problems. This is associated with your account unless you
+            turn analytics off.
+          </p>
+          <p style={para}>
+            <span style={strong}>Usage analytics.</span> Anonymous-by-default records of in-app
+            events (e.g. screens viewed) to understand how the app is used. These respect your
+            analytics opt-out.
+          </p>
+          <p style={para}>
+            <span style={strong}>What we do not collect:</span> we do not read your
+            contacts/address book, we do not use third-party advertising or tracking SDKs, and we
+            do not track you across other apps or websites.
+          </p>
         </Section>
 
-        <Section title="Why we hold it, and our lawful basis">
-          We hold your email address for one purpose: to contact you about {brandName}
-          {" — "}principally to let you know when it is ready, with the occasional closely
-          related update. Our lawful basis is your consent, given when you submit the
-          form. You are free to withdraw that consent at any time, and doing so is as
-          simple as unsubscribing or emailing us.
+        <Section title="How we use your data">
+          <ul style={list}>
+            <li>To run the app: your collection, map, stats, lists, friends, and leaderboards.</li>
+            <li>To keep it working: diagnosing crashes and improving performance.</li>
+            <li>To improve it: understanding which features are used (analytics).</li>
+            <li>
+              To produce{" "}
+              <span style={strong}>aggregated, anonymised insights for golf clubs</span> — for
+              example, how many {brandName} users played a club, or added it to one of their
+              lists, over a period. These insights are always aggregated across many users, never
+              individual-level, never personally identifiable, and exclude anyone who has opted
+              out of analytics. A club will never see that a named person visited.
+            </li>
+          </ul>
         </Section>
 
-        <Section title="Who processes it">
-          Your email is stored and delivered through Resend, our email provider, and this
-          site is hosted by Vercel. Both act only on our instructions, as our data
-          processors. We do not sell your information, and we never share it with anyone
-          else for their own purposes.
+        <Section title="Who we share it with">
+          <p style={para}>
+            We use a small number of service providers (&ldquo;processors&rdquo;) to run{" "}
+            {brandName}:
+          </p>
+          <ul style={list}>
+            <li>
+              <span style={strong}>Supabase</span> — database, authentication, and file storage
+              (EU region).
+            </li>
+            <li>
+              <span style={strong}>Sentry</span> — crash reporting (EU region).
+            </li>
+            <li>
+              <span style={strong}>Apple</span> — Sign in with Apple, and push notification
+              delivery.
+            </li>
+            <li>
+              <span style={strong}>Mapbox</span> — map rendering.
+            </li>
+          </ul>
+          <p style={para}>
+            We do not sell your personal data. The only data that leaves {brandName} in a form
+            that could be sold is the aggregated, anonymised club insights described above.
+          </p>
         </Section>
 
-        <Section title="How long we keep it">
-          We keep your email until {brandName} has launched and you have had the chance to
-          download it, or until you ask us to remove it — whichever comes first.
-          Thereafter it is deleted.
+        <Section title="Legal basis (UK GDPR)">
+          <p style={para}>
+            We process your data to perform our contract with you (providing the app), on the
+            basis of your consent (e.g. location, optional analytics contribution), and for our
+            legitimate interests in keeping the app secure and improving it.
+          </p>
         </Section>
 
         <Section title="Your rights">
-          You can ask us at any time to show you the information we hold about you, correct
-          it, delete it, or stop emailing you. To exercise any of these, email{" "}
-          <a href={mailto} style={link}>
-            {contactEmail}
-          </a>{" "}
-          and we will act promptly. You also have the right to lodge a complaint with the
-          Information Commissioner&rsquo;s Office (ICO), the UK&rsquo;s data protection
-          authority, at ico.org.uk.
+          <p style={para}>You can, at any time:</p>
+          <ul style={list}>
+            <li>
+              <span style={strong}>Access &amp; export</span> your data — Settings → Privacy &amp;
+              data → Export my data.
+            </li>
+            <li>
+              <span style={strong}>Delete your account</span> — Settings → Account → Delete
+              account. This permanently removes your account and all associated data, including
+              your uploaded photos.
+            </li>
+            <li>
+              <span style={strong}>Opt out of analytics</span> — Settings → Privacy &amp; data.
+              Opting out also excludes you from all aggregated club insights.
+            </li>
+            <li>
+              <span style={strong}>Control your visibility</span> — set your profile to Private or
+              Public at any time, and choose whether you appear on the global and local
+              leaderboards (Settings → Privacy &amp; data).
+            </li>
+          </ul>
+          <p style={para}>
+            Under UK GDPR you also have rights to rectification, restriction, objection, and to
+            complain to the Information Commissioner&rsquo;s Office (ICO) at ico.org.uk.
+          </p>
         </Section>
 
-        <Section title="Keeping it safe">
-          Access to the waiting list is restricted, and your information is held within
-          established, security-conscious services. We ask for the minimum we need, which
-          is the best protection of all.
+        <Section title="Data retention">
+          <p style={para}>
+            We keep your data while your account is active. When you delete your account, your
+            data (including stored photos) is removed. Aggregated insights that no longer identify
+            any individual may be retained.
+          </p>
         </Section>
 
-        <Section title="When the app arrives">
-          When the {brandName} app launches it will carry its own, fuller privacy policy
-          covering how the app itself handles your data. This notice covers only the
-          website.
+        <Section title="Children">
+          <p style={para}>
+            {brandName} is intended for users aged 17 and over and is not directed at children.
+          </p>
+        </Section>
+
+        <Section title="This website">
+          <p style={para}>
+            This website asks for one piece of personal information: the email address you give
+            the waiting list, held to contact you about {brandName} and deleted once it has done
+            its job or on request. It is stored and delivered through Resend, our email provider,
+            and the site is hosted by Vercel — both acting only on our instructions. We also use
+            Vercel&rsquo;s privacy-first analytics to count visits; it sets no cookies and does
+            not identify you.
+          </p>
+        </Section>
+
+        <Section title="Changes to this policy">
+          <p style={para}>
+            We may update this policy; we will change the &ldquo;Last updated&rdquo; date above
+            and, for material changes, notify you in-app.
+          </p>
+        </Section>
+
+        <Section title="Contact">
+          <p style={para}>
+            <a href={mailto} style={link}>
+              {CONTACT}
+            </a>{" "}
+            · {studio}
+          </p>
         </Section>
 
         <p
@@ -174,7 +335,7 @@ export default function PrivacyPage() {
         >
           Questions about your privacy?{" "}
           <a href={mailto} style={link}>
-            {contactEmail}
+            {CONTACT}
           </a>
         </p>
       </div>
