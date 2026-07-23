@@ -1172,14 +1172,79 @@ html {
    from the second viewport onward. Toggled by MarketingApp. */
 .fw-hero[data-offstage="1"] .fw-aurora { visibility: hidden; }
 .fw-hero[data-offstage="1"] .fw-aurora-blob { animation-play-state: paused; }
-/* scroll hint dies quickly on first scroll (inner span so the intro
-   fade on the outer element composes independently) */
-.fw-scroll-hint-inner {
-  display: flex;
+/* ─── Scroll cue ───────────────────────────────────────────── */
+/* The tappable "there's more below" prompt at the foot of the hero.
+   The wrapper carries the staged intro fade; the inner opacity dies on
+   first scroll against --hp so the two never fight. See ScrollCue.tsx. */
+.fw-scrollcue-wrap {
+  position: absolute;
+  bottom: clamp(18px, 3vw, 30px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  /* retire the moment the visitor scrolls — fully gone by --hp ≈ 0.2 */
+  opacity: max(0, calc(1 - var(--hp, 0) * 5));
+}
+/* once well past the hero the faded cue mustn't intercept taps */
+.fw-hero[data-offstage="1"] .fw-scrollcue-wrap { pointer-events: none; }
+
+.fw-scrollcue {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  margin: 0;
+  padding: 8px 14px 6px;
+  display: inline-flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  opacity: max(0, calc(1 - var(--hp, 0) * 5));
+  gap: 7px;
+  cursor: pointer;
+  color: rgba(246, 244, 238, 0.62);
+  border-radius: 14px;
+  transition: color 260ms ease, transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.fw-scrollcue:hover,
+.fw-scrollcue:focus-visible {
+  color: var(--cue-a, #5be4c3);
+}
+.fw-scrollcue:focus-visible {
+  outline: 2px solid var(--cue-a, #5be4c3);
+  outline-offset: 4px;
+}
+.fw-scrollcue-label {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.fw-scrollcue-chev {
+  display: inline-flex;
+  animation: fw-cue-bounce 1.9s ease-in-out infinite;
+}
+.fw-scrollcue-chev svg { display: block; }
+
+/* Idle escalation — the visitor has sat on the hero without scrolling.
+   No box, just the words: tint them mint (eased back so it's a nudge,
+   not a beacon) and drop the uppercase tracking for a plainer line. The
+   button stays fully clickable — tapping it still pages the visitor down. */
+.fw-scrollcue[data-idle="1"] {
+  color: color-mix(in srgb, var(--cue-a, #5be4c3) 72%, transparent);
+}
+.fw-scrollcue[data-idle="1"] .fw-scrollcue-label {
+  font-size: 13px;
+  letter-spacing: 0.2px;
+  text-transform: none;
+}
+.fw-scrollcue[data-idle="1"] .fw-scrollcue-chev {
+  animation-duration: 1.25s;
+}
+
+@keyframes fw-cue-bounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(6px); }
 }
 
 /* ─── Floating sticky nav ──────────────────────────────────── */
