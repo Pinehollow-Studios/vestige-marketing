@@ -1227,16 +1227,11 @@ html {
 .fw-scrollcue-chev svg { display: block; }
 
 /* Idle escalation — the visitor has sat on the hero without scrolling.
-   Grow, brighten the text, and drop the uppercase tracking for a plainer
-   line. The box stays deliberately quiet — a faint neutral glass that
-   settles back into the dark hero rather than glowing — so the words do
-   the work, not the container. */
+   No box, just the words: tint them mint (eased back so it's a nudge,
+   not a beacon) and drop the uppercase tracking for a plainer line. The
+   button stays fully clickable — tapping it still pages the visitor down. */
 .fw-scrollcue[data-idle="1"] {
-  /* mint, but eased back so it reads as a gentle nudge, not a beacon */
   color: color-mix(in srgb, var(--cue-a, #5be4c3) 72%, transparent);
-  background: rgba(255, 255, 255, 0.035);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
-  transform: scale(1.06);
 }
 .fw-scrollcue[data-idle="1"] .fw-scrollcue-label {
   font-size: 13px;
