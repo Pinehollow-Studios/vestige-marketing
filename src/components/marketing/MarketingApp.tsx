@@ -18,6 +18,7 @@ import { WhatItIs } from "./WhatItIs";
 import { Faq } from "./Faq";
 import { ClosingCTA } from "./ClosingCTA";
 import { ScrollProgress } from "./ScrollProgress";
+import { ScrollCue } from "./ScrollCue";
 import { Roadmap } from "./Roadmap";
 import { Preloader } from "./Preloader";
 import { StickyNav } from "./StickyNav";
@@ -216,38 +217,9 @@ export function MarketingApp({
           </div>
         </div>
 
-        {/* Scroll hint — outer carries the intro fade, inner fades out
-            against --hp on first scroll so the two never fight */}
-        <div
-          className="fw-intro-stage"
-          style={{
-            ...stage(1100),
-            position: "absolute",
-            bottom: 24,
-            left: "50%",
-            transform: "translateX(-50%)",
-            zIndex: 3,
-            fontFamily: fwF.ui,
-            fontSize: 10,
-            fontWeight: 700,
-            letterSpacing: 2,
-            textTransform: "uppercase",
-            color: "rgba(246,244,238,0.4)",
-          }}
-        >
-          <div className="fw-scroll-hint-inner">
-            <span>Scroll</span>
-            <span
-              style={{
-                width: 1,
-                height: 24,
-                background:
-                  "linear-gradient(180deg, rgba(246,244,238,0.4), transparent)",
-                animation: "fw-pulse-dot 2s ease-in-out infinite",
-              }}
-            />
-          </div>
-        </div>
+        {/* Scroll cue — a tappable, escalating "there's more below" prompt.
+            Fades against the hero's --hp on first scroll. See ScrollCue. */}
+        <ScrollCue palette={PALETTE} delayMs={1100} />
       </section>
 
       {/* ═══ MARQUEE ═══════════════════════════════════════ */}
