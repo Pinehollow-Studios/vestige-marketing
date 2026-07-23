@@ -139,6 +139,14 @@ export default function TermsPage() {
             The Service currently covers England only. Scotland and Wales are shown as
             &ldquo;coming soon&rdquo;. We may add, change, or remove features over time.
           </p>
+          <p style={para}>
+            The app is distributed on the{" "}
+            <span style={strong}>United Kingdom App Store only</span>, and is intended for use in
+            the United Kingdom. We make no representation that the Service is appropriate or
+            available in any other territory, and we may add or remove territories at any time.
+            Using the Service from outside the United Kingdom is at your own initiative and you
+            are responsible for compliance with local law.
+          </p>
         </Section>
 
         <Section title={`3. ${siteConfig.brandName} Pro (optional paid membership)`}>

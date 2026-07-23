@@ -247,6 +247,22 @@ export default function PrivacyPage() {
           </p>
         </Section>
 
+        <Section title="Where your data is held">
+          <p style={para}>
+            {brandName} is a United Kingdom product: the app is distributed on the{" "}
+            <span style={strong}>UK App Store only</span>, and it is intended for use in the
+            United Kingdom.
+          </p>
+          <p style={para}>
+            Your data is stored in the European Economic Area (Supabase and Sentry both run in EU
+            regions). Transfers from the UK to the EEA are covered by the UK&rsquo;s adequacy
+            regulations. Where a processor operates outside the UK and the EEA (for example
+            Apple&rsquo;s push delivery and Mapbox&rsquo;s map rendering, which are United States
+            companies), the transfer is made under the UK International Data Transfer Addendum to
+            the EU Standard Contractual Clauses, or another safeguard permitted by UK GDPR.
+          </p>
+        </Section>
+
         <Section title="Legal basis (UK GDPR)">
           <p style={para}>
             We process your data to perform our contract with you (providing the app), on the

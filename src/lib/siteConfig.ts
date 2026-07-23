@@ -230,7 +230,7 @@ export const siteConfig: SiteConfig = {
     headline: ["2,000 courses. How many have you ", "played", "?"],
     waitlistNote:
       "Beta codes go to the waiting list first. Play it months before launch.",
-    metaStrip: ["iPhone, iOS 18+", "Free at launch", "March 2027"],
+    metaStrip: ["iPhone, iOS 18+", "Free at launch", "UK App Store, March 2027"],
   },
 
   marquee: [
@@ -309,6 +309,10 @@ export const siteConfig: SiteConfig = {
     {
       q: "Is it England only?",
       a: "England first. The rest of the British Isles will follow.",
+    },
+    {
+      q: "Can I get it outside the UK?",
+      a: "Not at launch. Vestige is on the UK App Store only, because the map is English courses and there is not much in it for you if you have never played one. If you are British and abroad, the app travels fine: it is where you download it that has to be the UK.",
     },
     {
       q: "What do you do with my data?",
