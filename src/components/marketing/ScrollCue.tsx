@@ -18,9 +18,17 @@ import { accentFor, type Palette } from "./palette";
  *     the cue grows, brightens and swaps to a plainer "There's more below" —
  *     a stationary visitor is exactly the one who is stuck.
  *
+ * It is pinned to the foot of the *viewport* (position: fixed), not the
+ * hero: on a short, wide laptop the tall headline pushes the hero past
+ * one screen, and a cue anchored to the hero's bottom would sit below the
+ * fold — exactly the "I can't see it until I scroll" report. Fixed keeps
+ * it on the first screenful everywhere.
+ *
  * It fades out on the first scroll via the hero's existing `--hp` scrub var
- * (so it composes with the intro fade instead of fighting it), and stops
- * nagging once the visitor is moving.
+ * (so it composes with the intro fade instead of fighting it). `atTop`
+ * mirrors that in JS: because a fixed element stays put as it fades, we
+ * switch off its pointer-events once scrolled so the invisible button can't
+ * swallow taps over the sections behind it.
  */
 export function ScrollCue({
   palette = "mint",
@@ -33,32 +41,40 @@ export function ScrollCue({
   const acc = accentFor(palette);
   // They've lingered on the hero without scrolling — escalate the cue.
   const [idle, setIdle] = useState(false);
+  // Still on the first screen — the cue is visible and clickable.
+  const [atTop, setAtTop] = useState(true);
 
   useEffect(() => {
-    // Already scrolled (reload mid-page, a restored position) — never nag.
-    if (window.scrollY > 20) return;
-    let idleTimer: ReturnType<typeof setTimeout> | undefined = setTimeout(
-      () => setIdle(true),
-      5000
-    );
-    const cancel = () => {
+    const scrolled = () => window.scrollY > 8;
+    // Only nag someone who's actually parked at the top. (A reload with a
+    // restored mid-page position is handled in CSS via the hero's offstage
+    // flag, so the invisible cue can't catch taps there either.)
+    let idleTimer: ReturnType<typeof setTimeout> | undefined = scrolled()
+      ? undefined
+      : setTimeout(() => setIdle(true), 5000);
+    const cancelIdle = () => {
       if (idleTimer) {
         clearTimeout(idleTimer);
         idleTimer = undefined;
       }
     };
+    // Assume top to start (matches the initial state + the SSR markup); the
+    // first scroll event corrects it. setState lives in the callback, never
+    // synchronously in the effect body.
+    let last = false;
     const onScroll = () => {
-      // The moment they scroll, the escalation is moot — the --hp fade takes
-      // the cue away on its own, so just stop the timer from firing late.
-      if (window.scrollY > 20) {
-        cancel();
-        window.removeEventListener("scroll", onScroll);
-      }
+      const now = scrolled();
+      if (now === last) return;
+      last = now;
+      setAtTop(!now);
+      // Once they've moved, the escalation is moot — the --hp fade carries the
+      // cue away on its own, so just stop the timer from firing late.
+      if (now) cancelIdle();
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
-      cancel();
+      cancelIdle();
     };
   }, []);
 
@@ -71,6 +87,7 @@ export function ScrollCue({
   return (
     <div
       className="fw-intro-stage fw-scrollcue-wrap"
+      data-attop={atTop ? "1" : "0"}
       style={{ "--stage-d": `${delayMs}ms` } as CSSProperties}
     >
       <button

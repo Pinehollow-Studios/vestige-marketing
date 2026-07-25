@@ -136,6 +136,19 @@ html {
   text-align: center;
   padding: clamp(60px, 8vw, 120px) 0 clamp(40px, 6vw, 80px);
 }
+/* Short viewports (laptops in particular) — the width-based headline is
+   tall enough to push the hero past one screen, colliding with the fixed
+   scroll cue at the foot of the viewport. Recover vertical room so the
+   content clears the cue; taller screens keep the roomy default. */
+@media (max-height: 820px) {
+  .fw-hero {
+    padding-top: clamp(16px, 2.5vw, 28px);
+    padding-bottom: clamp(20px, 3vh, 34px);
+  }
+  .fw-hero-content {
+    padding: clamp(20px, 3.5vh, 56px) 0 clamp(52px, 8vh, 76px);
+  }
+}
 
 /* ─── Top bar ──────────────────────────────────────────────── */
 .fw-topbar {
@@ -1177,15 +1190,23 @@ html {
    The wrapper carries the staged intro fade; the inner opacity dies on
    first scroll against --hp so the two never fight. See ScrollCue.tsx. */
 .fw-scrollcue-wrap {
-  position: absolute;
+  /* Pinned to the viewport, not the hero — a tall headline can push the
+     hero past one screen on short laptops, and a hero-anchored cue would
+     then land below the fold. Fixed keeps it on the first screenful. */
+  position: fixed;
   bottom: clamp(18px, 3vw, 30px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 3;
   /* retire the moment the visitor scrolls — fully gone by --hp ≈ 0.2 */
   opacity: max(0, calc(1 - var(--hp, 0) * 5));
+  /* a fixed element stays put while it fades, so gate interactivity on the
+     JS atTop flag — the invisible button must not swallow taps once scrolled */
+  pointer-events: none;
 }
-/* once well past the hero the faded cue mustn't intercept taps */
+.fw-scrollcue-wrap[data-attop="1"] { pointer-events: auto; }
+/* backup for a reload with a restored mid-page position, before any scroll
+   event has fired to flip atTop: well past the hero, never take taps */
 .fw-hero[data-offstage="1"] .fw-scrollcue-wrap { pointer-events: none; }
 
 .fw-scrollcue {
