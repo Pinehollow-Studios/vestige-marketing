@@ -266,7 +266,7 @@ export const siteConfig: SiteConfig = {
   appPage: {
     headline: ["Three small ideas, ", "kept simple", "."],
     lede:
-      "No swing analysis. No data dashboards. Just a quiet way to keep the places you have played, mark a score if you like, and see how your collection stands.",
+      "No swing analysis. No data dashboards. Just somewhere to keep the places you have played, mark a score if you like, and see how your collection stands.",
     cta: {
       headlinePre: "Play it ",
       headlineItalic: "first",
