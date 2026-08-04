@@ -14,7 +14,7 @@
 
 export const progressConfig = {
   /** Courses in the database so far. */
-  coursesMapped: 1741,
+  coursesMapped: 1773,
   /** Approximate total — always rendered with a "~". */
   coursesTotal: 2000,
 
@@ -54,6 +54,7 @@ export const progressConfig = {
     "Norfolk",
     "Northamptonshire",
     "North Yorkshire",
+    "Northumberland",
     "Nottinghamshire",
     "Oxfordshire",
     "Rutland",
@@ -74,7 +75,7 @@ export const progressConfig = {
 
   /** The most recently mapped county — gets the "Just added" beacon on the
    *  atlas and the ledger line. Must be one of completedCounties above. */
-  latestCounty: "Tyne and Wear",
+  latestCounty: "Northumberland",
 
   lastUpdated: "4 August 2026",
 
