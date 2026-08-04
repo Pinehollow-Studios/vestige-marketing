@@ -14,7 +14,7 @@
 
 export const progressConfig = {
   /** Courses in the database so far. */
-  coursesMapped: 1717,
+  coursesMapped: 1741,
   /** Approximate total — always rendered with a "~". */
   coursesTotal: 2000,
 
@@ -63,6 +63,7 @@ export const progressConfig = {
     "Staffordshire",
     "Suffolk",
     "Surrey",
+    "Tyne and Wear",
     "Warwickshire",
     "West Midlands",
     "West Sussex",
@@ -73,7 +74,7 @@ export const progressConfig = {
 
   /** The most recently mapped county — gets the "Just added" beacon on the
    *  atlas and the ledger line. Must be one of completedCounties above. */
-  latestCounty: "County Durham",
+  latestCounty: "Tyne and Wear",
 
   lastUpdated: "4 August 2026",
 
