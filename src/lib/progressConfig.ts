@@ -99,7 +99,7 @@ export const progressConfig = {
 
   /** Honest, present-tense — rewrite it whenever the work changes. */
   rightNow:
-    "The database is done: every course in England is in, all the way to the Northumberland coast. Tom's polishing the app's main flows and squashing beta feedback ahead of a wider release; Jack's double-checking the last counties in and starting on the rest of the British Isles.",
+    "The database is done: every course in England is in, all the way to the Northumberland coast. Tom's polishing the app's main flows and squashing beta feedback ahead of a wider release; Jack's moved from mapping to filling out — more content inside the app, and deeper detail on each course.",
 
   /**
    * One real screenshot of the app. Drop the file in public/progress/
