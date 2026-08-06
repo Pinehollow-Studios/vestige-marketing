@@ -1721,6 +1721,15 @@ html {
 .fw-catlas svg {
   position: relative;
   display: block;
+  /* The county projection leaves only 10 user units of padding around
+     England (scripts/build-county-paths.mjs), and the glow on the fills
+     and the coastline blurs further than that — so an SVG clipped to its
+     own viewBox slices the haze flat wherever the country reaches the
+     edge: the Northumberland tip, the Norfolk bulge, Cornwall. Letting
+     it paint outside costs nothing (the spill is a soft ~12px and
+     .fw-root already clips the page horizontally) and the alternative,
+     padding the viewBox, would shrink the map to buy the same room. */
+  overflow: visible;
 }
 .fw-catlas-base {
   animation: fw-catlas-fade 700ms ease 150ms both;
