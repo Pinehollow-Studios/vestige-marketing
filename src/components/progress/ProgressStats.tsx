@@ -5,9 +5,16 @@ import { useCountUp, useScrollReveal } from "../marketing/hooks";
 type Stat = {
   label: string;
   value: number;
-  total: number;
+  /**
+   * Denominator of the "x of y" fraction. Null once the counting is
+   * finished and the value IS the total — the bar fills and `note`
+   * takes the place of the fraction.
+   */
+  total?: number | null;
   /** Render the total as approximate ("~2,000"). */
   approx?: boolean;
+  /** Stands in for "of y" when there's no denominator left. */
+  note?: string;
 };
 
 function StatRow({
@@ -20,7 +27,8 @@ function StatRow({
   delay: number;
 }) {
   const n = useCountUp(stat.value, { duration: 1800, delay: 200 + delay, enabled: revealed });
-  const pct = Math.round((stat.value / stat.total) * 100);
+  const fraction = stat.total ? stat.value / stat.total : 1;
+  const pct = Math.round(fraction * 100);
   return (
     <div
       className="fw-prog-stat"
@@ -33,16 +41,25 @@ function StatRow({
       <div className="l">{stat.label}</div>
       <div className="row">
         <span className="v">{n.toLocaleString("en-GB")}</span>
-        <span className="of">
-          of {stat.approx && "~"}
-          {stat.total.toLocaleString("en-GB")}
+        <span className={stat.total ? "of" : "of of-note"}>
+          {stat.total ? (
+            <>
+              of {stat.approx && "~"}
+              {stat.total.toLocaleString("en-GB")}
+            </>
+          ) : (
+            stat.note
+          )}
         </span>
-        <span className="pct">{pct}%</span>
+        {/* The percentage earns its place only against a denominator.
+            Next to "every one in England" it says nothing new, and on a
+            phone it was the thing that pushed the row onto two lines. */}
+        {stat.total && <span className="pct">{pct}%</span>}
       </div>
       <div className="fw-prog-bar">
         <i
           style={{
-            width: `${(stat.value / stat.total) * 100}%`,
+            width: `${fraction * 100}%`,
             transform: revealed ? "scaleX(1)" : "scaleX(0)",
             transitionDelay: `${200 + delay}ms`,
           }}
@@ -58,32 +75,62 @@ function StatRow({
  * count up and the bars draw once the card scrolls into view, same
  * choreography as the homepage StatsStrip. The homepage snapshot
  * omits `lastUpdated`; the full /progress page carries it.
+ *
+ * With the map finished the card leads with the completion banner and
+ * the fractions become statements: 47 of 47, and a course count with
+ * nothing left to divide it by. `latest` is ignored in that state —
+ * "just added" stops being the news once there's nothing left to add.
  */
 export function ProgressStats({
   counties,
   courses,
   latest,
   lastUpdated,
+  complete,
+  completedOn,
 }: {
   counties: Stat;
   courses: Stat;
   /** Most recently mapped county — named in a "Just added" ledger line. */
   latest?: string;
   lastUpdated?: string;
+  /** Every county mapped — leads with the banner instead of the beacon. */
+  complete?: boolean;
+  /** The day the last county landed, stamped on the banner. */
+  completedOn?: string;
 }) {
   const [ref, revealed] = useScrollReveal<HTMLDivElement>({ threshold: 0.25 });
   return (
-    <div ref={ref} className="fw-prog-card">
-      <StatRow stat={counties} revealed={revealed} delay={0} />
-      <StatRow stat={courses} revealed={revealed} delay={120} />
-      {latest && (
+    <div ref={ref} className="fw-prog-card" data-complete={complete ? "1" : "0"}>
+      {complete && (
+        <div
+          className="fw-prog-banner"
+          style={{
+            opacity: revealed ? 1 : 0,
+            transform: revealed ? "translateY(0)" : "translateY(-8px)",
+            transition: "transform 720ms cubic-bezier(0.2,0.8,0.2,1), opacity 720ms ease",
+          }}
+        >
+          <span className="fw-prog-banner-tick" aria-hidden="true" />
+          <span className="fw-prog-banner-text">England complete</span>
+          {completedOn && <span className="fw-prog-banner-date">{completedOn}</span>}
+        </div>
+      )}
+      <StatRow stat={counties} revealed={revealed} delay={complete ? 120 : 0} />
+      <StatRow stat={courses} revealed={revealed} delay={complete ? 240 : 120} />
+      {!complete && latest && (
         <div className="fw-prog-stamp fw-prog-latest">
           <span className="dot" aria-hidden="true" />
           Just added <b>{latest}</b>
         </div>
       )}
-      {lastUpdated && (
-        <div className={`fw-prog-stamp${latest ? " fw-prog-stamp-plain" : ""}`}>
+      {/* The banner already carries the completion date, and on the day
+          the map finished it IS the last-updated date — printing it twice
+          in one card just looks like a bug. */}
+      {lastUpdated && !(complete && lastUpdated === completedOn) && (
+        <div
+          className={`fw-prog-stamp${!complete && latest ? " fw-prog-stamp-plain" : ""}`}
+        >
           <span className="dot" aria-hidden="true" />
           Last updated <b>{lastUpdated}</b>
         </div>

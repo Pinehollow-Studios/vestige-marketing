@@ -1604,6 +1604,14 @@ html {
   font-variant-numeric: tabular-nums;
 }
 .fw-atlasmini-of { color: rgba(246, 244, 238, 0.4); font-weight: 600; }
+/* the foot of the page — the counter has reached the whole country */
+.fw-atlasmini-meta[data-full="1"] .fw-atlasmini-count {
+  color: #5be4c3;
+  text-shadow: 0 0 12px rgba(91, 228, 195, 0.5);
+}
+.fw-atlasmini-meta[data-full="1"] .fw-atlasmini-of { color: rgba(91, 228, 195, 0.55); }
+.fw-atlasmini-count,
+.fw-atlasmini-of { transition: color 500ms ease, text-shadow 500ms ease; }
 .fw-atlasmini-label {
   font-family: var(--font-ui);
   font-size: 9px;
@@ -1751,7 +1759,7 @@ html {
   letter-spacing: 1.6px;
   text-transform: uppercase;
   color: rgba(246, 244, 238, 0.45);
-  animation: fw-catlas-fade 700ms ease 2100ms both;
+  animation: fw-catlas-fade 700ms ease calc(var(--sweep-end, 2200ms) + 300ms) both;
 }
 .fw-catlas-legend span { display: inline-flex; align-items: center; gap: 7px; }
 .fw-catlas-legend i {
@@ -1776,8 +1784,9 @@ html {
 /* ─── Most-recent addition beacon ──────────────────────────── */
 /* A pulsing mint border traces the newest county's outline — a "look
    here" in the same mint as the map fill. Waits out the fill sweep
-   (--beacon-delay, set inline on .fw-catlas from the county count)
-   before it appears. */
+   (--sweep-end, set inline on .fw-catlas from the county count) before
+   it appears. Only rendered while counties are still to come; once the
+   map is complete the finale below takes over. */
 .fw-catlas-latest-outline {
   fill: none;
   stroke: #5be4c3;
@@ -1785,11 +1794,204 @@ html {
   stroke-linejoin: round;
   opacity: 0;
   filter: drop-shadow(0 0 4px rgba(91, 228, 195, 0.85));
-  animation: fw-catlas-outline-pulse 1600ms ease-in-out var(--beacon-delay, 2800ms) infinite;
+  animation: fw-catlas-outline-pulse 1600ms ease-in-out
+    calc(var(--sweep-end, 2200ms) + 200ms) infinite;
 }
 @keyframes fw-catlas-outline-pulse {
   0%, 100% { opacity: 0.95; stroke-width: 1.4; }
   50%      { opacity: 0.3;  stroke-width: 2.4; }
+}
+
+/* ═══ The finale — "England, complete" ═══════════════════════════
+   Runs only on a map with every county filled (data-complete="1"), and
+   only after the south→north sweep has finished. Five beats, each one
+   offset from --sweep-end so the whole sequence follows the fill however
+   many counties there are:
+
+     +0.06s  the seams between the counties dissolve — 47 pieces stop
+             being pieces and become one country
+     +0.12s  the coastline draws itself round the whole of England,
+             1.5s for the lap, thick and bright at the front
+     +1.35s  the halo behind the map blooms and settles brighter
+     +1.48s  a ring of light leaves the coast as the loop closes
+     +1.42s  a flush rakes across the land, clipped to the coastline
+     +1.90s  the "England complete" badge lands
+
+   After that the coast holds on a slow breath — the one thing that
+   keeps moving, so a visitor arriving late still sees a live map. */
+
+/* Beat one: the county borders fade out. Both layers have to go — the
+   base layer under the mint carries a faint white stroke of its own, and
+   left behind it would keep drawing the county lines the mint just
+   stopped drawing. Restated longhand because the shorthand above would
+   drop the second animation. */
+.fw-catlas[data-complete="1"] .fw-catlas-base path {
+  animation: fw-catlas-seams 900ms ease calc(var(--sweep-end, 2200ms) + 60ms) both;
+}
+/* the solid country underneath, crossfading in as the strokes go */
+.fw-catlas-land path {
+  fill: url(#fw-catlas-mint);
+  animation: fw-catlas-fade 900ms ease calc(var(--sweep-end, 2200ms) + 60ms) both;
+}
+.fw-catlas[data-complete="1"] .fw-catlas-done path {
+  animation-name: fw-catlas-fade, fw-catlas-seams;
+  animation-duration: 500ms, 900ms;
+  animation-timing-function: ease, ease;
+  animation-fill-mode: both, both;
+  animation-delay:
+    calc(620ms + var(--i, 0) * 55ms),
+    calc(var(--sweep-end, 2200ms) + 60ms);
+}
+@keyframes fw-catlas-seams {
+  from { stroke-opacity: 1; }
+  to   { stroke-opacity: 0; }
+}
+
+/* Beat two: the coastline. Cream rather than mint so it reads as a rim
+   light against the mint land it traces, with the glow carrying the
+   brand colour. pathLength="1" on the element makes the dash maths
+   resolution-independent — one unit is one lap of England. */
+.fw-catlas-coast {
+  fill: none;
+  stroke: #eafbf5;
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  filter: drop-shadow(0 0 5px rgba(91, 228, 195, 0.9));
+  animation:
+    fw-catlas-coast-draw 1500ms cubic-bezier(0.62, 0.02, 0.35, 1)
+      calc(var(--sweep-end, 2200ms) + 120ms) both,
+    fw-catlas-coast-breathe 3600ms ease-in-out
+      calc(var(--sweep-end, 2200ms) + 1620ms) infinite;
+}
+/* The draw owns stroke-dashoffset and stroke-width, the breath owns
+   stroke-opacity and the glow — no property is claimed twice, so the
+   two can overlap without one stamping on the other. */
+@keyframes fw-catlas-coast-draw {
+  from { stroke-dashoffset: 1; stroke-width: 2.8; }
+  to   { stroke-dashoffset: 0; stroke-width: 1.6; }
+}
+@keyframes fw-catlas-coast-breathe {
+  0%, 100% { stroke-opacity: 1;    filter: drop-shadow(0 0 5px rgba(91, 228, 195, 0.9)); }
+  50%      { stroke-opacity: 0.68; filter: drop-shadow(0 0 11px rgba(91, 228, 195, 0.5)); }
+}
+
+/* The offshore bits (Isle of Wight, Lindisfarne) can't join the lap —
+   dashing restarts on every subpath — so they light up as it closes. */
+.fw-catlas-isles {
+  fill: none;
+  stroke: #eafbf5;
+  stroke-width: 1.1;
+  stroke-linejoin: round;
+  opacity: 0;
+  filter: drop-shadow(0 0 4px rgba(91, 228, 195, 0.8));
+  animation: fw-catlas-fade 600ms ease calc(var(--sweep-end, 2200ms) + 1250ms) both;
+}
+
+/* Beat four: one ring of light leaving the coast. `forwards` only —
+   `both` would paint the ring on screen through the whole fill sweep. */
+.fw-catlas-ripple {
+  fill: none;
+  stroke: #eafbf5;
+  stroke-width: 2.2;
+  stroke-linejoin: round;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  filter: drop-shadow(0 0 8px rgba(91, 228, 195, 0.9));
+  animation: fw-catlas-ripple 1300ms cubic-bezier(0.2, 0.7, 0.3, 1)
+    calc(var(--sweep-end, 2200ms) + 1480ms) forwards;
+}
+@keyframes fw-catlas-ripple {
+  from { opacity: 0.8; transform: scale(1);     stroke-width: 2.2; }
+  to   { opacity: 0;   transform: scale(1.045); stroke-width: 0.5; }
+}
+
+/* Beat five: the flush. The band is a viewBox-wide rect parked off the
+   left edge; sliding it 2.4 map-widths carries it clear off the right. */
+.fw-catlas-flush {
+  opacity: 0;
+  animation: fw-catlas-flush 1600ms cubic-bezier(0.36, 0, 0.2, 1)
+    calc(var(--sweep-end, 2200ms) + 1420ms) forwards;
+}
+@keyframes fw-catlas-flush {
+  0%   { opacity: 0; transform: translateX(0); }
+  16%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { opacity: 0; transform: translateX(calc(var(--catlas-w, 400px) * 2.4)); }
+}
+
+/* Beat three: the halo behind the country blooms, then settles brighter
+   than it started — the map stays visibly "lit" from here on. */
+.fw-catlas[data-complete="1"]::before {
+  background: radial-gradient(52% 47% at 50% 48%, rgba(91, 228, 195, 0.17), transparent 70%);
+  opacity: 0.5;
+  animation: fw-catlas-halo 2600ms cubic-bezier(0.2, 0.8, 0.2, 1)
+    calc(var(--sweep-end, 2200ms) + 1350ms) forwards;
+}
+@keyframes fw-catlas-halo {
+  0%   { opacity: 0.5;  transform: scale(1); }
+  26%  { opacity: 1;    transform: scale(1.1); }
+  100% { opacity: 0.78; transform: scale(1.04); }
+}
+
+/* Beat six: the badge that replaces the legend. There is no "still to
+   come" left to explain, so the caption becomes the headline instead. */
+.fw-catlas-done-badge {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  width: fit-content;
+  margin: 16px auto 0;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(91, 228, 195, 0.35);
+  background: rgba(91, 228, 195, 0.08);
+  font-family: var(--font-ui);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: #5be4c3;
+  animation: fw-catlas-badge 800ms cubic-bezier(0.2, 0.8, 0.2, 1)
+    calc(var(--sweep-end, 2200ms) + 1900ms) both;
+}
+.fw-catlas-done-badge b {
+  font-weight: 700;
+  color: rgba(246, 244, 238, 0.5);
+}
+.fw-catlas-done-badge b::before {
+  content: "·";
+  margin-right: 9px;
+  color: rgba(246, 244, 238, 0.3);
+}
+/* a drawn tick rather than a glyph, so it matches the coastline's weight */
+.fw-catlas-tick {
+  width: 13px;
+  height: 13px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #5be4c3, #8fe85b);
+  box-shadow: 0 0 8px rgba(91, 228, 195, 0.75);
+  position: relative;
+  flex: none;
+}
+.fw-catlas-tick::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 2.5px;
+  width: 3.5px;
+  height: 6px;
+  border: solid #06090e;
+  border-width: 0 1.6px 1.6px 0;
+  transform: rotate(43deg);
+}
+@keyframes fw-catlas-badge {
+  from { opacity: 0; transform: translateY(10px) scale(0.94); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
 }
 
 /* ─── The ledger — fractions, bars, the date stamp ─────────── */
@@ -1802,10 +2004,66 @@ html {
   padding: clamp(22px, 5.5vw, 30px);
   margin-top: clamp(26px, 6vw, 40px);
 }
+/* Finished: the card picks up the same mint rim the map's coastline
+   has, so the two read as one announcement. */
+.fw-prog-card[data-complete="1"] {
+  border-color: rgba(91, 228, 195, 0.28);
+  box-shadow: 0 0 0 1px rgba(91, 228, 195, 0.06), 0 18px 48px -28px rgba(91, 228, 195, 0.5);
+}
 .fw-prog-stat + .fw-prog-stat {
   margin-top: 22px;
   padding-top: 22px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ─── The completion banner ────────────────────────────────── */
+/* Leads the ledger once the map is done. It says the thing the two
+   fractions below can only imply. */
+.fw-prog-banner {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin: -4px 0 22px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(91, 228, 195, 0.18);
+}
+.fw-prog-banner-text {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: #5be4c3;
+}
+.fw-prog-banner-date {
+  margin-left: auto;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: rgba(246, 244, 238, 0.4);
+  white-space: nowrap;
+}
+.fw-prog-banner-tick {
+  position: relative;
+  flex: none;
+  width: 17px;
+  height: 17px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #5be4c3, #8fe85b);
+  box-shadow: 0 0 10px rgba(91, 228, 195, 0.7);
+}
+.fw-prog-banner-tick::after {
+  content: "";
+  position: absolute;
+  left: 5.5px;
+  top: 3.5px;
+  width: 4.5px;
+  height: 8px;
+  border: solid #06090e;
+  border-width: 0 2px 2px 0;
+  transform: rotate(43deg);
 }
 .fw-prog-stat .l {
   font-family: var(--font-ui);
@@ -1817,6 +2075,7 @@ html {
 }
 .fw-prog-stat .row {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   gap: 10px;
   margin-top: 8px;
@@ -1838,6 +2097,18 @@ html {
   color: rgba(246, 244, 238, 0.45);
   white-space: nowrap;
   font-feature-settings: "tnum" 1, "lnum" 1;
+}
+/* With nothing left to divide by, the fraction's denominator becomes a
+   phrase — set as a label rather than a number so it doesn't read as
+   part of the figure beside it. */
+.fw-prog-stat .of-note {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: rgba(246, 244, 238, 0.5);
+  white-space: normal;
 }
 .fw-prog-stat .pct {
   margin-left: auto;
@@ -2048,19 +2319,19 @@ html {
   border-color: rgba(91, 228, 195, 0.7);
   transform: translateY(-1px);
 }
-/* The map's fill-in is keyframe-driven and would play on page load,
-   three viewports before anyone sees it — hold every animation on its
-   first frame until PeekFrame flips data-shown on scroll arrival. */
-.fw-peek .fw-catlas-base,
-.fw-peek .fw-catlas-done path,
-.fw-peek .fw-catlas-latest-outline,
-.fw-peek .fw-catlas-legend {
+/* The map's fill-in and its completion finale are keyframe-driven and
+   would play on page load, three viewports before anyone sees them —
+   hold every animation on its first frame until PeekFrame flips
+   data-shown on scroll arrival. Matched by descent rather than by name
+   so a new beat in the choreography is gated automatically. */
+.fw-peek .fw-catlas,
+.fw-peek .fw-catlas::before,
+.fw-peek .fw-catlas * {
   animation-play-state: paused;
 }
-.fw-peek[data-shown="1"] .fw-catlas-base,
-.fw-peek[data-shown="1"] .fw-catlas-done path,
-.fw-peek[data-shown="1"] .fw-catlas-latest-outline,
-.fw-peek[data-shown="1"] .fw-catlas-legend {
+.fw-peek[data-shown="1"] .fw-catlas,
+.fw-peek[data-shown="1"] .fw-catlas::before,
+.fw-peek[data-shown="1"] .fw-catlas * {
   animation-play-state: running;
 }
 

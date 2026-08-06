@@ -1,24 +1,36 @@
 import type { CSSProperties } from "react";
 import { COUNTY_SHAPES, COUNTY_VIEW } from "./counties";
+import { ENGLAND_COAST, ENGLAND_ISLES } from "./englandOutline";
 
 /**
  * The hero of /progress — England with every ceremonial county drawn,
  * the completed ones filling in mint one by one, south to north (the
- * order the database is actually growing in). A server component on
+ * order the database was actually grown in). A server component on
  * purpose: the ~6,000 points of county geometry render once into HTML
- * and never ship as client JavaScript; the fill-in choreography is
- * pure CSS animation-delay, so the map needs no hydration at all.
+ * and never ship as client JavaScript; the choreography is pure CSS
+ * animation-delay, so the map needs no hydration at all.
  *
  * Completed counties are painted twice — once faint in the base layer
  * with all 47, once mint in the overlay — so each fade-in simply
  * reveals the overlay over an already-complete map.
+ *
+ * When the last county lands the map runs its finale: the seams between
+ * the counties dissolve so the 47 pieces become one country, the
+ * coastline draws itself round the whole of England, a pulse of light
+ * leaves the coast and a flush sweeps across the land. Every beat is
+ * timed off the county count, so it stays glued to the end of the fill
+ * sweep however many counties there are. While counties are still to
+ * come, the newest one pulses instead and the finale never runs.
  */
 export function CountyAtlas({
   completed,
   latest,
+  courses,
 }: {
   completed: ReadonlyArray<string>;
   latest?: string;
+  /** Courses mapped — the second figure on the completion badge. */
+  courses?: number;
 }) {
   const known = new Set(COUNTY_SHAPES.map((s) => s.name));
   const unknown = completed.filter((n) => !known.has(n));
@@ -35,31 +47,43 @@ export function CountyAtlas({
 
   const doneSet = new Set(completed);
   // South → north, so the mint sweep climbs the country the way the
-  // course database is being built.
+  // course database was built.
   const done = COUNTY_SHAPES.filter((s) => doneSet.has(s.name)).sort(
     (a, b) => b.cy - a.cy
   );
 
-  // The most recent addition gets a "Just added" beacon anchored to its
-  // centroid. It waits out the south->north fill sweep, then pulses — the
-  // delay is derived from the county count so it always lands just after the
-  // last county fills, however many there are. (Mirrors the done-path timing
-  // in globals.css: 620ms + i*55ms, 500ms each.)
-  const latestShape = latest ? done.find((s) => s.name === latest) : undefined;
-  const beaconDelay = 1120 + Math.max(0, done.length - 1) * 55 + 200;
+  const complete = done.length === COUNTY_SHAPES.length;
+
+  // The moment the last county has finished fading in. Mirrors the
+  // done-path timing in globals.css (620ms + i*55ms, 500ms each). Every
+  // beat that has to land after the sweep — the legend, the "just added"
+  // beacon, the whole finale — is offset from this one value in CSS, so
+  // the choreography stays glued to the end of the fill at any county
+  // count and can be retuned in one place.
+  const sweepEnd = 1120 + Math.max(0, done.length - 1) * 55;
+
+  // Mid-fill, the most recent addition gets a "Just added" beacon anchored
+  // to its centroid, a beat after the sweep passes it.
+  const latestShape =
+    !complete && latest ? done.find((s) => s.name === latest) : undefined;
+
+  const vars = { "--sweep-end": `${sweepEnd}ms` } as Record<string, string>;
+  // The flush crosses the map's own width, so the distance is the viewBox.
+  if (complete) vars["--catlas-w"] = `${COUNTY_VIEW.w}px`;
 
   return (
     <figure
       className="fw-catlas"
+      data-complete={complete ? "1" : "0"}
       role="img"
-      aria-label={`Map of England: ${completed.length} of ${COUNTY_SHAPES.length} counties mapped so far${
-        latestShape ? `, most recently ${latestShape.name}` : ""
-      }`}
-      style={
-        latestShape
-          ? ({ "--beacon-delay": `${beaconDelay}ms` } as CSSProperties)
-          : undefined
+      aria-label={
+        complete
+          ? `Map of England: all ${COUNTY_SHAPES.length} counties mapped, the country complete`
+          : `Map of England: ${completed.length} of ${COUNTY_SHAPES.length} counties mapped so far${
+              latestShape ? `, most recently ${latestShape.name}` : ""
+            }`
       }
+      style={vars as CSSProperties}
     >
       <svg viewBox={`0 0 ${COUNTY_VIEW.w} ${COUNTY_VIEW.h}`} width="100%">
         <defs>
@@ -74,6 +98,23 @@ export function CountyAtlas({
             <stop offset="0%" stopColor="#5BE4C3" />
             <stop offset="100%" stopColor="#8FE85B" />
           </linearGradient>
+          {complete && (
+            <>
+              {/* The flush of light that crosses the finished country —
+                  a band wider than the map, slid across and clipped to
+                  the coast so it can only ever light up England. */}
+              <linearGradient id="fw-catlas-flush" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#EAFBF5" stopOpacity="0" />
+                <stop offset="45%" stopColor="#EAFBF5" stopOpacity="0.5" />
+                <stop offset="55%" stopColor="#FFFFFF" stopOpacity="0.62" />
+                <stop offset="100%" stopColor="#EAFBF5" stopOpacity="0" />
+              </linearGradient>
+              <clipPath id="fw-catlas-land">
+                <path d={ENGLAND_COAST} />
+                <path d={ENGLAND_ISLES} />
+              </clipPath>
+            </>
+          )}
         </defs>
         <g className="fw-catlas-base">
           {COUNTY_SHAPES.map((s) => (
@@ -82,6 +123,17 @@ export function CountyAtlas({
             </path>
           ))}
         </g>
+        {/* One solid England beneath the counties, faded in as the seams
+            go. Each county was simplified on its own, so neighbours meet
+            with hairline gaps — invisible under a stroke, but the moment
+            the strokes dissolve those gaps let the dark page through and
+            keep drawing the borders. This gives them mint to show. */}
+        {complete && (
+          <g className="fw-catlas-land" aria-hidden="true">
+            <path d={ENGLAND_COAST} />
+            <path d={ENGLAND_ISLES} />
+          </g>
+        )}
         <g className="fw-catlas-done">
           {done.map((s, i) => (
             <path
@@ -91,7 +143,7 @@ export function CountyAtlas({
               style={{ "--i": i } as CSSProperties}
             >
               <title>{`${s.name} — ${
-                s.name === latest ? "just added" : "mapped"
+                !complete && s.name === latest ? "just added" : "mapped"
               }`}</title>
             </path>
           ))}
@@ -105,20 +157,55 @@ export function CountyAtlas({
             />
           </g>
         )}
-      </svg>
-      <figcaption className="fw-catlas-legend" aria-hidden="true">
-        <span>
-          <i data-kind="done" /> Mapped
-        </span>
-        {latestShape && (
-          <span>
-            <i data-kind="latest" /> Just added
-          </span>
+        {complete && (
+          <g className="fw-catlas-finale" aria-hidden="true">
+            {/* the flush, tilted so it reads as light raking across the
+                land. The rotation lives on the wrapper because the CSS
+                transform that slides the band would replace it. */}
+            <g clipPath="url(#fw-catlas-land)">
+              <g transform={`rotate(-14 ${COUNTY_VIEW.w / 2} ${COUNTY_VIEW.h / 2})`}>
+                <rect
+                  className="fw-catlas-flush"
+                  x={-COUNTY_VIEW.w}
+                  y={-COUNTY_VIEW.h * 0.3}
+                  width={COUNTY_VIEW.w}
+                  height={COUNTY_VIEW.h * 1.6}
+                  fill="url(#fw-catlas-flush)"
+                />
+              </g>
+            </g>
+            {/* one ring of light leaving the coast as the loop closes */}
+            <path className="fw-catlas-ripple" d={ENGLAND_COAST} />
+            {/* the coastline itself, drawn on then held at a slow breath */}
+            <path className="fw-catlas-coast" d={ENGLAND_COAST} pathLength={1} />
+            <path className="fw-catlas-isles" d={ENGLAND_ISLES} />
+          </g>
         )}
-        <span>
-          <i /> Still to come
-        </span>
-      </figcaption>
+      </svg>
+      {complete ? (
+        // The figures, not the word "complete" — on /progress the ledger
+        // beside this already says that, and two banners saying the same
+        // thing next to each other reads as a mistake.
+        <figcaption className="fw-catlas-done-badge">
+          <span className="fw-catlas-tick" aria-hidden="true" />
+          All {COUNTY_SHAPES.length} counties
+          {courses != null && <b>{courses.toLocaleString("en-GB")} courses</b>}
+        </figcaption>
+      ) : (
+        <figcaption className="fw-catlas-legend" aria-hidden="true">
+          <span>
+            <i data-kind="done" /> Mapped
+          </span>
+          {latestShape && (
+            <span>
+              <i data-kind="latest" /> Just added
+            </span>
+          )}
+          <span>
+            <i /> Still to come
+          </span>
+        </figcaption>
+      )}
     </figure>
   );
 }
