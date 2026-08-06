@@ -2,7 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { siteConfig } from "@/lib/siteConfig";
-import { progressConfig, COUNTIES_TOTAL } from "@/lib/progressConfig";
+import {
+  progressConfig,
+  COUNTIES_TOTAL,
+  COURSES_EXACT_TEXT,
+  isComplete,
+} from "@/lib/progressConfig";
 import { CountyAtlas } from "@/components/progress/CountyAtlas";
 import { ProgressStats } from "@/components/progress/ProgressStats";
 import { PageMotion } from "@/components/marketing/PageMotion";
@@ -14,11 +19,13 @@ import { ENGLAND_PATH } from "@/components/marketing/england";
 
 /**
  * /progress — the build, in the open. A reward for the waiting list
- * and a recruiting tool for the curious: the county map filling in,
- * the two honest fractions, what's happening right now, and one way
- * in. The homepage carries only the map as a peek; everything else
- * about the build lives here. Numbers are hand-edited in
- * src/lib/progressConfig.ts.
+ * and a recruiting tool for the curious: the county map filling in and
+ * then lighting up complete, the two honest figures, what's happening
+ * right now, and one way in. The homepage carries only the map as a
+ * peek; everything else about the build lives here. Numbers are
+ * hand-edited in src/lib/progressConfig.ts, and every "complete" here
+ * derives from that file rather than being written into the copy — add
+ * a territory to counties.ts and the page goes back to filling in.
  *
  * Deliberately absent: the roadmap and FAQ (they live on the
  * homepage), a second signup form, a changelog. One idea per page.
@@ -26,15 +33,25 @@ import { ENGLAND_PATH } from "@/components/marketing/england";
 
 export const metadata: Metadata = {
   title: "Progress",
-  description: `How far ${siteConfig.brandName} has come: counties mapped, courses collected, and what we're working on right now.`,
+  description: isComplete
+    ? `How far ${siteConfig.brandName} has come: every county in England mapped, ${COURSES_EXACT_TEXT} courses collected, and what we're working on right now.`
+    : `How far ${siteConfig.brandName} has come: counties mapped, courses collected, and what we're working on right now.`,
   // Pre-launch: inherited from the root layout, restated so nobody
   // "fixes" the layout and indexes this page by accident.
   robots: { index: false, follow: false },
 };
 
 export default function ProgressPage() {
-  const { coursesMapped, coursesTotal, completedCounties, latestCounty, lastUpdated, rightNow, screenshot } =
-    progressConfig;
+  const {
+    coursesMapped,
+    coursesTotal,
+    completedCounties,
+    latestCounty,
+    completedOn,
+    lastUpdated,
+    rightNow,
+    screenshot,
+  } = progressConfig;
 
   return (
     <div className="fw-root">
@@ -46,24 +63,41 @@ export default function ProgressPage() {
         {/* ─── Hero: intro + ledger beside the map on desktop ─ */}
         <section className="fw-prog-hero" aria-label="Progress so far">
           <div className="fw-prog-intro">
-            {/* capped so "England, filling in." holds a single line in
-                both the phone column and the desktop hero cell — at
-                43px+ a 375px phone orphans the "in." */}
+            {/* capped so the headline holds a single line in both the
+                phone column and the desktop hero cell — at 43px+ a
+                375px phone orphans the last word. */}
             <RevealHeadline
               pre="England, "
-              ital="filling in"
+              ital={isComplete ? "complete" : "filling in"}
               post="."
               fontSize="clamp(40px, 10.5vw, 68px)"
               lineHeight="0.97"
               letterSpacing="clamp(-2.6px, -0.3vw, -1.4px)"
             />
             <p className="fw-lede fw-page-enter" style={{ "--enter-d": "420ms" } as React.CSSProperties}>
-              Vestige is an iPhone app that puts every golf course in England
-              on one map, and keeps the ones you&rsquo;ve played. We&rsquo;re
-              partway through building it. This is how far the map has come.
+              {isComplete ? (
+                <>
+                  Vestige is an iPhone app that puts every golf course in
+                  England on one map, and keeps the ones you&rsquo;ve played.
+                  The map is finished: all {COUNTIES_TOTAL} counties,{" "}
+                  {COURSES_EXACT_TEXT} courses, every one of them in. This is
+                  how it got there.
+                </>
+              ) : (
+                <>
+                  Vestige is an iPhone app that puts every golf course in
+                  England on one map, and keeps the ones you&rsquo;ve played.
+                  We&rsquo;re partway through building it. This is how far the
+                  map has come.
+                </>
+              )}
             </p>
           </div>
-          <CountyAtlas completed={completedCounties} latest={latestCounty} />
+          <CountyAtlas
+            completed={completedCounties}
+            latest={latestCounty}
+            courses={coursesMapped}
+          />
           <ProgressStats
             counties={{
               label: "Counties mapped",
@@ -75,9 +109,12 @@ export default function ProgressPage() {
               value: coursesMapped,
               total: coursesTotal,
               approx: true,
+              note: "every one in England",
             }}
             latest={latestCounty}
             lastUpdated={lastUpdated}
+            complete={isComplete}
+            completedOn={completedOn}
           />
         </section>
 

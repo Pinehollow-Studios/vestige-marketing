@@ -8,7 +8,7 @@ import {
   pStyle,
 } from "../lib/emailShell";
 import { siteConfig } from "../lib/siteConfig";
-import { progressConfig, COUNTIES_TOTAL } from "../lib/progressConfig";
+import { progressConfig, COUNTIES_TOTAL, isComplete } from "../lib/progressConfig";
 
 /** Where the build-progress-map script writes the snapshot, relative to the
  *  site root. Referenced absolutely below so it resolves in the inbox. */
@@ -31,12 +31,17 @@ export default function UpdateEmail() {
 
   // Figures derive from the same source the website uses, so the email can
   // never disagree with /progress. Update them in src/lib/progressConfig.ts.
+  // Once the counting is finished there's no denominator left, so the course
+  // figure stops being a fraction and starts being the answer.
+  const mapped = progressConfig.coursesMapped.toLocaleString("en-GB");
   const figures: ReadonlyArray<{ value: string; label: string }> = [
     {
-      value: `${progressConfig.coursesMapped.toLocaleString(
-        "en-GB"
-      )} of ~${progressConfig.coursesTotal.toLocaleString("en-GB")}`,
-      label: "Courses mapped",
+      value: progressConfig.coursesTotal
+        ? `${mapped} of ~${progressConfig.coursesTotal.toLocaleString("en-GB")}`
+        : mapped,
+      label: progressConfig.coursesTotal
+        ? "Courses mapped"
+        : "Courses mapped — every one in England",
     },
     {
       value: `${progressConfig.completedCounties.length} of ${COUNTIES_TOTAL}`,
@@ -190,8 +195,17 @@ export default function UpdateEmail() {
                     >
                       {progress.justAdded.topCount}
                     </span>{" "}
-                    of England&rsquo;s top 100 are on the map now &mdash; including
-                    these newcomers:
+                    {isComplete ? (
+                      <>
+                        of England&rsquo;s top 100 are on the map &mdash; these
+                        among the last in:
+                      </>
+                    ) : (
+                      <>
+                        of England&rsquo;s top 100 are on the map now &mdash;
+                        including these newcomers:
+                      </>
+                    )}
                   </>
                 ) : (
                   <>A few of the standouts that came with them:</>

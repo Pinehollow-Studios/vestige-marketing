@@ -3,7 +3,23 @@
  *
  * When the App Store approves the final name, change the values in this file
  * (and update the OG image + favicon) and the entire site is rebranded.
+ *
+ * The course figures below are NOT written out by hand. They come from
+ * progressConfig, the same file the /progress map reads, so the hero, the
+ * stats strip, the FAQ and the emails can never drift apart or go stale:
+ * COURSES_HEADLINE_PLUS is the count rounded down for headlines ("1,700+"),
+ * COURSES_EXACT_TEXT the real figure for the lines that earn the precision.
  */
+
+// Explicit .ts extension (allowed by allowImportingTsExtensions in tsconfig):
+// scripts/build-progress-map.ts pulls this module into bare node, whose ESM
+// resolver won't guess at extensions the way the bundler does.
+import {
+  COUNTIES_TOTAL,
+  COURSES_EXACT_TEXT,
+  COURSES_HEADLINE,
+  COURSES_HEADLINE_PLUS,
+} from "./progressConfig.ts";
 
 export type SiteConfig = {
   brandName: string;
@@ -212,8 +228,7 @@ export const siteConfig: SiteConfig = {
   brandShortName: "Vestige",
   brandLowerName: "vestige",
   tagline: "Every golf course in England, collected.",
-  description:
-    "England has over 2,000 golf courses, from Open Championship links to your local pitch & putt. Vestige keeps the ones you've played, fills in your map of the country, and shows how your collection compares with your friends'.",
+  description: `England has ${COURSES_HEADLINE_PLUS} golf courses, from Open Championship links to your local pitch & putt, and every one of them is on the map. Vestige keeps the ones you've played, fills in your map of the country, and shows how your collection compares with your friends'.`,
   domain: "vestige.golf",
   appStoreUrl: null,
   contactEmail: "hello@pinehollow.studio",
@@ -227,7 +242,7 @@ export const siteConfig: SiteConfig = {
   hero: {
     liveCountMinWeekly: 100,
     liveEyebrowLabel: "joined the waiting list this week",
-    headline: ["2,000 courses. How many have you ", "played", "?"],
+    headline: [`${COURSES_HEADLINE_PLUS} courses. How many have you `, "played", "?"],
     waitlistNote:
       "Beta codes go to the waiting list first. Play it months before launch.",
     metaStrip: ["iPhone, iOS 18+", "Free at launch", "UK App Store, March 2027"],
@@ -257,8 +272,8 @@ export const siteConfig: SiteConfig = {
   ],
 
   stats: [
-    { kind: "number", target: 2000, suffix: "+", label: "Courses" },
-    { kind: "number", target: 47, label: "Ceremonial counties" },
+    { kind: "number", target: COURSES_HEADLINE, suffix: "+", label: "Courses" },
+    { kind: "number", target: COUNTIES_TOTAL, label: "Counties, all mapped" },
     { kind: "number", target: 0, prefix: "£", label: "Cost at launch" },
     { kind: "static", value: "March ’27", label: "On the App Store" },
   ],
@@ -284,7 +299,7 @@ export const siteConfig: SiteConfig = {
     titleItalic: "keeping.",
     body: [
       "Ask a golfer how many courses they've played and you'll get a guess, a frown, and a story about a links in Cornwall. What you won't get is a number. Nobody keeps the list.",
-      "So we're building one: every course in England on a single map, the ones you've played marked with a tap, and a friendly tally of who's collected the most. No swing analysis, no dashboards. Just the places, kept. England first; the rest of the British Isles to follow.",
+      `So we're building one: every course in England on a single map, the ones you've played marked with a tap, and a friendly tally of who's collected the most. The map itself is finished — all ${COURSES_EXACT_TEXT} of them, gathered county by county over the past year — so the app is what's left. No swing analysis, no dashboards. Just the places, kept. England first; the rest of the British Isles to follow.`,
       "The name? A vestige is the trace something leaves behind. Every round leaves one.",
     ],
   },
@@ -304,7 +319,7 @@ export const siteConfig: SiteConfig = {
     },
     {
       q: "Which courses are in it?",
-      a: "Every course in England: all 2,000-odd, from Open Championship links to your local nine-hole pitch & putt.",
+      a: `Every course in England — all ${COURSES_EXACT_TEXT} of them, from Open Championship links to your local nine-hole pitch & putt. That count is the finished one: the database was completed county by county and there is nothing left to add before launch.`,
     },
     {
       q: "Is it England only?",
@@ -329,8 +344,7 @@ export const siteConfig: SiteConfig = {
       kind: "atlas",
       eyebrow: "The atlas",
       title: "Every course in England.",
-      body:
-        "All 2,000+ of them, championship links to your local nine-hole pitch & putt, complete on the day we launch.",
+      body: `All ${COURSES_EXACT_TEXT} of them, championship links to your local nine-hole pitch & putt. The map was finished before the app was — nothing missing on day one.`,
     },
     {
       kind: "tap",
@@ -376,55 +390,65 @@ export const siteConfig: SiteConfig = {
     ],
   },
 
-  // PLACEHOLDER CONTENT — swap in real figures/highlights before sending.
+  // The completion send. Headline figures come from progressConfig, so only
+  // the words below need touching for the next update.
   progress: {
-    subject: "The map's filling in",
+    subject: "England's done",
     eyebrow: "Progress update",
-    headline: "The map's filling in.",
+    headline: "England, complete.",
     intro: [
-      "A quick note from the workshop. Since you joined the waiting list, we've been mapping England county by county. Here's where things stand.",
+      `A big one from the workshop. When you joined the waiting list we had a few counties on the map and a long way to go. As of this month there is nowhere left to go: every golf course in England is in the database — all ${COURSES_EXACT_TEXT} of them, across all ${COUNTIES_TOTAL} ceremonial counties.`,
+      "Northumberland was the last one in, which felt about right — we started on the south coast and worked north until we ran out of England.",
     ],
     map: {
       enabled: true,
-      alt: "Map of England with the mapped counties filled in mint, the collection climbing south to north.",
+      alt: "Map of England with every county filled in mint, the country complete.",
     },
     spotlight: {
       enabled: false,
       county: "Lincolnshire",
       name: "Woodhall Spa",
     },
-    highlights: [],
+    highlights: [
+      {
+        title: "The database is finished",
+        body: "Which means nothing is missing on the day we launch. You will not open the app and find your home course absent, wherever in England it is.",
+      },
+      {
+        title: "The map now plays it back",
+        body: "The progress page on the website runs the whole thing as an animation: the counties filling in south to north, then the coastline drawing itself around a finished England. Worth thirty seconds.",
+      },
+    ],
     justAdded: {
       enabled: true,
-      eyebrow: "Recently added",
-      lead: "A few of the counties that have joined the map lately, the north filling in fast:",
+      eyebrow: "The counties that finished it",
+      lead: "The last six in, all of them northern, over the past few weeks:",
       counties: [
-        "Cheshire",
-        "East Riding of Yorkshire",
-        "Greater Manchester",
-        "Lincolnshire",
-        "South Yorkshire",
-        "West Yorkshire",
+        "Lancashire",
+        "North Yorkshire",
+        "Cumbria",
+        "County Durham",
+        "Tyne and Wear",
+        "Northumberland",
       ],
-      // Ranks + count from top100golfcourses.com England list (2025). 84 of the
-      // top 100 sit in completed counties; the 16 that don't are all in the
-      // not-yet-mapped links coast (Merseyside, Lancashire, Cumbria, etc.).
-      topCount: 84,
+      // Every English course is now in the database, so by definition the whole
+      // of the top100golfcourses.com England list is on the map. Ranks are
+      // omitted below — the point of this send is the sweep, not the placings.
+      topCount: 100,
       courses: [
         {
-          name: "Woodhall Spa",
-          county: "Lincolnshire",
-          rank: 12,
-          note: "home of England Golf",
+          name: "Royal Lytham & St Annes",
+          county: "Lancashire",
+          note: "an Open venue, and the one the list had been missing",
         },
-        { name: "Alwoodley", county: "West Yorkshire", rank: 19 },
-        { name: "Moortown", county: "West Yorkshire", rank: 39 },
-        { name: "Delamere Forest", county: "Cheshire", rank: 52 },
+        { name: "Ganton", county: "North Yorkshire" },
+        { name: "Silloth on Solway", county: "Cumbria" },
+        { name: "Seaton Carew", county: "County Durham" },
       ],
     },
     showRightNow: true,
     showRoadmap: true,
-    signoff: "More soon,",
+    signoff: "On to the app,",
   },
 
   closingCta: {

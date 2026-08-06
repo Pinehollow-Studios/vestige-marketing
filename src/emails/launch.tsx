@@ -9,6 +9,7 @@ import {
   pStyle,
 } from "../lib/emailShell";
 import { siteConfig } from "../lib/siteConfig";
+import { COURSES_EXACT_TEXT } from "../lib/progressConfig";
 
 /**
  * Launch announcement — sent as a Resend Broadcast to the "Vestige launch
@@ -43,8 +44,8 @@ export default function LaunchEmail() {
 
       <Text style={pStyle}>
         The wait is over. {siteConfig.brandName} is on the App Store today — every
-        course in England, all 2,000+ of them, ready for you to start your
-        collection. Free.
+        course in England, all {COURSES_EXACT_TEXT} of them, ready for you to
+        start your collection. Free.
       </Text>
 
       <Section style={{ margin: "26px 0 6px" }}>
