@@ -22,7 +22,7 @@
 
 export const progressConfig = {
   /** Courses in the database. England is complete, so this is all of them. */
-  coursesMapped: 1773,
+  coursesMapped: 1793,
   /**
    * Estimated courses across the territory still being mapped — the
    * denominator of the "x of ~y" fraction, always rendered with a "~".
@@ -95,7 +95,7 @@ export const progressConfig = {
   /** The day the last county landed — stamped on the completion badge. */
   completedOn: "4 August 2026",
 
-  lastUpdated: "4 August 2026",
+  lastUpdated: "18 August 2026",
 
   /** Honest, present-tense — rewrite it whenever the work changes. */
   rightNow:
@@ -138,5 +138,5 @@ export const COURSES_HEADLINE_TEXT = COURSES_HEADLINE.toLocaleString("en-GB");
 /** "1,700+" — the rounded figure as it appears in headlines. */
 export const COURSES_HEADLINE_PLUS = `${COURSES_HEADLINE_TEXT}+`;
 
-/** "1,773" — the exact count, for the places that earn the precision. */
+/** "1,793" — the exact count, for the places that earn the precision. */
 export const COURSES_EXACT_TEXT = progressConfig.coursesMapped.toLocaleString("en-GB");
