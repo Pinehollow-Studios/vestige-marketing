@@ -12,6 +12,10 @@
 
 - [`privacy-policy.md`](privacy-policy.md) — UK GDPR / DPA 2018 privacy notice.
 - [`terms-of-service.md`](terms-of-service.md) — end-user terms / EULA.
+- [`beta-testing-agreement.md`](beta-testing-agreement.md) — the private-beta
+  tester agreement (confidentiality, no sharing, liability for breach),
+  accepted via the app's beta acknowledgement gate. Live at `/beta-terms`
+  (Tom, 2026-08-28); solicitor review still recommended.
 
 ## Before these can go live
 
