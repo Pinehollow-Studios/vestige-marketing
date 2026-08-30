@@ -2,14 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 import { siteConfig } from "@/lib/siteConfig";
+import { FwMark } from "./atoms";
 
 type Phase = "loading" | "exit" | "gone";
 
 /**
- * Cinematic intro — wordmark letters rise out of a clipped baseline, a
- * gradient hairline draws underneath, then the whole curtain wipes up
- * to reveal the hero. `onReveal` fires the moment the wipe starts so
- * the hero entrance overlaps the exit (no dead frame between them).
+ * Cinematic intro — the brand mark settles, wordmark letters rise out of
+ * a clipped baseline, a gradient hairline draws underneath, then the
+ * whole curtain wipes up to reveal the hero. `onReveal` fires the moment
+ * the wipe starts so the hero entrance overlaps the exit (no dead frame
+ * between them).
  *
  * First visit holds ~1.5s; repeat visits in the same session get a
  * fast 350ms flash-wipe via sessionStorage.
@@ -55,6 +57,13 @@ export function Preloader({ onReveal }: { onReveal: () => void }) {
       aria-hidden="true"
     >
       <div className="fw-preloader-inner">
+        {/* The mark settles first, then the letters rise into it. Asked for
+            at a size that covers the widest the clamp below ever goes. */}
+        <FwMark
+          size={96}
+          className="fw-pre-mark"
+          style={{ width: "clamp(52px, 8.4vw, 92px)", height: "auto" }}
+        />
         <div className="fw-pre-word">
           {letters.map((ch, i) => (
             <span key={i} className="fw-pre-letterbox">

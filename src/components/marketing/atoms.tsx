@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment, useEffect, useState } from "react";
+import Image from "next/image";
 import { accentFor, fwF, fwT, type Palette } from "./palette";
 import { useCountUp } from "./hooks";
 
@@ -118,64 +119,70 @@ export function RevealHeadline({
 
 // ─── Brand mark + lockup ────────────────────────────────────
 
-type FwMarkProps = { size?: number; palette?: Palette };
+type FwMarkProps = {
+  /** Laid-out size in px. Also the basis for the 2× source request. */
+  size?: number;
+  className?: string;
+  /** Merged last — for callers that need a responsive width instead. */
+  style?: React.CSSProperties;
+};
 
-export function FwMark({ size = 26, palette = "mint" }: FwMarkProps) {
-  const acc = accentFor(palette);
+/**
+ * The brand mark — the same globe the app icon is built from.
+ *
+ * `public/brand/vestige-globe.png` is rendered out of the iOS Icon
+ * Composer document by `scripts/build-brand-icons.sh`: the icon's globe
+ * layer, cropped to its own edges, with no navy ground. Bare like this
+ * it reads as a logo beside the wordmark; the grounded tile is what the
+ * favicon and the touch icon use. Never redraw it — re-run the script.
+ *
+ * Sized at roughly 1.7× the wordmark's 13px — bigger and it reads as a
+ * badge parked next to the type rather than one lockup.
+ *
+ * The intrinsic size is asked for at 2× the laid-out size and constrained
+ * back down in CSS. next/image derives its srcset from the width prop, so
+ * declaring the true 26px would leave a 3× phone rendering a 2× source of
+ * a glossy 3D render — visibly soft on the one mark the eye returns to.
+ * The extra weight is a few KB.
+ *
+ * `priority` because it sits in the first viewport of every page and a
+ * lazily-loaded logo pops in after the text it belongs to.
+ */
+export function FwMark({ size = 22, className, style }: FwMarkProps) {
   return (
-    <span
-      style={{
-        width: size,
-        height: size,
-        borderRadius: size * 0.32,
-        flexShrink: 0,
-        background: `linear-gradient(160deg, ${acc.a} 0%, ${acc.b} 100%)`,
-        boxShadow: `0 0 0 1px rgba(255,255,255,0.32) inset, 0 6px 16px -4px ${acc.a}80`,
-        display: "inline-flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <svg width={size * 0.55} height={size * 0.55} viewBox="0 0 16 16" fill="none">
-        <path
-          d="M3 12 L3 3 L11 5 L8 7 L11 9 L3 7"
-          fill={acc.on}
-          stroke={acc.on}
-          strokeWidth="0.5"
-          strokeLinejoin="round"
-        />
-        <path d="M2 12 L14 12" stroke={acc.on} strokeWidth="1.4" strokeLinecap="round" />
-      </svg>
-    </span>
+    <Image
+      className={className}
+      src="/brand/vestige-globe.png"
+      alt=""
+      aria-hidden="true"
+      width={size * 2}
+      height={size * 2}
+      priority
+      style={{ display: "block", flexShrink: 0, width: size, height: size, ...style }}
+    />
   );
 }
 
 type FwLockupProps = {
-  palette?: Palette;
   size?: number;
   color?: string;
   gap?: number;
   /** Caption to the right of the mark. Defaults to siteConfig.brandName. */
   label?: string;
-  /**
-   * Show the gradient brand mark to the left of the wordmark. Off by
-   * default — the FwMark square is a placeholder, and until the real
-   * logo exists the lockup is wordmark-only everywhere.
-   */
+  /** Show the globe mark to the left of the wordmark. */
   showMark?: boolean;
 };
 
 export function FwLockup({
-  palette = "mint",
-  size = 26,
+  size = 22,
   color,
   gap = 10,
   label = "VESTIGE",
-  showMark = false,
+  showMark = true,
 }: FwLockupProps) {
   return (
     <span style={{ display: "inline-flex", alignItems: "center", gap }}>
-      {showMark && <FwMark size={size} palette={palette} />}
+      {showMark && <FwMark size={size} />}
       <span
         style={{
           fontFamily: fwF.ui,

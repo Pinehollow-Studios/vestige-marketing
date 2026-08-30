@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { siteConfig } from "@/lib/siteConfig";
 import { accentFor, type Palette } from "./palette";
 import { useMagnetic } from "./hooks";
+import { FwMark } from "./atoms";
 
 /**
  * Floating glass pill nav — the site's tab chooser now that the story
@@ -51,6 +52,7 @@ export function StickyNav({ palette = "mint" }: { palette?: Palette }) {
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}
       >
+        <FwMark size={20} />
         {siteConfig.brandName.toUpperCase()}
       </Link>
       <span className="fw-sticky-rule" aria-hidden />

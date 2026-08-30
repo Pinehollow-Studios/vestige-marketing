@@ -25,11 +25,45 @@ When the App Store name is approved, edit **`src/lib/siteConfig.ts`** — every 
 - `hero.line1` / `line2Gradient` / `line3Italic` (the three-line serif stack — keep `line2Gradient` as the most-emphasised word; it gets the mint→lime gradient)
 - `features[]` if the product framing shifts
 
-You'll also want to replace:
-- `src/app/icon.png` / `favicon.ico` (use a single 512×512 png in `src/app/`)
-- `src/app/opengraph-image.png` (1200×630 social card)
+The brand artwork does not live here — see **Brand assets** below.
 
 When you're ready to be indexed by Google, flip `robots: { index: false, follow: false }` in `src/app/layout.tsx` to `index: true` and update `src/app/robots.ts` to `allow: "/"`.
+
+## Brand assets
+
+Nothing brand-shaped in this repo is drawn here. The app icon is authored
+once, in **vestige-ios**, as an Icon Composer document
+(`Vestige/Resources/AppIcon.icon` — a navy gradient ground plus a transparent
+globe; see `vestige-ios/docs/app-icon.md`). The website re-renders from it:
+
+```bash
+./scripts/build-brand-icons.sh      # needs Xcode + `brew install imagemagick`
+```
+
+That writes, and is the only thing that should write:
+
+| File | What it is |
+|---|---|
+| `src/app/favicon.ico` | 16/32/48 tile — the browser tab |
+| `src/app/icon.png` | 512 tile — high-DPI `rel="icon"`, bookmarks, search results |
+| `src/app/apple-icon.png` | 180 squared tile — iOS "Add to Home Screen" |
+| `public/brand/icon-192.png`, `icon-512.png`, `icon-maskable-512.png` | Android / PWA, wired up in `src/app/manifest.ts` |
+| `public/brand/vestige-globe.png` | the bare globe, cropped — the mark beside the wordmark (`FwMark`), the link-landing and 404 heroes, and the share card |
+| `public/brand/vestige-globe-128.png` | the same mark at a fixed size for emails, which can't use `next/image` |
+| `public/brand/vestige-app-icon.png` | the full 1024 tile, for anywhere an app icon is asked for |
+
+Two rules. **The tile is grounded, the mark is not** — the globe alone reads as
+a logo next to type; the navy tile is what a Home Screen or a tab expects.
+And **the maskable icon is squared** while the others keep their rounded
+corners, because Android crops that one to its own shape and a pre-rounded PNG
+comes back double-rounded.
+
+If the app icon changes, re-run the script — never edit these files by hand,
+and never redraw the globe here.
+
+The share card (`src/app/opengraph-image.tsx`) is generated from JSX at build
+time and inlines the mark as a data URI, since Satori has no filesystem at
+render time. It is a root-segment file, so every route inherits it.
 
 ## Waitlist (Resend contacts + segment)
 

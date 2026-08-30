@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/lib/siteConfig";
 
@@ -85,14 +86,25 @@ export default function GuidelinesPage() {
         <Link
           href="/"
           style={{
-            display: "inline-block",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 9,
             marginBottom: 44,
             fontSize: 13,
             color: "#9BA7B5",
             textDecoration: "none",
           }}
         >
-          ← {brandName}
+          <span aria-hidden="true">←</span>
+          <Image
+            src="/brand/vestige-globe.png"
+            alt=""
+            aria-hidden="true"
+            width={36}
+            height={36}
+            style={{ display: "block", width: 18, height: 18 }}
+          />
+          {brandName}
         </Link>
 
         <h1

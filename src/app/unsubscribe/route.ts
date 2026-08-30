@@ -76,8 +76,10 @@ function page(opts: {
     background: #0E1822; border: 1px solid rgba(255,255,255,0.10);
     border-radius: 16px; padding: 36px 32px;
   }
+  .lockup { display: flex; align-items: center; gap: 10px; margin: 0 0 18px; }
+  .lockup img { display: block; width: 26px; height: 26px; }
   .eyebrow {
-    margin: 0 0 14px; font-size: 11px; font-weight: 700;
+    margin: 0; font-size: 11px; font-weight: 700;
     letter-spacing: 2px; text-transform: uppercase; color: #5BE4C3;
   }
   h1 {
@@ -100,7 +102,10 @@ function page(opts: {
 </head>
 <body>
   <main class="card">
-    <p class="eyebrow">${escapeHtml(brandName)}</p>
+    <div class="lockup">
+      <img src="/brand/vestige-globe.png" alt="" width="26" height="26" />
+      <p class="eyebrow">${escapeHtml(brandName)}</p>
+    </div>
     <h1>${escapeHtml(heading)}</h1>
     <p>${body}</p>
     ${action ?? ""}

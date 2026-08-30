@@ -14,10 +14,15 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default async function Image() {
-  const [m700, m600] = await Promise.all([
+  const [m700, m600, glyph] = await Promise.all([
     readFile(join(process.cwd(), "assets/Manrope-700.woff")),
     readFile(join(process.cwd(), "assets/Manrope-600.woff")),
+    readFile(join(process.cwd(), "public/brand/vestige-globe.png")),
   ]);
+
+  // Satori has no filesystem, so the mark is inlined. It is the app icon's
+  // globe — see scripts/build-brand-icons.sh.
+  const glyphSrc = `data:image/png;base64,${glyph.toString("base64")}`;
 
   const ink = "#F6F4EE";
   const mint = "#5BE4C3";
@@ -53,17 +58,14 @@ export default async function Image() {
           }}
         />
 
-        {/* wordmark */}
+        {/* lockup — the app icon's globe, then the wordmark */}
         <div style={{ display: "flex", alignItems: "center" }}>
-          <div
-            style={{
-              width: 13,
-              height: 13,
-              borderRadius: 99,
-              background: mint,
-              display: "flex",
-              marginRight: 16,
-            }}
+          <img
+            src={glyphSrc}
+            width={46}
+            height={46}
+            alt=""
+            style={{ marginRight: 18 }}
           />
           <div
             style={{

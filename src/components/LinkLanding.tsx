@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { siteConfig } from "@/lib/siteConfig";
 
 /**
@@ -53,6 +54,19 @@ export function LinkLanding({ eyebrow, headline, blurb }: LinkLandingProps) {
           gap: "var(--s-3)",
         }}
       >
+        {/* The app icon's globe. These pages are the first thing a friend
+            without the app ever sees of Vestige, and the mark is what they
+            will then be looking for on the App Store. */}
+        <Image
+          src="/brand/vestige-globe.png"
+          alt=""
+          aria-hidden="true"
+          width={72}
+          height={72}
+          priority
+          style={{ display: "block", width: 72, height: 72 }}
+        />
+
         <span
           style={{
             fontSize: 13,
