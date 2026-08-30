@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   description: `The terms that govern participation in the ${siteConfig.brandName} private beta.`,
 };
 
-const UPDATED = "28 August 2026";
+const UPDATED = "29 August 2026";
 const CONTACT = "support@pinehollow.studio";
 
 const link: React.CSSProperties = {
@@ -115,8 +115,9 @@ export default function BetaTermsPage() {
 
         <p style={{ fontSize: 17, lineHeight: 1.72, color: "rgba(246,244,238,0.85)", margin: 0 }}>
           This Beta Testing Agreement (the &ldquo;Agreement&rdquo;) is a legal agreement between
-          you and <span style={strong}>{studio}</span>, registered in England and Wales at 82A
-          James Carter Road, Mildenhall, Bury St. Edmunds, IP28 7DE, United Kingdom
+          you and <span style={strong}>{studio}</span>, a company registered in England and
+          Wales (company number 17212889) with its registered office at 82A James Carter Road,
+          Mildenhall, Bury St. Edmunds, IP28 7DE, United Kingdom
           (&ldquo;{brandName}&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;), governing your
           participation in the {brandName} private beta programme (the &ldquo;Beta&rdquo;). It
           supplements our{" "}
@@ -139,7 +140,7 @@ export default function BetaTermsPage() {
           <span style={strong}>You accept this Agreement by ticking the acknowledgement box in
           the app</span>{" "}
           (&ldquo;I understand this is a private beta build, and I won&rsquo;t share
-          access&rdquo;) or by otherwise using a beta build. If you do not agree, do not use the
+          access.&rdquo;) or by otherwise using a beta build. If you do not agree, do not use the
           Beta.
         </p>
 

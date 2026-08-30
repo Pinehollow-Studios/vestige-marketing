@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   description: `The terms that govern your use of the ${siteConfig.brandName} app, including the ${siteConfig.brandName} Pro membership.`,
 };
 
-const UPDATED = "14 July 2026";
+const UPDATED = "29 August 2026";
 const CONTACT = "support@pinehollow.studio";
 
 const link: React.CSSProperties = {
@@ -114,8 +114,9 @@ export default function TermsPage() {
 
         <p style={{ fontSize: 17, lineHeight: 1.72, color: "rgba(246,244,238,0.85)", margin: 0 }}>
           These Terms of Service (&ldquo;Terms&rdquo;) are a legal agreement between you and{" "}
-          <span style={strong}>{studio}</span>, registered in England and Wales at 82A James
-          Carter Road, Mildenhall, Bury St. Edmunds, IP28 7DE, United Kingdom
+          <span style={strong}>{studio}</span>, a company registered in England and Wales
+          (company number 17212889) with its registered office at 82A James Carter Road,
+          Mildenhall, Bury St. Edmunds, IP28 7DE, United Kingdom
           (&ldquo;{brandName}&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;), governing your use of
           the {brandName} iPhone app and related services (the &ldquo;Service&rdquo;). By creating
           an account or using the Service, you agree to these Terms. If you do not agree, do not
@@ -251,9 +252,12 @@ export default function TermsPage() {
           </p>
           <p style={para}>
             You are responsible for Your Content. We have no tolerance for objectionable content
-            or abusive behaviour. We may remove content that breaches these Terms or the law, and
-            we operate moderation and reporting tools, including the ability to block other users
-            and report problems from within the app.
+            or abusive behaviour. We may remove content that breaches these Terms, our{" "}
+            <Link href="/guidelines" style={link}>
+              Community Guidelines
+            </Link>
+            , or the law, and we operate moderation and reporting tools, including the ability to
+            block other users and report problems from within the app.
           </p>
         </Section>
 
@@ -365,10 +369,21 @@ export default function TermsPage() {
           </p>
         </Section>
 
-        <Section title="17. Contact">
+        <Section title="17. General">
           <p style={para}>
-            {studio} · 82A James Carter Road, Mildenhall, Bury St. Edmunds, IP28 7DE, United
-            Kingdom ·{" "}
+            These Terms, together with the Privacy Policy and any beta or supplemental terms we
+            present to you in the app, are the entire agreement between you and us about the
+            Service. If any part of these Terms is found unenforceable, the rest remains in
+            force. If we do not enforce a term straight away, we have not waived it. You may not
+            transfer your rights under these Terms to anyone else; we may transfer ours to a
+            successor of the business, with your protections intact.
+          </p>
+        </Section>
+
+        <Section title="18. Contact">
+          <p style={para}>
+            {studio} (company number 17212889) · 82A James Carter Road, Mildenhall, Bury St.
+            Edmunds, IP28 7DE, United Kingdom ·{" "}
             <a href={mailto} style={link}>
               {CONTACT}
             </a>

@@ -1,209 +1,180 @@
 # Vestige — Privacy Policy
 
-> **DRAFT — NOT YET LIVE. Pending UK solicitor review.** This document was
-> drafted against Vestige's actual data flows. It has not been legally vetted.
-> Replace every `[BRACKETED PLACEHOLDER]` before publication.
+> Canonical source for the rendered page at `src/app/privacy/page.tsx`
+> (https://vestige.golf/privacy) — the two must be kept in step. Written to
+> match what the app actually does, verified against the iOS codebase. As
+> with the other documents in this folder, a UK solicitor's review is
+> recommended (especially the club-insights section — "aggregated /
+> anonymised" has a high bar under UK GDPR).
 
-**Effective date:** [EFFECTIVE DATE]
-**Last updated:** [EFFECTIVE DATE]
+**Last updated:** 29 August 2026
 
-## 1. Who we are
+Vestige ("Vestige", "we", "us") is a golf-course collection tracker for
+England, built by Pinehollow Studios Limited. This policy explains what
+personal data we collect, why, and your rights over it. It covers the
+Vestige iOS app and, in its final section, the vestige.golf website.
 
-Vestige ("Vestige", "we", "us") is an iPhone app that lets you keep a record
-of the golf courses you have played in England and compare your collection
-with friends. Vestige is operated by **Pinehollow Studios Limited**, a company
-registered in England and Wales (company number **[COMPANY NUMBER]**), with its
-registered office at **[COMPANY REGISTERED ADDRESS]**.
+## The short version
 
-For the purposes of the UK GDPR and the Data Protection Act 2018, Pinehollow
-Studios Limited is the **data controller** for the personal data described in
-this policy. We are registered with the Information Commissioner's Office (ICO)
-under registration number **[ICO REGISTRATION NUMBER]**.
+- We collect only what the app needs to work, plus opt-out-able diagnostics.
+- **We never show ads and never sell your individual data.** Both are
+  permanent commitments.
+- We use your golf activity to build aggregated, anonymised insights that
+  may be sold to golf clubs — never anything that identifies you. You can
+  opt out of contributing entirely.
+- You can export everything we hold about you, and delete your account (and
+  all of its data) from inside the app at any time.
 
-If you have any questions about this policy or your personal data, contact us
-at **[CONTACT EMAIL]**.
+## Who we are
 
-## 2. The short version
+The data controller is **Pinehollow Studios Limited**, a company registered
+in England and Wales (company number 17212889) with its registered office at
+82A James Carter Road, Mildenhall, Bury St. Edmunds, IP28 7DE, United
+Kingdom. For any privacy question or request, contact
+**support@pinehollow.studio**.
 
-- We collect what we need to run your collection, your account, and the social
-  features — and not much else.
-- We do not show ads, and we never sell your personal data.
-- We do sell **aggregated, anonymised** insights about visiting golfers to golf
-  clubs. These never contain your name, your identity, or anything that
-  identifies you, and you can opt out entirely. See section 6.
-- You can export or permanently delete all of your data from inside the app at
-  any time.
-- We store data in the European Union (Supabase, EU region).
+## What we collect
 
-## 3. The personal data we collect
+**Account & profile.** Your email address, username, display name, and
+optionally your first name, home club, home county, a short bio, and an
+avatar/cover photo. If you sign in with Apple or Google, we receive the
+identifier those services return to us; if you use Apple's Hide My Email, we
+receive Apple's private relay address instead of your real one.
 
-**You give us:**
+**Your golf activity.** The courses you mark as played, rounds you log
+(date, optional score, optional notes/reflections), the lists you create,
+and your friend connections.
 
-- **Account data** — your email address and password, or, if you use Sign in
-  with Apple or Sign in with Google, the identifier those services return to us.
-- **Profile data** — username, display name, first name, an optional phone
-  number, optional bio, optional avatar photo, optional home club and home
-  county, and your profile-visibility setting (private / friends / public).
-- **Your collection** — the courses you mark as played, the rounds you log
-  (date, optional score, optional notes, tagged playing partners), your bucket
-  list, the lists you create, and any ratings or reflections you attach to a
-  round.
-- **Photos** — images you attach to rounds or use as an avatar. When you upload
-  a round photo we read its embedded location (GPS) and capture time from the
-  photo's metadata, where present.
-- **Feedback** — bug reports and feedback you send us, including any optional
-  screenshot you attach.
+**About you (optional).** During onboarding we ask three optional questions:
+your age band, your handicap band, and how you mostly play. You can skip
+them entirely. We use these answers only in aggregate — to understand
+Vestige's audience and in the club insights described below — never to
+profile you individually, and they are never shown on your profile.
 
-**We collect automatically when you use the app:**
+**Photos you upload.** Round photos, course photos, and profile images. When
+you add a photo we extract its embedded metadata (capture time and, if
+present, GPS location) and keep those details alongside the photo to
+associate it with a round or course; the image copies we store are
+re-encoded, which strips the embedded metadata from the stored files.
 
-- **Approximate or precise location** — only when you actively use a feature
-  that needs it (for example, confirming you are at a course). We ask for
-  permission in context, with a reason, and you can decline.
-- **Device and diagnostic data** — app version, iOS version, and device model
-  (attached to feedback reports, unless you remove it before sending).
-- **Usage analytics** — anonymous-by-default events about how features are used,
-  emitted only if you have not opted out (Settings → Analytics).
-- **Crash and stability data** — crash reports and performance diagnostics,
-  processed via Sentry (EU region) and Apple's MetricKit. These are linked to
-  your user identifier unless you have opted out of analytics.
+**Location.** Only when you use a feature that needs it: sorting the course
+suggestions on your home screen by distance, and showing your position on
+the map when you ask for it. We take a single reading while the app is open
+and use it on your device — the reading itself is never uploaded to our
+servers or stored, and we never track your location in the background.
+(Location embedded in photos you upload is covered above.)
 
-We do **not** collect your handicap, your contacts, or your precise location in
-the background.
+**Notifications.** If you enable push notifications, we store your device's
+push token so Apple can deliver them. You can turn categories of
+notification off in Settings, or revoke the permission entirely in iOS
+Settings.
 
-## 4. How and why we use your data, and our legal bases
+**Diagnostics.** Crash reports and basic performance/diagnostic data (via
+Sentry, hosted in the EU, and Apple's MetricKit), to find and fix problems.
+This is associated with your account unless you turn analytics off.
 
-| What we do | Why | Legal basis (UK GDPR) |
-|---|---|---|
-| Create and run your account; show and sync your collection | To provide the app you signed up for | Performance of a contract |
-| Social features (friends, lists, leaderboards, activity) | To provide features you choose to use | Performance of a contract |
-| Location at check-in; push notifications | Features you turn on | Consent (you can withdraw it) |
-| Usage analytics | To understand and improve the app | Consent (opt-out) / legitimate interests — see section 11 |
-| Crash and diagnostic reporting | To keep the app stable and secure | Legitimate interests |
-| Detecting unrealistic round-logging patterns (integrity / anti-abuse) | To keep public leaderboards fair | Legitimate interests |
-| Producing aggregated, anonymised club insights | Our business model (section 6) | Legitimate interests, on anonymised data only, with an opt-out |
-| Responding to your feedback and support requests | To help you | Legitimate interests / contract |
+**Usage analytics.** Anonymous-by-default records of in-app events (e.g.
+screens viewed) to understand how the app is used. These respect your
+analytics opt-out.
 
-Where we rely on consent, you can withdraw it at any time without affecting the
-lawfulness of processing before withdrawal. Where we rely on legitimate
-interests, we have balanced those interests against your rights; contact us to
-ask about that balancing.
+**What we do not collect:** we do not read your contacts/address book, we do
+not use third-party advertising or tracking SDKs, and we do not track you
+across other apps or websites.
 
-## 5. Profile visibility
+## How we use your data
 
-Your profile defaults to **friends-only**. You can change it to private (only
-you) or public (anyone with the app) in Settings. Public visibility is required
-to appear on public leaderboards, and is always opt-in. Your score on any logged
-round is private to you regardless of your visibility setting.
+- To run the app: your collection, map, stats, lists, friends, and
+  leaderboards.
+- To keep it working: diagnosing crashes and improving performance.
+- To improve it: understanding which features are used (analytics).
+- To produce **aggregated, anonymised insights for golf clubs** — for
+  example, how many Vestige users played a club, or added it to one of their
+  lists, over a period. These insights are always aggregated across many
+  users, never individual-level, never personally identifiable, and exclude
+  anyone who has opted out of analytics. A club will never see that a named
+  person visited.
 
-## 6. Golf-club insights (our business model)
+## Who we share it with
 
-Vestige is free for golfers. We fund it by selling **aggregated, anonymised**
-insights to golf clubs — for example, how many Vestige users played a club in a
-period, the broad home-county mix of its visitors, or how many users have it on
-their bucket list.
-
-These insights are subject to strict rules:
-
-- **Never individual-level.** A club never sees that a named person played on a
-  given date. We apply minimum-aggregation thresholds and suppress any figure
-  small enough to identify an individual.
-- **Never personally identifiable.** No names, emails, usernames, or other
-  identifiers are ever included.
-- **Opt-out is honoured by exclusion.** If you opt out of analytics
-  contribution (Settings → Analytics), your data is **excluded** from these
-  insights entirely — not merely hidden.
-
-We do not, and will not, sell, rent, or otherwise disclose your personal data to
-golf clubs or any other third party for their own marketing.
-
-## 7. Who we share data with
-
-We do not sell your personal data. We share it only with service providers who
-process it on our behalf, under contract, and only as needed to run the app:
+We use a small number of service providers ("processors") to run Vestige:
 
 - **Supabase** — database, authentication, and file storage (EU region).
-- **Sentry** — crash and error reporting (EU region).
-- **Mapbox** — map rendering. Limited technical and usage data is processed to
-  serve map tiles.
-- **Apple** — Sign in with Apple, push notifications (APNs), and weather data
-  (WeatherKit), where you use those features.
+- **Sentry** — crash reporting (EU region).
+- **Apple** — Sign in with Apple, and push notification delivery.
 - **Google** — Sign in with Google, where you use it.
-- **Vercel** and **Resend** — hosting and email for our website and waiting
-  list (see section 13).
+- **Mapbox** — map rendering.
 
-We may also disclose data where required by law, to protect our rights or the
-safety of others, or in connection with a corporate transaction (with continued
-protection of your data).
+We do not sell your personal data. The only data that leaves Vestige in a
+form that could be sold is the aggregated, anonymised club insights
+described above.
 
-## 8. International transfers
+## Where your data is held
 
-We store and process your personal data in the **European Union**. Some service
-providers (for example Apple) may process limited data outside the UK/EEA. Where
-data is transferred outside the UK, we rely on an adequacy decision or on
-appropriate safeguards such as the UK International Data Transfer Agreement /
-Addendum and Standard Contractual Clauses.
+Vestige is a United Kingdom product: the app is distributed on the UK App
+Store only, and it is intended for use in the United Kingdom.
 
-## 9. How long we keep it
+Your data is stored in the European Economic Area (Supabase and Sentry both
+run in EU regions). Transfers from the UK to the EEA are covered by the UK's
+adequacy regulations. Where a processor operates outside the UK and the EEA
+(for example Apple's push delivery and Mapbox's map rendering, which are
+United States companies), the transfer is made under the UK International
+Data Transfer Addendum to the EU Standard Contractual Clauses, or another
+safeguard permitted by UK GDPR.
 
-We keep your personal data for as long as your account is active. When you
-delete your account, we delete or irreversibly anonymise your personal data,
-except where we must keep limited records to comply with a legal obligation, or
-where data has already been irreversibly aggregated into the anonymised insights
-described in section 6 (which by then contain nothing that identifies you).
+## Legal basis (UK GDPR)
 
-## 10. Your rights
+We process your data to perform our contract with you (providing the app);
+on the basis of your consent for the features you switch on (location and
+push notifications — both asked for in context, both refusable); and for our
+legitimate interests in keeping the app secure, understanding how it is
+used, and improving it — always subject to the analytics opt-out described
+above. Where we rely on legitimate interests we have balanced them against
+your rights, and you can object at any time.
 
-Under UK data protection law you have the right to: access your data; correct
-it; delete it; restrict or object to processing; data portability; and to
-withdraw consent. You can exercise the two most common rights directly in the
-app:
+## Your rights
 
-- **Export** — Settings → Account → Export my data.
-- **Delete** — Settings → Account → Delete account (permanent).
+You can, at any time:
 
-For any other request, contact **[CONTACT EMAIL]**. You also have the right to
-complain to the ICO ([ico.org.uk](https://ico.org.uk)), though we would
-appreciate the chance to help first.
+- **Access & export** your data — Settings → Privacy & data → Export my
+  data.
+- **Delete your account** — Settings → Account → Delete account. This
+  permanently removes your account and all associated data, including your
+  uploaded photos.
+- **Opt out of analytics** — Settings → Privacy & data. Opting out also
+  excludes you from all aggregated club insights.
+- **Control your visibility** — set your profile to Private or Public at any
+  time, and choose whether you appear on the global and local leaderboards
+  (Settings → Privacy & data).
 
-## 11. Analytics, crash reporting, location, and notifications
+Under UK GDPR you also have rights to rectification, restriction, objection,
+and to complain to the Information Commissioner's Office (ICO) at
+[ico.org.uk](https://ico.org.uk).
 
-- **Analytics.** Events are anonymous by default and are only sent if you have
-  not opted out. We use no third-party advertising or tracking SDKs.
-- **Crash reporting.** Crash and diagnostic data is processed by Sentry (EU) and
-  via Apple MetricKit, linked to your user identifier unless you opt out of
-  analytics, so we can follow up on issues you report.
-- **Location.** Requested only in context, for features such as confirming you
-  are at a course. Declining does not block the rest of the app.
-- **Notifications.** Requested the first time a notification-worthy event
-  happens. You control categories in Settings, and can turn them off in iOS.
+## Data retention
 
-## 12. Security
+We keep your data while your account is active. When you delete your
+account, your data (including stored photos) is removed. Aggregated insights
+that no longer identify any individual may be retained.
 
-We use industry-standard measures to protect your data, including encryption in
-transit, access controls, and a managed, hosted backend. No system is perfectly
-secure, but we work to protect your information and to meet our legal
-obligations if anything goes wrong.
+## Children
 
-## 13. Our website and waiting list
+Vestige is intended for users aged 17 and over and is not directed at
+children.
 
-If you join the waiting list on **vestige.golf**, we collect your email address
-(via Resend) solely to notify you about the launch. The website does not use
-advertising cookies. You can unsubscribe at any time.
+## This website
 
-## 14. Children
+This website asks for one piece of personal information: the email address
+you give the waiting list, held to contact you about Vestige and deleted
+once it has done its job or on request. It is stored and delivered through
+Resend, our email provider, and the site is hosted by Vercel — both acting
+only on our instructions. We also use Vercel's privacy-first analytics to
+count visits; it sets no cookies and does not identify you.
 
-Vestige is not intended for children under **[MINIMUM AGE]**, and we do not
-knowingly collect data from them. If you believe a child has provided us data,
-contact us and we will delete it.
+## Changes to this policy
 
-## 15. Changes to this policy
+We may update this policy; we will change the "Last updated" date above and,
+for material changes, notify you in-app.
 
-We may update this policy from time to time. If we make a material change, we
-will let you know in the app or by email before it takes effect.
+## Contact
 
-## 16. Contact
-
-**Pinehollow Studios Limited**
-[COMPANY REGISTERED ADDRESS]
-Email: **[CONTACT EMAIL]**
-ICO registration: **[ICO REGISTRATION NUMBER]**
+**support@pinehollow.studio** · Pinehollow Studios Limited
