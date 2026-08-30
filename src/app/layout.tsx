@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Manrope } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
@@ -41,6 +41,22 @@ export const metadata: Metadata = {
     title: `${siteConfig.brandName} — ${siteConfig.tagline}`,
     description: siteConfig.description,
   },
+  // The name under the icon when the site is added to an iOS Home Screen.
+  // Without it iOS uses the <title>, which is the full title-plus-tagline.
+  // Deliberately not `capable` — that launches the bookmark chrome-less,
+  // under the notch, and this is a marketing site with no safe-area insets
+  // and an App Store link as its whole point. It should open in the browser.
+  appleWebApp: { title: siteConfig.brandName },
+  applicationName: siteConfig.brandName,
+};
+
+/**
+ * The app icon's ground colour, so the browser chrome around the page —
+ * Safari's address bar, Android's status bar, the PWA splash — carries
+ * the same near-black the site and the icon are built on.
+ */
+export const viewport: Viewport = {
+  themeColor: "#06090E",
 };
 
 export default function RootLayout({

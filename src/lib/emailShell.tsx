@@ -1,15 +1,19 @@
 import * as React from "react";
 import {
   Body,
+  Column,
   Container,
   Head,
   Heading,
   Hr,
   Html,
+  Img,
   Preview,
+  Row,
   Section,
   Text,
 } from "@react-email/components";
+import { siteConfig } from "./siteConfig";
 
 /**
  * Shared branded shell + tokens for Vestige emails, aligned to the Vestige
@@ -151,19 +155,37 @@ export function EmailShell({
       >
         <Container style={{ width: "100%", maxWidth: 520, margin: "0 auto", padding: "0 16px" }}>
           <Section style={{ padding: "2px 4px 20px" }}>
-            {/* Wordmark — typeset in Manrope, sentence case, TextPrimary (§3). */}
-            <Text
-              style={{
-                margin: 0,
-                fontFamily: brand.display,
-                fontSize: 20,
-                letterSpacing: "-0.3px",
-                color: brand.ink,
-                fontWeight: 600,
-              }}
-            >
-              Vestige
-            </Text>
+            {/* Lockup — the app icon's globe, then the wordmark typeset in
+                Manrope, sentence case, TextPrimary (§3). A <Row> rather than
+                inline-flex: Outlook lays emails out as tables, and only a
+                table keeps the two on one baseline there. The mark is served
+                absolutely from the site because an email has no origin; it is
+                decorative, so a client that blocks images loses nothing. */}
+            <Row>
+              <Column style={{ width: 30, paddingRight: 10 }}>
+                <Img
+                  src={`https://${siteConfig.domain}/brand/vestige-globe-128.png`}
+                  width={30}
+                  height={30}
+                  alt=""
+                  style={{ display: "block", border: 0 }}
+                />
+              </Column>
+              <Column>
+                <Text
+                  style={{
+                    margin: 0,
+                    fontFamily: brand.display,
+                    fontSize: 20,
+                    letterSpacing: "-0.3px",
+                    color: brand.ink,
+                    fontWeight: 600,
+                  }}
+                >
+                  Vestige
+                </Text>
+              </Column>
+            </Row>
           </Section>
 
           <Section

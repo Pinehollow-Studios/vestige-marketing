@@ -11,7 +11,7 @@ export function SiteFooter() {
   const { studio } = siteConfig.footer;
   return (
     <footer className="fw-footer">
-      <FwLockup size={22} label={siteConfig.brandName.toUpperCase()} />
+      <FwLockup label={siteConfig.brandName.toUpperCase()} />
       {/* Two clusters that wrap as whole rows on narrow screens —
           no separators to strand at a line break. */}
       <div className="fw-footer-meta">

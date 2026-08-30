@@ -120,7 +120,7 @@ export function MarketingApp({
 
         {/* Top bar */}
         <div className="fw-topbar fw-intro-stage" style={stage(80)}>
-          <FwLockup palette={PALETTE} label={siteConfig.brandName.toUpperCase()} />
+          <FwLockup label={siteConfig.brandName.toUpperCase()} />
           {/* the other pages, then the one in-page action */}
           <nav className="fw-topbar-nav">
             {siteConfig.nav

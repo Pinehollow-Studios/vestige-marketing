@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/lib/siteConfig";
 
@@ -30,6 +31,16 @@ export default function NotFound() {
       }}
     >
       <div style={{ maxWidth: 560, padding: "48px 24px 96px", textAlign: "center" }}>
+        <Image
+          src="/brand/vestige-globe.png"
+          alt=""
+          aria-hidden="true"
+          width={64}
+          height={64}
+          priority
+          style={{ display: "block", width: 64, height: 64, margin: "0 auto 26px" }}
+        />
+
         <p
           style={{
             fontSize: 13,
