@@ -6,12 +6,14 @@ import { NextResponse } from "next/server";
  * `com.apple.developer.associated-domains` entitlement (iOS repo
  * `project.yml`):
  *
- * - `applinks` — `https://vestige.golf/u/<username>` opens the app via
- *   Universal Links rather than the web fallback (CLAUDE.md §10.1).
- *   Only `/u/*` is claimed: it is the one path with a web fallback page
- *   (`src/app/u/[username]/`), so a visitor without the app installed
- *   still lands somewhere real. Do not add paths here before their
- *   fallback pages exist, or non-installed visitors get a 404.
+ * - `applinks` — the shareable Vestige links open the app via Universal
+ *   Links rather than the web fallback (CLAUDE.md §10.1). Every claimed
+ *   path has a web fallback page under `src/app/`, so a visitor without
+ *   the app installed still lands somewhere real. Do not add paths here
+ *   before their fallback pages exist, or non-installed visitors get a
+ *   404 — which is exactly the state the 2026-08-30 share audit found
+ *   for course and list links, whose share buttons had been live for
+ *   months against paths this file never claimed.
  *
  * - `webcredentials` — lets iOS file a Vestige password under
  *   `vestige.golf` in the Passwords app instead of under an opaque
@@ -42,6 +44,18 @@ const APPLE_APP_SITE_ASSOCIATION = {
           {
             "/": "/u/*",
             comment: "Profile invite links — vestige.golf/u/<username>",
+          },
+          {
+            "/": "/course/*",
+            comment: "Course share links — vestige.golf/course/<uuid>",
+          },
+          {
+            "/": "/list/*",
+            comment: "List share links — vestige.golf/list/<uuid>",
+          },
+          {
+            "/": "/society/join/*",
+            comment: "Society invite links — vestige.golf/society/join/<token>",
           },
         ],
       },
