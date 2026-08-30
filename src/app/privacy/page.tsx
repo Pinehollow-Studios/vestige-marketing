@@ -5,10 +5,10 @@ import { siteConfig } from "@/lib/siteConfig";
 
 /**
  * Privacy policy — the full policy for the Vestige app (and, in its final
- * section, this website's waiting list). Rendered from the publish-ready
- * draft in the iOS repo (`docs/privacy-policy.md`, 10 July 2026); the two
- * must be kept in step. Linked from the app (VestigePrivacyURL), the Pro
- * paywall, and App Store Connect.
+ * section, this website's waiting list). Rendered from
+ * `legal/privacy-policy.md` (the canonical markdown source in this repo);
+ * the two must be kept in step. Linked from the app (VestigePrivacyURL),
+ * the Pro paywall, and App Store Connect.
  */
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   description: `What ${siteConfig.brandName} collects, why, and the rights you hold over it — covering the app and this website.`,
 };
 
-const UPDATED = "10 July 2026";
+const UPDATED = "29 August 2026";
 const CONTACT = "support@pinehollow.studio";
 
 const link: React.CSSProperties = {
@@ -141,8 +141,10 @@ export default function PrivacyPage() {
 
         <Section title="Who we are">
           <p style={para}>
-            The data controller is <span style={strong}>{studio}</span>. For any privacy question
-            or request, contact{" "}
+            The data controller is <span style={strong}>{studio}</span>, a company registered in
+            England and Wales (company number 17212889) with its registered office at 82A James
+            Carter Road, Mildenhall, Bury St. Edmunds, IP28 7DE, United Kingdom. For any privacy
+            question or request, contact{" "}
             <a href={mailto} style={link}>
               {CONTACT}
             </a>
@@ -154,8 +156,9 @@ export default function PrivacyPage() {
           <p style={para}>
             <span style={strong}>Account &amp; profile.</span> Your email address, username,
             display name, and optionally your first name, home club, home county, a short bio, and
-            an avatar/cover photo. If you sign in with Apple and choose to hide your email, we
-            receive Apple&rsquo;s private relay address instead of your real one.
+            an avatar/cover photo. If you sign in with Apple or Google, we receive the identifier
+            those services return to us; if you use Apple&rsquo;s Hide My Email, we receive
+            Apple&rsquo;s private relay address instead of your real one.
           </p>
           <p style={para}>
             <span style={strong}>Your golf activity.</span> The courses you mark as played, rounds
@@ -163,10 +166,11 @@ export default function PrivacyPage() {
             your friend connections.
           </p>
           <p style={para}>
-            <span style={strong}>About you (optional).</span> During onboarding we ask a few
-            optional questions about you (such as your age band). You can skip them entirely. We
-            use these answers only in the aggregated club insights described below — never to
-            profile you individually.
+            <span style={strong}>About you (optional).</span> During onboarding we ask three
+            optional questions: your age band, your handicap band, and how you mostly play. You
+            can skip them entirely. We use these answers only in aggregate — to understand{" "}
+            {brandName}&rsquo;s audience and in the club insights described below — never to
+            profile you individually, and they are never shown on your profile.
           </p>
           <p style={para}>
             <span style={strong}>Photos you upload.</span> Round photos, course photos, and
@@ -176,10 +180,12 @@ export default function PrivacyPage() {
             embedded metadata from the stored files.
           </p>
           <p style={para}>
-            <span style={strong}>Location.</span> Only to show you golf courses near you (the
-            &ldquo;Near you&rdquo; suggestions on the home screen), and only while the app is open
-            — we take a single location reading at that moment. We never track your location in
-            the background.
+            <span style={strong}>Location.</span> Only when you use a feature that needs it:
+            sorting the course suggestions on your home screen by distance, and showing your
+            position on the map when you ask for it. We take a single reading while the app is
+            open and use it on your device — the reading itself is never uploaded to our servers
+            or stored, and we never track your location in the background. (Location embedded in
+            photos you upload is covered above.)
           </p>
           <p style={para}>
             <span style={strong}>Notifications.</span> If you enable push notifications, we store
@@ -238,6 +244,9 @@ export default function PrivacyPage() {
               delivery.
             </li>
             <li>
+              <span style={strong}>Google</span> — Sign in with Google, where you use it.
+            </li>
+            <li>
               <span style={strong}>Mapbox</span> — map rendering.
             </li>
           </ul>
@@ -265,9 +274,13 @@ export default function PrivacyPage() {
 
         <Section title="Legal basis (UK GDPR)">
           <p style={para}>
-            We process your data to perform our contract with you (providing the app), on the
-            basis of your consent (e.g. location, optional analytics contribution), and for our
-            legitimate interests in keeping the app secure and improving it.
+            We process your data to perform our contract with you (providing the app); on the
+            basis of your consent for the features you switch on (location and push
+            notifications — both asked for in context, both refusable); and for our legitimate
+            interests in keeping the app secure, understanding how it is used, and improving it
+            — always subject to the analytics opt-out described above. Where we rely on
+            legitimate interests we have balanced them against your rights, and you can object
+            at any time.
           </p>
         </Section>
 
@@ -295,7 +308,11 @@ export default function PrivacyPage() {
           </ul>
           <p style={para}>
             Under UK GDPR you also have rights to rectification, restriction, objection, and to
-            complain to the Information Commissioner&rsquo;s Office (ICO) at ico.org.uk.
+            complain to the Information Commissioner&rsquo;s Office (ICO) at{" "}
+            <a href="https://ico.org.uk" style={link}>
+              ico.org.uk
+            </a>
+            .
           </p>
         </Section>
 

@@ -6,21 +6,22 @@
 > acknowledgement gate); as with the other documents in this folder, a UK
 > solicitor's review is recommended.
 
-**Effective date:** 28 August 2026
+**Last updated:** 29 August 2026
 
 This Beta Testing Agreement (the "Agreement") is a legal agreement between you
-and **Pinehollow Studios**, registered in England and Wales at 82A James
-Carter Road, Mildenhall, Bury St. Edmunds, IP28 7DE, United Kingdom
-("Vestige", "we", "us"), governing your participation in the Vestige private
-beta programme (the "Beta"). It supplements our [Terms of
+and **Pinehollow Studios Limited**, a company registered in England and Wales
+(company number 17212889) with its registered office at 82A James Carter
+Road, Mildenhall, Bury St. Edmunds, IP28 7DE, United Kingdom ("Vestige",
+"we", "us"), governing your participation in the Vestige private beta
+programme (the "Beta"). It supplements our [Terms of
 Service](https://vestige.golf/terms) and [Privacy
 Policy](https://vestige.golf/privacy), and Apple's TestFlight Terms of Use.
 Where this Agreement and the Terms of Service conflict on a beta-specific
 matter, this Agreement governs during the Beta.
 
 **You accept this Agreement by ticking the acknowledgement box in the app**
-("I understand this is a private beta build, and I won't share access") or by
-otherwise using a beta build. If you do not agree, do not use the Beta.
+("I understand this is a private beta build, and I won't share access.") or
+by otherwise using a beta build. If you do not agree, do not use the Beta.
 
 ## 1. Your invitation
 
