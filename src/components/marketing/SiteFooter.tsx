@@ -30,6 +30,9 @@ export function SiteFooter() {
           <Link className="fw-footer-link" href="/privacy">
             Privacy
           </Link>
+          <a className="fw-footer-link" href={`mailto:${siteConfig.supportEmail}`}>
+            Support
+          </a>
         </nav>
         <div className="fw-footer-group fw-footer-studio" aria-label="Made by">
           <a

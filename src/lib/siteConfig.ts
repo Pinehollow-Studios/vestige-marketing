@@ -37,7 +37,10 @@ export type SiteConfig = {
   domain: string;
   /** Null until live. When set, swap waitlist UI for App Store CTA. */
   appStoreUrl: string | null;
+  /** The front door — general enquiries, press, waitlist replies. */
   contactEmail: string;
+  /** Help with the app itself — beta, account, privacy requests, legal pages. */
+  supportEmail: string;
 
   /**
    * The site's pages, in tab order. The story is split across three
@@ -256,6 +259,7 @@ export const siteConfig: SiteConfig = {
   domain: "vestige.golf",
   appStoreUrl: null,
   contactEmail: "hello@pinehollow.studio",
+  supportEmail: "support@pinehollow.studio",
 
   nav: [
     { href: "/", label: "Home" },

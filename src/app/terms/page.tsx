@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 };
 
 const UPDATED = "29 August 2026";
-const CONTACT = "support@pinehollow.studio";
+const CONTACT = siteConfig.supportEmail;
 
 const link: React.CSSProperties = {
   color: "#5BE4C3",
