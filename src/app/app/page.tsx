@@ -21,9 +21,6 @@ import { SiteFooter } from "@/components/marketing/SiteFooter";
 export const metadata: Metadata = {
   title: "The app",
   description: `What's inside ${siteConfig.brandName} — every course in England on one map, rounds kept with a tap, and a polite competition with your friends.`,
-  // Pre-launch: inherited from the root layout, restated so nobody
-  // "fixes" the layout and indexes this page by accident.
-  robots: { index: false, follow: false },
 };
 
 export default function AppPage() {

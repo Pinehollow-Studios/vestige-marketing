@@ -36,9 +36,6 @@ export const metadata: Metadata = {
   description: isComplete
     ? `How far ${siteConfig.brandName} has come: every county in England mapped, ${COURSES_EXACT_TEXT} courses collected, and what we're working on right now.`
     : `How far ${siteConfig.brandName} has come: counties mapped, courses collected, and what we're working on right now.`,
-  // Pre-launch: inherited from the root layout, restated so nobody
-  // "fixes" the layout and indexes this page by accident.
-  robots: { index: false, follow: false },
 };
 
 export default function ProgressPage() {

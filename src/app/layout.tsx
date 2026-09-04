@@ -59,6 +59,41 @@ export const viewport: Viewport = {
   themeColor: "#06090E",
 };
 
+/**
+ * Structured data for search engines. The WebSite entry is what Google
+ * reads the site name from — without it results were headed
+ * "vestige.golf" rather than "Vestige" — and the Organization entry
+ * gives it the app icon as the logo. Rendered as a script tag in the
+ * body, per the Next JSON-LD guide; `<` is escaped so nothing in the
+ * copy can close the tag early.
+ */
+const siteUrl = `https://${siteConfig.domain}`;
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${siteUrl}/#organization`,
+      name: siteConfig.brandName,
+      legalName: siteConfig.footer.studio.name,
+      url: siteUrl,
+      logo: `${siteUrl}/brand/icon-512.png`,
+      email: siteConfig.contactEmail,
+      sameAs: [siteConfig.footer.studio.website],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      name: siteConfig.brandName,
+      url: siteUrl,
+      description: siteConfig.description,
+      inLanguage: "en-GB",
+      publisher: { "@id": `${siteUrl}/#organization` },
+    },
+  ],
+};
+const structuredDataJson = JSON.stringify(structuredData).replace(/</g, "\\u003c");
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -72,6 +107,10 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
     >
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: structuredDataJson }}
+        />
         {children}
         <Analytics />
       </body>
