@@ -185,14 +185,21 @@ export function MarketingApp({
               marginTop: 18,
               display: "inline-flex",
               alignItems: "center",
-              gap: 12,
+              justifyContent: "center",
+              // On a phone the three items don't fit one line; wrap whole
+              // items rather than breaking a date across two lines.
+              flexWrap: "wrap",
+              gap: "8px 12px",
               fontFamily: fwF.ui,
               fontSize: 12,
               color: "rgba(246,244,238,0.5)",
             }}
           >
             {siteConfig.hero.metaStrip.map((m, i) => (
-              <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 12 }}>
+              <span
+                key={i}
+                style={{ display: "inline-flex", alignItems: "center", gap: 12, whiteSpace: "nowrap" }}
+              >
                 {i === 0 ? (
                   <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
                     <span
@@ -208,7 +215,10 @@ export function MarketingApp({
                   </span>
                 ) : (
                   <>
-                    <span style={{ width: 1, height: 10, background: "rgba(255,255,255,0.18)" }} />
+                    <span
+                      className="fw-hero-meta-sep"
+                      style={{ width: 1, height: 10, background: "rgba(255,255,255,0.18)" }}
+                    />
                     <span>{m}</span>
                   </>
                 )}

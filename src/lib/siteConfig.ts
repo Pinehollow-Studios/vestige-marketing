@@ -117,7 +117,14 @@ export type SiteConfig = {
   /** Frequently-asked questions — rendered as accessible accordions. */
   faq: ReadonlyArray<{ q: string; a: string }>;
 
-  /** Roadmap timeline — three milestones from now to launch. */
+  /**
+   * Roadmap timeline — the release windows from now to the launch.
+   * Three on the site (Tom, 2026-09-04): the public beta, version 1.0
+   * going public, and the launch proper. The invite-only beta already
+   * running is deliberately not on here. January is "1.0, publicly
+   * available" — never "launch", never "App Store", never "quietly";
+   * March is the one the site makes a big thing of.
+   */
   roadmap: {
     eyebrow: string;
     titlePre: string;
@@ -129,6 +136,12 @@ export type SiteConfig = {
       year: string;
       label: string;
       body: string;
+      /**
+       * "now" for a window that has already opened (rendered "Now" instead
+       * of "Targeting"); "headline" for the one the page should make the
+       * most of (bigger label, brighter dot). Omit for the rest.
+       */
+      status?: "now" | "headline";
     }>;
   };
 
@@ -244,8 +257,8 @@ export const siteConfig: SiteConfig = {
     liveEyebrowLabel: "joined the waiting list this week",
     headline: [`${COURSES_HEADLINE_PLUS} courses. How many have you `, "played", "?"],
     waitlistNote:
-      "Beta codes go to the waiting list first. Play it months before launch.",
-    metaStrip: ["iPhone, iOS 18+", "Free at launch", "UK App Store, March 2027"],
+      "The public beta opens to the waiting list in October. Play it months before launch.",
+    metaStrip: ["iPhone, iOS 18+", "Free at launch", "Public beta, October 2026"],
   },
 
   marquee: [
@@ -275,7 +288,7 @@ export const siteConfig: SiteConfig = {
     { kind: "number", target: COURSES_HEADLINE, suffix: "+", label: "Courses" },
     { kind: "number", target: COUNTIES_TOTAL, label: "Counties, all mapped" },
     { kind: "number", target: 0, prefix: "£", label: "Cost at launch" },
-    { kind: "static", value: "March ’27", label: "On the App Store" },
+    { kind: "static", value: "Oct ’26", label: "Public beta" },
   ],
 
   appPage: {
@@ -287,7 +300,7 @@ export const siteConfig: SiteConfig = {
       headlineItalic: "first",
       headlinePost: ".",
       body:
-        "Join the waiting list. Beta codes go to the list before anyone else, and the App Store release is free.",
+        "Join the waiting list. The public beta opens to the list in October, and the App Store release is free.",
       ctaLabel: "Join the waiting list",
       meta: "iPhone, iOS 18+ · Free at launch",
     },
@@ -335,7 +348,7 @@ export const siteConfig: SiteConfig = {
     },
     {
       q: "When can I actually use it?",
-      a: "A friends-and-family beta in September, then a public beta in early 2027, then the free App Store release in spring. Waitlist members get an access code before anyone else.",
+      a: "The public beta opens on 2 October 2026: join the waiting list and the TestFlight link comes to you. Version 1.0 follows in January 2027, publicly available and free, for anyone who wants in early. Then March 2027 is launch day, the big one. Free at every step.",
     },
   ],
 
@@ -367,25 +380,26 @@ export const siteConfig: SiteConfig = {
     titlePre: "From here, to ",
     titleItalic: "spring",
     titlePost: ".",
-    sub: "Three steps between now and the App Store.",
+    sub: "Three steps between now and the launch.",
     milestones: [
       {
-        month: "Sep",
+        month: "Oct",
         year: "2026",
-        label: "Beta one",
-        body: "Friends and family. The first look.",
+        label: "Public beta",
+        body: "Open to the waiting list. Sign up and the TestFlight link is yours.",
       },
       {
         month: "Jan",
         year: "2027",
-        label: "Beta two",
-        body: "Public beta. Waitlist members get a code first.",
+        label: "Version 1.0",
+        body: "Publicly available, and free. The full app, for anyone who wants in early.",
       },
       {
         month: "Mar",
         year: "2027",
         label: "Launch day",
-        body: "On the App Store. Free for everyone.",
+        body: "The big one. Vestige, out in the world, free for everyone.",
+        status: "headline",
       },
     ],
   },
