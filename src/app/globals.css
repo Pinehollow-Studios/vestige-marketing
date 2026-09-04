@@ -772,8 +772,11 @@ html {
 .fw-timeline-track {
   position: absolute;
   top: 6px;
-  left: calc(4% + 16%);
-  right: calc(4% + 16%);
+  /* From the centre of the first column to the centre of the last — the
+     nodes grid is the 92% inside the 4% padding, split into --n columns
+     (written inline by Roadmap.tsx). */
+  left: calc(4% + 92% / var(--n, 3) / 2);
+  right: calc(4% + 92% / var(--n, 3) / 2);
   height: 1px;
   background: linear-gradient(
     90deg,
@@ -798,7 +801,7 @@ html {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(var(--n, 3), 1fr);
   gap: 24px;
 }
 .fw-timeline-node {
@@ -853,6 +856,36 @@ html {
   color: rgba(246, 244, 238, 0.66);
   margin: 10px auto 0;
   max-width: 240px;
+}
+/* The headline milestone — the launch. A bigger dot with a stronger halo
+   and the label in the mint gradient, so the eye lands on March. */
+.fw-timeline-node--headline .fw-timeline-dot {
+  width: 16px;
+  height: 16px;
+  /* 4px taller than its siblings: pull it up 2px so its centre still sits
+     on the track, and give back 2px below so the text lines up. */
+  margin-top: -2px;
+  margin-bottom: 26px;
+  box-shadow:
+    0 0 0 6px rgba(91, 228, 195, 0.16),
+    0 0 28px rgba(91, 228, 195, 0.75);
+}
+.fw-timeline-node--headline .fw-timeline-label {
+  font-size: clamp(26px, 2.9vw, 36px);
+  background: linear-gradient(120deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.fw-timeline-node--headline .fw-timeline-body {
+  color: rgba(246, 244, 238, 0.82);
+}
+/* Hero meta strip: on a phone the items wrap onto two lines, and a divider
+   at the start of a line reads as a stray mark — drop them, the gap does. */
+@media (max-width: 480px) {
+  .fw-hero-meta-sep {
+    display: none;
+  }
 }
 @media (max-width: 760px) {
   .fw-timeline-nodes {

@@ -60,9 +60,10 @@ export default function WelcomeEmail({
         }}
       >
         <Text style={{ margin: 0, fontSize: 14, lineHeight: "21px", color: brand.ink2 }}>
-          Being on the list means a head start on building your collection. When
-          the public beta opens, waitlist members get an access code before anyone
-          else — and at full release it&rsquo;s open and free to all.
+          Being on the list means a head start on building your collection. The
+          public beta opens to the list in October, months before launch, and the
+          TestFlight link comes straight to this address. At full release
+          it&rsquo;s open and free to all.
         </Text>
       </Section>
 
@@ -71,7 +72,7 @@ export default function WelcomeEmail({
       <Section style={{ margin: "6px 0 2px" }}>
         {siteConfig.roadmap.milestones.map((m, i) => (
           <Text key={i} style={{ margin: "8px 0 0", fontSize: 14, lineHeight: "20px", color: brand.ink2 }}>
-            Targeting{" "}
+            {m.status === "now" ? "Now" : "Targeting"}{" "}
             <span style={{ color: brand.accent, fontWeight: 700 }}>
               {m.month} {m.year}
             </span>

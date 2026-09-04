@@ -75,18 +75,30 @@ export function Roadmap() {
         </div>
       </Reveal>
 
-      <div ref={trackRef} className="fw-timeline">
+      {/* --n lets the CSS size the grid and centre the track's ends on the
+          first and last dots for any number of milestones. */}
+      <div
+        ref={trackRef}
+        className="fw-timeline"
+        style={{ "--n": milestones.length } as React.CSSProperties}
+      >
         <div className="fw-timeline-track">
           <div className="fw-timeline-track-fill" />
         </div>
         <div className="fw-timeline-nodes">
           {milestones.map((m, i) => (
             <Reveal key={i} delay={250 + i * 180}>
-              <article className="fw-timeline-node">
+              <article
+                className={
+                  m.status === "headline"
+                    ? "fw-timeline-node fw-timeline-node--headline"
+                    : "fw-timeline-node"
+                }
+              >
                 <div className="fw-timeline-dot" />
                 <p className="fw-timeline-date">
                   <span style={{ textTransform: "none", color: fwT.ink2, fontWeight: 600 }}>
-                    Targeting{" "}
+                    {m.status === "now" ? "Now" : "Targeting"}{" "}
                   </span>
                   {m.month.toUpperCase()} · {m.year}
                 </p>

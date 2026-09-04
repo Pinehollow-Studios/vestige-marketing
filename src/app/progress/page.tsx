@@ -133,8 +133,8 @@ export default function ProgressPage() {
               <p className="fw-page-eyebrow">From the build</p>
               <h2 className="fw-prog-shot-title">What it looks like today.</h2>
               <p className="fw-prog-shot-sub">
-                A real screen from the closed TestFlight build: the app as it
-                stands, still taking shape.
+                A real screen from the current build: the app as it stands,
+                still taking shape.
               </p>
             </div>
           </Reveal>
@@ -173,8 +173,8 @@ export default function ProgressPage() {
               Want <span className="fw-page-cta-ital">in</span>?
             </h2>
             <p>
-              Join the waiting list. Beta codes go there first, along with the
-              occasional update like this one. Nothing else.
+              Join the waiting list. The public beta link goes there in October,
+              along with the occasional update like this one. Nothing else.
             </p>
             <Link href="/#join" className="fw-page-cta-btn">
               Join the waiting list
