@@ -1,11 +1,17 @@
 import Link from "next/link";
 import { siteConfig } from "@/lib/siteConfig";
 import { FwLockup } from "./atoms";
+import { PinehollowMark } from "./PinehollowMark";
 
 /**
  * The shared footer — brand lockup, the site's pages, and the studio
  * attribution. One component so every page (home / the app / progress)
  * carries the same way around the site.
+ *
+ * The studio cluster is the site's standing link to Pinehollow: the
+ * studio's own mark, the registered name (the UK trading-disclosure line
+ * lives on the legal pages, this is the visible one), the studio website
+ * and the shared inbox. All of it comes from siteConfig.footer.studio.
  */
 export function SiteFooter() {
   const { studio } = siteConfig.footer;
@@ -25,14 +31,26 @@ export function SiteFooter() {
             Privacy
           </Link>
         </nav>
-        <div className="fw-footer-group">
+        <div className="fw-footer-group fw-footer-studio" aria-label="Made by">
           <a
-            className="fw-footer-mark"
+            className="fw-footer-mark fw-footer-studio-name"
+            href={studio.website}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={`${studio.shortName} — ${studio.websiteLabel}`}
+          >
+            <PinehollowMark size={13} />
+            <span>
+              <span className="fw-footer-studio-by">Made by</span> {studio.name}
+            </span>
+          </a>
+          <a
+            className="fw-footer-link"
             href={studio.website}
             target="_blank"
             rel="noopener noreferrer"
           >
-            {studio.name}
+            {studio.websiteLabel}
           </a>
           <a className="fw-footer-link" href={`mailto:${studio.email}`}>
             {studio.email}
