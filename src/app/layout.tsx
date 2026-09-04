@@ -48,6 +48,11 @@ export const metadata: Metadata = {
   // and an App Store link as its whole point. It should open in the browser.
   appleWebApp: { title: siteConfig.brandName },
   applicationName: siteConfig.brandName,
+  // Who makes it — rendered as author/creator/publisher meta and a
+  // rel="author" link back to the studio site.
+  authors: [{ name: siteConfig.footer.studio.shortName, url: siteConfig.footer.studio.website }],
+  creator: siteConfig.footer.studio.shortName,
+  publisher: siteConfig.footer.studio.shortName,
 };
 
 /**
@@ -80,6 +85,15 @@ const structuredData = {
       logo: `${siteUrl}/brand/icon-512.png`,
       email: siteConfig.contactEmail,
       sameAs: [siteConfig.footer.studio.website],
+      // The studio, by the same @id it publishes on pinehollow.studio, so
+      // the two graphs join: Vestige is the product, Pinehollow the maker.
+      parentOrganization: {
+        "@type": "Organization",
+        "@id": siteConfig.footer.studio.organizationId,
+        name: siteConfig.footer.studio.shortName,
+        legalName: siteConfig.footer.studio.name,
+        url: siteConfig.footer.studio.website,
+      },
     },
     {
       "@type": "WebSite",

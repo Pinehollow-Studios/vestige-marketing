@@ -1069,6 +1069,17 @@ html {
 .fw-footer-link:hover {
   color: #F6F4EE;
 }
+.fw-footer-studio-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.fw-footer-studio-by {
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  text-transform: none;
+  color: rgba(168, 179, 192, 0.55);
+}
 .fw-footer-sep {
   font-family: var(--font-ui);
   font-size: 11px;

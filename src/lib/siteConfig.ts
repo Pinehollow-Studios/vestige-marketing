@@ -229,12 +229,20 @@ export type SiteConfig = {
     studio: {
       /** Legal company name. Renders UPPERCASE, links to website. */
       name: string;
+      /** Trading name, for prose and titles ("Pinehollow Studios"). */
+      shortName: string;
       /** Contact email. Renders lowercase as a mailto: link. */
       email: string;
       /** Studio website URL (https://...). */
       website: string;
       /** Display label for the website link (e.g. "pinehollow.studio"). */
       websiteLabel: string;
+      /**
+       * The studio's Organization node id in structured data. It must be
+       * the same string the studio site publishes for itself, so Google
+       * reads the two sites as one organisation and its product.
+       */
+      organizationId: string;
     };
   };
 };
@@ -481,9 +489,11 @@ export const siteConfig: SiteConfig = {
   footer: {
     studio: {
       name: "Pinehollow Studios Limited",
+      shortName: "Pinehollow Studios",
       email: "hello@pinehollow.studio",
       website: "https://www.pinehollow.studio/",
       websiteLabel: "pinehollow.studio",
+      organizationId: "https://www.pinehollow.studio/#organization",
     },
   },
 };
