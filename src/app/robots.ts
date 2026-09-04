@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { siteConfig } from "@/lib/siteConfig";
 
 /**
  * Live: allow search engines to crawl and index the site.
@@ -9,5 +10,6 @@ import type { MetadataRoute } from "next";
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [{ userAgent: "*", allow: "/", disallow: "/unsubscribe" }],
+    sitemap: `https://${siteConfig.domain}/sitemap.xml`,
   };
 }

@@ -29,7 +29,10 @@ export type SiteConfig = {
    *  one declarative sentence that works everywhere: bio, ads, hero. */
   tagline: string;
   /** Meta/OG description — fuller than the tagline so title and
-   *  description don't duplicate in search results and link previews. */
+   *  description don't duplicate in search results and link previews.
+   *  Keep it under ~155 characters: Google truncates past that and,
+   *  when the tag is much longer, tends to swap in on-page copy of its
+   *  own choosing instead. */
   description: string;
   domain: string;
   /** Null until live. When set, swap waitlist UI for App Store CTA. */
@@ -241,7 +244,7 @@ export const siteConfig: SiteConfig = {
   brandShortName: "Vestige",
   brandLowerName: "vestige",
   tagline: "Every golf course in England, collected.",
-  description: `England has ${COURSES_HEADLINE_PLUS} golf courses, from Open Championship links to your local pitch & putt, and every one of them is on the map. Vestige keeps the ones you've played, fills in your map of the country, and shows how your collection compares with your friends'.`,
+  description: `A free iPhone app that keeps the golf courses you've played on a map of all ${COURSES_HEADLINE_PLUS} in England, and shows how your collection compares with your friends'.`,
   domain: "vestige.golf",
   appStoreUrl: null,
   contactEmail: "hello@pinehollow.studio",
