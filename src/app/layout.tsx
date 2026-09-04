@@ -84,6 +84,9 @@ const structuredData = {
       url: siteUrl,
       logo: `${siteUrl}/brand/icon-512.png`,
       email: siteConfig.contactEmail,
+      contactPoint: [
+        { "@type": "ContactPoint", contactType: "customer support", email: siteConfig.supportEmail, availableLanguage: "en" },
+      ],
       sameAs: [siteConfig.footer.studio.website],
       // The studio, by the same @id it publishes on pinehollow.studio, so
       // the two graphs join: Vestige is the product, Pinehollow the maker.
