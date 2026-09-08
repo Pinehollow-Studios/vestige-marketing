@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   description: `What ${siteConfig.brandName} collects, why, and the rights you hold over it — covering the app and this website.`,
 };
 
-const UPDATED = "29 August 2026";
+const UPDATED = "8 September 2026";
 const CONTACT = siteConfig.supportEmail;
 
 const link: React.CSSProperties = {
@@ -189,7 +189,10 @@ export default function PrivacyPage() {
             profile images. When you add a photo we extract its embedded metadata (capture time
             and, if present, GPS location) and keep those details alongside the photo to associate
             it with a round or course; the image copies we store are re-encoded, which strips the
-            embedded metadata from the stored files.
+            embedded metadata from the stored files. Photos are also checked automatically for
+            unsafe content shortly after upload — the copy sent for that check is the re-encoded
+            one, so it carries no embedded metadata, and it is sent without your name or handle
+            attached.
           </p>
           <p style={para}>
             <span style={strong}>Location.</span> Only when you use a feature that needs it:
@@ -228,6 +231,16 @@ export default function PrivacyPage() {
             <li>To keep it working: diagnosing crashes and improving performance.</li>
             <li>To improve it: understanding which features are used (analytics).</li>
             <li>
+              To keep {brandName} a decent place to be. Text you post — your bio, list names and
+              descriptions, round notes and captions, comments, and the names you type for playing
+              partners — is screened against our own word list as you post it, and may be refused.
+              That same text, and the photos you upload, are also checked by Microsoft&rsquo;s
+              Azure AI Content Safety service (EU region) as a second opinion: it can flag
+              something for a person to look at, and can hide a photo pending that review, but it
+              never decides anything about your account. Private notes you keep to yourself, and
+              the bug reports you send us, are deliberately not screened at all.
+            </li>
+            <li>
               To produce{" "}
               <span style={strong}>aggregated, anonymised insights for golf clubs</span> — for
               example, how many {brandName} users played a club, or added it to one of their
@@ -261,6 +274,10 @@ export default function PrivacyPage() {
             <li>
               <span style={strong}>Mapbox</span> — map rendering.
             </li>
+            <li>
+              <span style={strong}>Microsoft</span> — automated content-safety checks on photos
+              and text (Azure AI Content Safety, EU region).
+            </li>
           </ul>
           <p style={para}>
             We do not sell your personal data. The only data that leaves {brandName} in a form
@@ -276,7 +293,8 @@ export default function PrivacyPage() {
           </p>
           <p style={para}>
             Your data is stored in the European Economic Area (Supabase and Sentry both run in EU
-            regions). Transfers from the UK to the EEA are covered by the UK&rsquo;s adequacy
+            regions, and the content-safety checks run in Microsoft&rsquo;s Sweden Central
+            region). Transfers from the UK to the EEA are covered by the UK&rsquo;s adequacy
             regulations. Where a processor operates outside the UK and the EEA (for example
             Apple&rsquo;s push delivery and Mapbox&rsquo;s map rendering, which are United States
             companies), the transfer is made under the UK International Data Transfer Addendum to
@@ -289,10 +307,17 @@ export default function PrivacyPage() {
             We process your data to perform our contract with you (providing the app); on the
             basis of your consent for the features you switch on (location and push
             notifications — both asked for in context, both refusable); and for our legitimate
-            interests in keeping the app secure, understanding how it is used, and improving it
-            — always subject to the analytics opt-out described above. Where we rely on
-            legitimate interests we have balanced them against your rights, and you can object
-            at any time.
+            interests in keeping the app secure, keeping its content safe, understanding how it
+            is used, and improving it — always subject to the analytics opt-out described above.
+            Where we rely on legitimate interests we have balanced them against your rights, and
+            you can object at any time.
+          </p>
+          <p style={para}>
+            The content checks described above are automated, but they do not decide anything
+            about you on their own: at most they refuse a piece of text or hide a photo so a
+            person can look at it. Every decision about an account — a warning, a restriction, a
+            suspension — is made by a person, and you can reply to us through the feedback thread
+            in the app.
           </p>
         </Section>
 
@@ -333,6 +358,13 @@ export default function PrivacyPage() {
             We keep your data while your account is active. When you delete your account, your
             data (including stored photos) is removed. Aggregated insights that no longer identify
             any individual may be retained.
+          </p>
+          <p style={para}>
+            The content-safety checks described above do not create a second copy of anything:
+            Microsoft does not store the photos or text we send for analysis, does not use them to
+            train its models, and processes them only in the region we chose. What we keep is the
+            result — a score, and whether a person needs to look at it — alongside the content you
+            posted, on our own servers.
           </p>
         </Section>
 

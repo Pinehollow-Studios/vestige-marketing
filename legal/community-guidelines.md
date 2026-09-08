@@ -6,7 +6,7 @@
 > the legally binding rules; this page is the human-readable version the
 > report and block flows can point at.
 
-**Last updated:** 29 August 2026
+**Last updated:** 8 September 2026
 
 Vestige is a place to keep a record of the golf courses you have played and
 share it with people you choose. The social side is deliberately small:
@@ -49,6 +49,13 @@ Share photos you took, of the golf you played. Do not upload:
 The same standard applies to your bio, captions, comments, and list notes.
 Spam, scams, and advertising do not belong anywhere on Vestige.
 
+Some of this is checked automatically. A short list of words is blocked
+outright, so a post or a name using one is refused as you write it — you
+will be told, and you can reword it. Photos are scanned after they are
+uploaded, and one that looks wrong can be hidden while a person looks at it.
+The automated part never decides anything about your account; it only ever
+asks a human to check.
+
 ## Reporting and blocking
 
 If someone or something breaks these guidelines, tell us from inside the
@@ -60,8 +67,10 @@ you from each other.
 We review reports and act on them: removing content, warning the person,
 or restricting or suspending the account. We have no tolerance for
 objectionable content or abusive behaviour. If your own content is
-removed and you think we got it wrong, reply through the feedback thread
-and a person will look at it.
+removed or refused and you think we got it wrong — including by the
+automated checks above — reply through the feedback thread and a person
+will look at it. Your bug reports and messages to us are never screened,
+so telling us what someone said to you always works.
 
 ## The final call
 

@@ -4,7 +4,7 @@
 > (https://vestige.golf/terms) — the two must be kept in step. As with the
 > other documents in this folder, a UK solicitor's review is recommended.
 
-**Last updated:** 29 August 2026
+**Last updated:** 8 September 2026
 
 These Terms of Service ("Terms") are a legal agreement between you and
 **Pinehollow Studios Limited**, a company registered in England and Wales
@@ -117,6 +117,15 @@ content or abusive behaviour. We may remove content that breaches these
 Terms, our [Community Guidelines](community-guidelines.md), or the law, and
 we operate moderation and reporting tools, including the ability to block
 other users and report problems from within the app.
+
+Some of that moderation is automated. Text you submit is screened as you
+post it and may be refused, and photos you upload are checked for unsafe
+content after upload and may be hidden while a person reviews them. Our
+[Privacy Policy](privacy-policy.md) explains what this involves and who
+performs it. Automated checks never decide anything about your account on
+their own — a person makes those decisions — and if you think we have got
+one wrong, reply through the feedback thread in the app and we will look at
+it.
 
 ## 7. Privacy
 
