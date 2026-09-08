@@ -203,7 +203,7 @@ export function EmailShell({
           <Section style={{ padding: "18px 4px 0" }}>
             <Hr style={{ borderColor: brand.separator, margin: "0 0 14px" }} />
             <Text style={{ margin: 0, fontSize: 12, lineHeight: "18px", color: brand.ink3 }}>
-              Vestige &middot; Every course in England, tracked.
+              {siteConfig.brandName} &middot; {siteConfig.tagline}
             </Text>
             {footer && (
               <Text style={{ margin: "8px 0 0", fontSize: 12, lineHeight: "18px", color: brand.ink3 }}>

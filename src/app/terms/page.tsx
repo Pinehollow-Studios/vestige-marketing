@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   description: `The terms that govern your use of the ${siteConfig.brandName} app, including the ${siteConfig.brandName} Pro membership.`,
 };
 
-const UPDATED = "29 August 2026";
+const UPDATED = "8 September 2026";
 const CONTACT = siteConfig.supportEmail;
 
 const link: React.CSSProperties = {
@@ -270,6 +270,18 @@ export default function TermsPage() {
             </Link>
             , or the law, and we operate moderation and reporting tools, including the ability to
             block other users and report problems from within the app.
+          </p>
+          <p style={para}>
+            Some of that moderation is automated. Text you submit is screened as you post it and
+            may be refused, and photos you upload are checked for unsafe content after upload and
+            may be hidden while a person reviews them. Our{" "}
+            <Link href="/privacy" style={link}>
+              Privacy Policy
+            </Link>{" "}
+            explains what this involves and who performs it. Automated checks never decide
+            anything about your account on their own — a person makes those decisions — and if
+            you think we have got one wrong, reply through the feedback thread in the app and we
+            will look at it.
           </p>
         </Section>
 

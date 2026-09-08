@@ -7,7 +7,7 @@
 > recommended (especially the club-insights section — "aggregated /
 > anonymised" has a high bar under UK GDPR).
 
-**Last updated:** 29 August 2026
+**Last updated:** 8 September 2026
 
 Vestige ("Vestige", "we", "us") is a golf-course collection tracker for
 England, built by Pinehollow Studios Limited. This policy explains what
@@ -55,7 +55,10 @@ profile you individually, and they are never shown on your profile.
 you add a photo we extract its embedded metadata (capture time and, if
 present, GPS location) and keep those details alongside the photo to
 associate it with a round or course; the image copies we store are
-re-encoded, which strips the embedded metadata from the stored files.
+re-encoded, which strips the embedded metadata from the stored files. Photos
+are also checked automatically for unsafe content shortly after upload — the
+copy sent for that check is the re-encoded one, so it carries no embedded
+metadata, and it is sent without your name or handle attached.
 
 **Location.** Only when you use a feature that needs it: sorting the course
 suggestions on your home screen by distance, and showing your position on
@@ -87,6 +90,15 @@ across other apps or websites.
   leaderboards.
 - To keep it working: diagnosing crashes and improving performance.
 - To improve it: understanding which features are used (analytics).
+- To keep Vestige a decent place to be. Text you post — your bio, list
+  names and descriptions, round notes and captions, comments, and the names
+  you type for playing partners — is screened against our own word list as
+  you post it, and may be refused. That same text, and the photos you
+  upload, are also checked by Microsoft's Azure AI Content Safety service
+  (EU region) as a second opinion: it can flag something for a person to
+  look at, and can hide a photo pending that review, but it never decides
+  anything about your account. Private notes you keep to yourself, and the
+  bug reports you send us, are deliberately not screened at all.
 - To produce **aggregated, anonymised insights for golf clubs** — for
   example, how many Vestige users played a club, or added it to one of their
   lists, over a period. These insights are always aggregated across many
@@ -103,6 +115,8 @@ We use a small number of service providers ("processors") to run Vestige:
 - **Apple** — Sign in with Apple, and push notification delivery.
 - **Google** — Sign in with Google, where you use it.
 - **Mapbox** — map rendering.
+- **Microsoft** — automated content-safety checks on photos and text
+  (Azure AI Content Safety, EU region).
 
 We do not sell your personal data. The only data that leaves Vestige in a
 form that could be sold is the aggregated, anonymised club insights
@@ -114,7 +128,8 @@ Vestige is a United Kingdom product: the app is distributed on the UK App
 Store only, and it is intended for use in the United Kingdom.
 
 Your data is stored in the European Economic Area (Supabase and Sentry both
-run in EU regions). Transfers from the UK to the EEA are covered by the UK's
+run in EU regions, and the content-safety checks run in Microsoft's Sweden
+Central region). Transfers from the UK to the EEA are covered by the UK's
 adequacy regulations. Where a processor operates outside the UK and the EEA
 (for example Apple's push delivery and Mapbox's map rendering, which are
 United States companies), the transfer is made under the UK International
@@ -126,10 +141,16 @@ safeguard permitted by UK GDPR.
 We process your data to perform our contract with you (providing the app);
 on the basis of your consent for the features you switch on (location and
 push notifications — both asked for in context, both refusable); and for our
-legitimate interests in keeping the app secure, understanding how it is
-used, and improving it — always subject to the analytics opt-out described
-above. Where we rely on legitimate interests we have balanced them against
-your rights, and you can object at any time.
+legitimate interests in keeping the app secure, keeping its content safe,
+understanding how it is used, and improving it — always subject to the
+analytics opt-out described above. Where we rely on legitimate interests we
+have balanced them against your rights, and you can object at any time.
+
+The content checks described above are automated, but they do not decide
+anything about you on their own: at most they refuse a piece of text or hide
+a photo so a person can look at it. Every decision about an account — a
+warning, a restriction, a suspension — is made by a person, and you can
+reply to us through the feedback thread in the app.
 
 ## Your rights
 
@@ -155,6 +176,12 @@ and to complain to the Information Commissioner's Office (ICO) at
 We keep your data while your account is active. When you delete your
 account, your data (including stored photos) is removed. Aggregated insights
 that no longer identify any individual may be retained.
+
+The content-safety checks described above do not create a second copy of
+anything: Microsoft does not store the photos or text we send for analysis,
+does not use them to train its models, and processes them only in the region
+we chose. What we keep is the result — a score, and whether a person needs
+to look at it — alongside the content you posted, on our own servers.
 
 ## Children
 

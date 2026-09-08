@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   description: `How to be on ${siteConfig.brandName} — what belongs, what doesn't, and how reporting and blocking work.`,
 };
 
-const UPDATED = "29 August 2026";
+const UPDATED = "8 September 2026";
 const CONTACT = siteConfig.supportEmail;
 
 const link: React.CSSProperties = {
@@ -176,6 +176,13 @@ export default function GuidelinesPage() {
             The same standard applies to your bio, captions, comments, and list notes. Spam,
             scams, and advertising do not belong anywhere on {brandName}.
           </p>
+          <p style={para}>
+            Some of this is checked automatically. A short list of words is blocked outright, so a
+            post or a name using one is refused as you write it — you will be told, and you can
+            reword it. Photos are scanned after they are uploaded, and one that looks wrong can be
+            hidden while a person looks at it. The automated part never decides anything about
+            your account; it only ever asks a human to check.
+          </p>
         </Section>
 
         <Section title="Reporting and blocking">
@@ -191,8 +198,10 @@ export default function GuidelinesPage() {
             <span style={strong}>
               We have no tolerance for objectionable content or abusive behaviour.
             </span>{" "}
-            If your own content is removed and you think we got it wrong, reply through the
-            feedback thread and a person will look at it.
+            If your own content is removed or refused and you think we got it wrong — including
+            by the automated checks above — reply through the feedback thread and a person will
+            look at it. Your bug reports and messages to us are never screened, so telling us what
+            someone said to you always works.
           </p>
         </Section>
 
