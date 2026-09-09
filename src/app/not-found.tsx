@@ -74,8 +74,8 @@ export default function NotFound() {
             margin: "20px 0 0",
           }}
         >
-          Whatever you were looking for isn&rsquo;t here — it may have moved, or
-          the address may be mistyped. The rest of {brandName} is where it
+          Whatever you were looking for isn&rsquo;t here. It may have moved, or the
+          address may be mistyped. The rest of {brandName} is where it
           should be.
         </p>
 

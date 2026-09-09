@@ -20,7 +20,7 @@ import { SiteFooter } from "@/components/marketing/SiteFooter";
 
 export const metadata: Metadata = {
   title: "The app",
-  description: `What's inside ${siteConfig.brandName} — every course in England on one map, rounds kept with a tap, and a polite competition with your friends.`,
+  description: `What's inside ${siteConfig.brandName}: every course in England on one map, rounds kept with a tap, and a polite competition with your friends.`,
 };
 
 export default function AppPage() {

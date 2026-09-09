@@ -36,7 +36,7 @@ type GlassEmailProps = {
 export function GlassEmail({
   palette = "mint",
   size = "lg",
-  placeholder = "you@somewhere.co.uk",
+  placeholder = "you@example.co.uk",
   cta = "Join the list",
 }: GlassEmailProps) {
   const acc = accentFor(palette);

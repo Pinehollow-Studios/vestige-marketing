@@ -21,6 +21,22 @@ import {
   COURSES_HEADLINE_PLUS,
 } from "./progressConfig.ts";
 
+/**
+ * The one send. The public beta link is a single TestFlight invite that goes
+ * out on this date to the waiting list *as it stands that day* — it is not a
+ * rolling invite, and nobody who joins afterwards gets one; the next way in is
+ * version 1.0 in January 2027. The site's beta copy (hero note, stats strip,
+ * /app CTA, FAQ, roadmap, closing CTA, /progress) says so in words; this is
+ * the machine-readable half, for copy that has to change once it has happened.
+ */
+export const BETA_LINK_SEND_DATE = "2026-10-02T00:00:00Z";
+
+/** Has the one send already happened? Copy written for people who can
+ *  still make the list must not be shown to people who can't. */
+export function betaLinkStillToCome(now: Date = new Date()) {
+  return now.getTime() < Date.parse(BETA_LINK_SEND_DATE);
+}
+
 export type SiteConfig = {
   brandName: string;
   brandShortName: string;
@@ -272,8 +288,8 @@ export const siteConfig: SiteConfig = {
     liveEyebrowLabel: "joined the waiting list this week",
     headline: [`${COURSES_HEADLINE_PLUS} courses. How many have you `, "played", "?"],
     waitlistNote:
-      "The public beta opens to the waiting list in October. Play it months before launch.",
-    metaStrip: ["iPhone, iOS 18+", "Free at launch", "Public beta, October 2026"],
+      "Join before 2 October and the public beta link is yours.",
+    metaStrip: ["iPhone, iOS 18+", "Free at launch", "Beta link goes out 2 Oct"],
   },
 
   marquee: [
@@ -303,11 +319,11 @@ export const siteConfig: SiteConfig = {
     { kind: "number", target: COURSES_HEADLINE, suffix: "+", label: "Courses" },
     { kind: "number", target: COUNTIES_TOTAL, label: "Counties, all mapped" },
     { kind: "number", target: 0, prefix: "£", label: "Cost at launch" },
-    { kind: "static", value: "Oct ’26", label: "Public beta" },
+    { kind: "static", value: "2 Oct", label: "Public beta link" },
   ],
 
   appPage: {
-    headline: ["Three small ideas, ", "kept simple", "."],
+    headline: ["We kept it to ", "three small ideas", "."],
     lede:
       "No swing analysis. No data dashboards. Just somewhere to keep the places you have played, mark a score if you like, and see how your collection stands.",
     cta: {
@@ -315,7 +331,7 @@ export const siteConfig: SiteConfig = {
       headlineItalic: "first",
       headlinePost: ".",
       body:
-        "Join the waiting list. The public beta opens to the list in October, and the App Store release is free.",
+        "Join the waiting list. The public beta link goes out once, on 2 October, to everyone on it by then. The App Store release is free.",
       ctaLabel: "Join the waiting list",
       meta: "iPhone, iOS 18+ · Free at launch",
     },
@@ -327,7 +343,7 @@ export const siteConfig: SiteConfig = {
     titleItalic: "keeping.",
     body: [
       "Ask a golfer how many courses they've played and you'll get a guess, a frown, and a story about a links in Cornwall. What you won't get is a number. Nobody keeps the list.",
-      `So we're building one: every course in England on a single map, the ones you've played marked with a tap, and a friendly tally of who's collected the most. The map itself is finished — all ${COURSES_EXACT_TEXT} of them, gathered county by county over the past year — so the app is what's left. No swing analysis, no dashboards. Just the places, kept. England first; the rest of the British Isles to follow.`,
+      `So we're building one: every course in England on a single map, the ones you've played marked with a tap, and a friendly tally of who's collected the most. The map itself is finished, all ${COURSES_EXACT_TEXT} of them gathered county by county over the past year, so the app is what's left. Just the places you've played. England first; the rest of the British Isles to follow.`,
       "The name? A vestige is the trace something leaves behind. Every round leaves one.",
     ],
   },
@@ -335,19 +351,19 @@ export const siteConfig: SiteConfig = {
   faq: [
     {
       q: "Is it really free?",
-      a: "Yes. The full app and your whole collection are free, and always will be. You will never pay to map a course, fill in your collection, or see where you stand. A paid tier may come later for a few extras, but only ever on top of the free app, never a gate in front of it.",
+      a: "Yes. The full app and your whole collection are free, and always will be. Mapping a course, filling in your collection, seeing where you stand: none of it costs anything. A paid tier may come later for a few extras, and it will only ever sit on top of the free app.",
     },
     {
       q: "Does it track my score or handicap?",
-      a: "No. Vestige isn't a scorecard or a swing analyser. Jot a score against a round if you like, but the point is the collection: the courses, not the numbers.",
+      a: "No. Vestige isn't a scorecard or a swing analyser. Jot a score against a round if you like, but the point is the collection itself.",
     },
     {
       q: "How does it know which courses I've played?",
-      a: "You tell it. One tap marks a course as played. No card to scan, no per-hole bookkeeping.",
+      a: "You tell it. One tap marks a course as played, and that is all there is to it.",
     },
     {
       q: "Which courses are in it?",
-      a: `Every course in England — all ${COURSES_EXACT_TEXT} of them, from Open Championship links to your local nine-hole pitch & putt. That count is the finished one: the database was completed county by county and there is nothing left to add before launch.`,
+      a: `Every course in England: all ${COURSES_EXACT_TEXT} of them, from Open Championship links to your local nine-hole pitch & putt. That count is the finished one: the database was completed county by county and there is nothing left to add before launch.`,
     },
     {
       q: "Is it England only?",
@@ -359,11 +375,11 @@ export const siteConfig: SiteConfig = {
     },
     {
       q: "What do you do with my data?",
-      a: "As little as possible, and no ads. We will never sell your personal data: no names, nothing that ties back to you. Further down the line we may sell broad, anonymised trends to golf clubs, the patterns across thousands of rounds, but never your individual record. Your collection is yours, and you can export or delete it whenever you like.",
+      a: "As little as possible, and no ads. We will never sell your personal data: no names, nothing that ties back to you. Your collection is yours, and you can export or delete it whenever you like.",
     },
     {
       q: "When can I actually use it?",
-      a: "The public beta opens on 2 October 2026: join the waiting list and the TestFlight link comes to you. Version 1.0 follows in January 2027, publicly available and free, for anyone who wants in early. Then March 2027 is launch day, the big one. Free at every step.",
+      a: "The public beta link goes out on 2 October 2026. One send, to everyone on the waiting list that day, so join before then and it is yours. There is no second send: join later and the next way in is version 1.0 in January 2027, publicly available and free. Then March 2027 is launch day proper. Free at every step.",
     },
   ],
 
@@ -372,12 +388,12 @@ export const siteConfig: SiteConfig = {
       kind: "atlas",
       eyebrow: "The atlas",
       title: "Every course in England.",
-      body: `All ${COURSES_EXACT_TEXT} of them, championship links to your local nine-hole pitch & putt. The map was finished before the app was — nothing missing on day one.`,
+      body: `All ${COURSES_EXACT_TEXT} of them, championship links to your local nine-hole pitch & putt. The map was finished before the app was, so nothing is missing on day one.`,
     },
     {
       kind: "tap",
       eyebrow: "One tap",
-      title: "A round, kept.",
+      title: "Keep the round.",
       body:
         "Tap the course, add a score if you like. No card to scan, no per-hole bookkeeping.",
     },
@@ -386,7 +402,7 @@ export const siteConfig: SiteConfig = {
       eyebrow: "Your circle",
       title: "A polite competition.",
       body:
-        "See whose collection runs deepest among your friends, and where you rank across the country. First-tee bragging rights, finally settled.",
+        "See whose collection runs deepest among your friends, and where you rank across the country. It settles the first-tee argument for good.",
     },
   ],
 
@@ -401,7 +417,7 @@ export const siteConfig: SiteConfig = {
         month: "Oct",
         year: "2026",
         label: "Public beta",
-        body: "Open to the waiting list. Sign up and the TestFlight link is yours.",
+        body: "The TestFlight link, sent once to everyone on the waiting list. There is no second send.",
       },
       {
         month: "Jan",
@@ -424,10 +440,10 @@ export const siteConfig: SiteConfig = {
   progress: {
     subject: "England's done",
     eyebrow: "Progress update",
-    headline: "England, complete.",
+    headline: "The last county is in.",
     intro: [
-      `A big one from the workshop. When you joined the waiting list we had a few counties on the map and a long way to go. As of this month there is nowhere left to go: every golf course in England is in the database — all ${COURSES_EXACT_TEXT} of them, across all ${COUNTIES_TOTAL} ceremonial counties.`,
-      "Northumberland was the last one in, which felt about right — we started on the south coast and worked north until we ran out of England.",
+      `A big one from the workshop. When you joined the waiting list we had a few counties on the map and a long way to go. As of this month there is nowhere left to go: every golf course in England is in the database. All ${COURSES_EXACT_TEXT} of them, across all ${COUNTIES_TOTAL} ceremonial counties.`,
+      "Northumberland was the last one in, which felt about right. We started on the south coast and worked north until we ran out of England.",
     ],
     map: {
       enabled: true,
@@ -484,7 +500,7 @@ export const siteConfig: SiteConfig = {
     eyebrowLabel: "already on the list",
     headlinePre: "Be among the ",
     headlineItalic: "first.",
-    sub: "We'll keep you posted as we build, more as launch nears, and never any noise. Promise.",
+    sub: "The public beta link goes out once, on 2 October. We'll keep you posted between now and then, and never any noise. Promise.",
     ctaLabel: "Count me in",
     forwardNudge:
       "P.S. Know a golfer who'd swear blind they've played more? Forward them this.",

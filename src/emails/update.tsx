@@ -41,7 +41,7 @@ export default function UpdateEmail() {
         : mapped,
       label: progressConfig.coursesTotal
         ? "Courses mapped"
-        : "Courses mapped — every one in England",
+        : "Courses mapped, every one in England",
     },
     {
       value: `${progressConfig.completedCounties.length} of ${COUNTIES_TOTAL}`,
@@ -197,12 +197,12 @@ export default function UpdateEmail() {
                     </span>{" "}
                     {isComplete ? (
                       <>
-                        of England&rsquo;s top 100 are on the map &mdash; these
-                        among the last in:
+                        of England&rsquo;s top 100 are on the map. These among
+                        the last in:
                       </>
                     ) : (
                       <>
-                        of England&rsquo;s top 100 are on the map now &mdash;
+                        of England&rsquo;s top 100 are on the map now,
                         including these newcomers:
                       </>
                     )}
@@ -241,7 +241,7 @@ export default function UpdateEmail() {
                   {"  ·  "}
                   {c.county}
                   {c.note ? (
-                    <span style={{ color: brand.ink3 }}> &mdash; {c.note}</span>
+                    <span style={{ color: brand.ink3 }}>{"  ·  "}{c.note}</span>
                   ) : null}
                 </Text>
               ))}

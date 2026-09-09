@@ -26,11 +26,11 @@ export function ProgressPeek() {
         <h2 className="fw-peek-title">
           {isComplete ? (
             <>
-              The map, <span className="fw-peek-ital">finished</span>.
+              The map is <span className="fw-peek-ital">finished</span>.
             </>
           ) : (
             <>
-              The map, <span className="fw-peek-ital">so far</span>.
+              The map <span className="fw-peek-ital">so far</span>.
             </>
           )}
         </h2>
@@ -39,7 +39,7 @@ export function ProgressPeek() {
             <>
               We set out to put every golf course in England on one map, county
               by county. {COUNTIES_TOTAL} counties and {COURSES_EXACT_TEXT}{" "}
-              courses later, it&rsquo;s done — watch it fill in.
+              courses later, it&rsquo;s done. Watch it fill in.
             </>
           ) : (
             <>

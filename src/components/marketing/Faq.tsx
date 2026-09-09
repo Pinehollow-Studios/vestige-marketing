@@ -25,7 +25,7 @@ export function Faq({ palette = "mint" }: { palette?: Palette }) {
             />
             Good to know
           </span>
-          <h2 className="fw-faq-title">Questions, answered.</h2>
+          <h2 className="fw-faq-title">Before you ask.</h2>
         </div>
 
       </Reveal>

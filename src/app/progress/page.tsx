@@ -170,8 +170,8 @@ export default function ProgressPage() {
               Want <span className="fw-page-cta-ital">in</span>?
             </h2>
             <p>
-              Join the waiting list. The public beta link goes there in October,
-              along with the occasional update like this one. Nothing else.
+              Join the waiting list. The public beta link goes out to it once, on
+              2 October, plus the occasional update like this one. Nothing else.
             </p>
             <Link href="/#join" className="fw-page-cta-btn">
               Join the waiting list
