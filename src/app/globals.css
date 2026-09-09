@@ -1021,28 +1021,43 @@ html {
 .fw-footer {
   position: relative;
   z-index: 2;
-  padding: 28px clamp(20px, 5vw, 80px) 36px;
+  padding: 30px clamp(20px, 5vw, 80px) 38px;
   border-top: 1px solid rgba(255,255,255,0.06);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
   background: rgba(6,9,14,0.85);
-}
-.fw-footer-meta {
-  display: inline-flex;
+  /* Three named zones so each moves as a block at the breakpoints,
+     instead of nine links wrapping wherever they run out of room. */
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas: "brand nav studio";
   align-items: center;
-  gap: 22px;
-  flex-wrap: wrap;
-  row-gap: 10px;
+  column-gap: clamp(24px, 3vw, 44px);
+  row-gap: 26px;
 }
-/* pages / studio clusters — each wraps to its own row on phones */
-.fw-footer-group {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
+.fw-footer-brand { grid-area: brand; display: flex; align-items: center; }
+.fw-footer-nav {
+  grid-area: nav;
+  justify-self: center;
+  display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  column-gap: 20px;
   row-gap: 8px;
+}
+.fw-footer-studio {
+  grid-area: studio;
+  justify-self: end;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  /* Wider than the 20px inside a cluster, so "made by" reads as its own
+     group rather than as five more nav links. */
+  column-gap: 34px;
+  row-gap: 8px;
+}
+.fw-footer-studio-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
 }
 .fw-footer-mark {
   font-family: var(--font-ui);
@@ -1064,6 +1079,7 @@ html {
   letter-spacing: 0.2px;
   color: rgba(168, 179, 192, 0.78);
   text-decoration: none;
+  white-space: nowrap;
   transition: color 0.25s ease;
 }
 .fw-footer-link:hover {
@@ -1080,14 +1096,38 @@ html {
   text-transform: none;
   color: rgba(168, 179, 192, 0.55);
 }
-.fw-footer-sep {
-  font-family: var(--font-ui);
-  font-size: 11px;
-  color: rgba(168, 179, 192, 0.35);
-  user-select: none;
+
+/* Two rows: identity and the pages up top, the small print beneath.
+   The single row needs ~1110px of content (the studio name is the long
+   pole), so it only survives above 1280 — below that the studio cluster
+   would wrap inside its own column and strand a ragged third line. */
+@media (max-width: 1279px) {
+  .fw-footer {
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "brand nav"
+      "studio studio";
+  }
+  .fw-footer-nav { justify-self: end; }
+  .fw-footer-studio { justify-self: start; }
 }
-@media (max-width: 540px) {
-  .fw-footer { flex-direction: column; align-items: flex-start; gap: 20px; }
+
+/* Stacked, everything flush left. */
+@media (max-width: 640px) {
+  .fw-footer {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "brand"
+      "nav"
+      "studio";
+    row-gap: 22px;
+  }
+  .fw-footer-nav { justify-self: start; column-gap: 18px; }
+  .fw-footer-studio {
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 12px;
+  }
 }
 
 /* ─── Scroll progress bar ──────────────────────────────────── */
