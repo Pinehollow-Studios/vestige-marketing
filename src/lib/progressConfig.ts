@@ -22,7 +22,7 @@
 
 export const progressConfig = {
   /** Courses in the database. England is complete, so this is all of them. */
-  coursesMapped: 1799,
+  coursesMapped: 1803,
   /**
    * Estimated courses across the territory still being mapped — the
    * denominator of the "x of ~y" fraction, always rendered with a "~".
@@ -122,7 +122,7 @@ export const isComplete = progressConfig.completedCounties.length === COUNTIES_T
 
 /**
  * The headline course figure, for marketing copy: the real count rounded
- * DOWN to the nearest hundred, so "1,700+" is always an undersell and can
+ * DOWN to the nearest hundred, so "1,800+" is always an undersell and can
  * never over-claim. Change the rounding here and the hero, the stats
  * strip, the meta description and the emails all follow.
  *
@@ -132,11 +132,11 @@ export const isComplete = progressConfig.completedCounties.length === COUNTIES_T
  */
 export const COURSES_HEADLINE = Math.floor(progressConfig.coursesMapped / 100) * 100;
 
-/** "1,700" — the rounded figure, formatted. */
+/** "1,800" — the rounded figure, formatted. */
 export const COURSES_HEADLINE_TEXT = COURSES_HEADLINE.toLocaleString("en-GB");
 
-/** "1,700+" — the rounded figure as it appears in headlines. */
+/** "1,800+" — the rounded figure as it appears in headlines. */
 export const COURSES_HEADLINE_PLUS = `${COURSES_HEADLINE_TEXT}+`;
 
-/** "1,799" — the exact count, for the places that earn the precision. */
+/** "1,803" — the exact count, for the places that earn the precision. */
 export const COURSES_EXACT_TEXT = progressConfig.coursesMapped.toLocaleString("en-GB");
