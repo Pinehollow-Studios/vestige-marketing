@@ -7,7 +7,7 @@
  * The course figures below are NOT written out by hand. They come from
  * progressConfig, the same file the /progress map reads, so the hero, the
  * stats strip, the FAQ and the emails can never drift apart or go stale:
- * COURSES_HEADLINE_PLUS is the count rounded down for headlines ("1,700+"),
+ * COURSES_HEADLINE_PLUS is the count rounded down for headlines ("1,800+"),
  * COURSES_EXACT_TEXT the real figure for the lines that earn the precision.
  */
 
