@@ -880,12 +880,67 @@ html {
 .fw-timeline-node--headline .fw-timeline-body {
   color: rgba(246, 244, 238, 0.82);
 }
-/* Hero meta strip: on a phone the items wrap onto two lines, and a divider
-   at the start of a line reads as a stray mark — drop them, the gap does. */
+/* ─── Hero meta strip ──────────────────────────────────────── */
+.fw-hero-meta {
+  margin-top: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* Wrap whole items, never break a date across two lines. */
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: rgba(246, 244, 238, 0.5);
+}
+.fw-hero-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  white-space: nowrap;
+}
+.fw-hero-meta-first {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.fw-hero-meta-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+}
+.fw-hero-meta-sep {
+  width: 1px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.18);
+}
+/* Phones: the three items plus their dividers are ~26px too wide for a
+   375–430px screen at the desktop size, so tighten the type and the gaps
+   rather than dropping the dividers. */
 @media (max-width: 480px) {
-  .fw-hero-meta-sep {
-    display: none;
+  .fw-hero-meta {
+    font-size: 11px;
+    gap: 7px 9px;
   }
+  .fw-hero-meta-item { gap: 9px; }
+  .fw-hero-meta-sep { height: 9px; }
+}
+/* The 375px class of phone is the tight one: at the sizes above it clears
+   by only a few px, which a slightly wider font render would eat. */
+@media (max-width: 400px) {
+  .fw-hero-meta { gap: 6px 7px; }
+  .fw-hero-meta-item { gap: 7px; }
+}
+/* Narrower than that nothing gets all three onto one line, and a divider
+   at the start of a wrapped line reads as a stray mark. So give the last
+   item its own line deliberately, without its leading divider, instead of
+   letting flex wrap wherever it runs out of room. */
+@media (max-width: 374px) {
+  .fw-hero-meta-item:last-child {
+    flex-basis: 100%;
+    justify-content: center;
+  }
+  .fw-hero-meta-item:last-child .fw-hero-meta-sep { display: none; }
 }
 @media (max-width: 760px) {
   .fw-timeline-nodes {

@@ -175,47 +175,22 @@ export function MarketingApp({
             </p>
           </div>
 
-          <div
-            className="fw-intro-stage"
-            style={{
-              ...stage(840),
-              marginTop: 18,
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              // On a phone the three items don't fit one line; wrap whole
-              // items rather than breaking a date across two lines.
-              flexWrap: "wrap",
-              gap: "8px 12px",
-              fontFamily: fwF.ui,
-              fontSize: 12,
-              color: "rgba(246,244,238,0.5)",
-            }}
-          >
+          {/* Sizing and wrapping live in CSS (.fw-hero-meta), not here, so
+              the phone breakpoints can tighten them — see globals.css. */}
+          <div className="fw-intro-stage fw-hero-meta" style={stage(840)}>
             {siteConfig.hero.metaStrip.map((m, i) => (
-              <span
-                key={i}
-                style={{ display: "inline-flex", alignItems: "center", gap: 12, whiteSpace: "nowrap" }}
-              >
+              <span key={i} className="fw-hero-meta-item">
                 {i === 0 ? (
-                  <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                  <span className="fw-hero-meta-first">
                     <span
-                      style={{
-                        width: 5,
-                        height: 5,
-                        borderRadius: 999,
-                        background: acc.a,
-                        boxShadow: `0 0 8px ${acc.a}`,
-                      }}
+                      className="fw-hero-meta-dot"
+                      style={{ background: acc.a, boxShadow: `0 0 8px ${acc.a}` }}
                     />
                     {m}
                   </span>
                 ) : (
                   <>
-                    <span
-                      className="fw-hero-meta-sep"
-                      style={{ width: 1, height: 10, background: "rgba(255,255,255,0.18)" }}
-                    />
+                    <span className="fw-hero-meta-sep" aria-hidden />
                     <span>{m}</span>
                   </>
                 )}
