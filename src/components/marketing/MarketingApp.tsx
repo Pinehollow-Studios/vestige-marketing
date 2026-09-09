@@ -23,7 +23,6 @@ import { Roadmap } from "./Roadmap";
 import { Preloader } from "./Preloader";
 import { StickyNav } from "./StickyNav";
 import { MegaWordmark } from "./MegaWordmark";
-import { CourseTrail } from "./CourseTrail";
 import { AtlasMini } from "./AtlasMini";
 import { SiteFooter } from "./SiteFooter";
 
@@ -108,8 +107,6 @@ export function MarketingApp({
       <Preloader onReveal={() => setIntroDone(true)} />
       {/* fixed ambient glows — dawn mint drifting to golden hour as --gp climbs */}
       <div className="fw-ambient" aria-hidden="true" />
-      {/* the course-routing trail weaving down the whole page */}
-      <CourseTrail />
       <ScrollProgress />
       <StickyNav palette={PALETTE} />
       <AtlasMini />
