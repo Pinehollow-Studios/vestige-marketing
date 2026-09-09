@@ -26,7 +26,8 @@ export function StickyNav({ palette = "mint" }: { palette?: Palette }) {
   const pathname = usePathname();
   const onHome = pathname === "/";
   const [shown, setShown] = useState(false);
-  const ctaRef = useMagnetic<HTMLAnchorElement>(0.3, ".fw-sticky");
+  // A short lean only: the nav links sit right up against this pill.
+  const ctaRef = useMagnetic<HTMLAnchorElement>(0.16, ".fw-sticky", 6);
 
   useEffect(() => {
     const apply = () =>

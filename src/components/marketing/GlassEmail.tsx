@@ -57,8 +57,9 @@ export function GlassEmail({
   const sent = state.status === "ok";
   const error = state.status === "error" ? state.message : null;
   const tall = size === "lg" ? 64 : 54;
-  // CTA leans toward the cursor while the pointer roams the pill.
-  const magRef = useMagnetic<HTMLButtonElement>(0.22, ".fw-email");
+  // CTA leans toward the cursor while the pointer roams the pill — a
+  // few px only, so it never crowds the email field beside it.
+  const magRef = useMagnetic<HTMLButtonElement>(0.14, ".fw-email", 7);
 
   // On a successful submit the on-screen keyboard has pushed the page down,
   // and on mobile closing it can leave the page scrolled — which fades the
