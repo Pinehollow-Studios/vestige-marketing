@@ -7,7 +7,7 @@ import {
   h1Style,
   pStyle,
 } from "../lib/emailShell";
-import { siteConfig } from "../lib/siteConfig";
+import { betaLinkStillToCome, siteConfig } from "../lib/siteConfig";
 
 /**
  * Welcome email — fires from the joinWaitlist server action when a *new*
@@ -15,6 +15,10 @@ import { siteConfig } from "../lib/siteConfig";
  * `unsubscribeUrl` (a signed one-click link minted in lib/email.tsx); previews
  * render without it and fall back to the support mailto. Tinker freely; preview
  * with `npm run email`.
+ *
+ * The beta paragraph is date-aware on purpose: the public beta link is a single
+ * send, so once it has gone out this email must stop promising it to people who
+ * joined too late. Rendered per send, so `new Date()` is the send date.
  */
 export default function WelcomeEmail({
   unsubscribeUrl,
@@ -26,7 +30,7 @@ export default function WelcomeEmail({
     `mailto:${siteConfig.contactEmail}?subject=Unsubscribe%20from%20Vestige`;
   return (
     <EmailShell
-      preview={`You're on the ${siteConfig.brandName} waiting list — ${siteConfig.tagline}`}
+      preview={`You're on the ${siteConfig.brandName} waiting list. ${siteConfig.tagline}`}
       footer={
         <>
           You&rsquo;re getting this because you joined the waiting list at{" "}
@@ -45,8 +49,8 @@ export default function WelcomeEmail({
       <Heading style={h1Style}>You&rsquo;re on the list.</Heading>
 
       <Text style={pStyle}>
-        Thanks for joining the waiting list for {siteConfig.brandName} — the way to
-        keep every golf course you&rsquo;ve played in England, and see how your
+        Thanks for joining the waiting list for {siteConfig.brandName}, the way to
+        keep every golf course you&rsquo;ve played in England and see how your
         collection stands against your friends.
       </Text>
 
@@ -60,10 +64,23 @@ export default function WelcomeEmail({
         }}
       >
         <Text style={{ margin: 0, fontSize: 14, lineHeight: "21px", color: brand.ink2 }}>
-          Being on the list means a head start on building your collection. The
-          public beta opens to the list in October, months before launch, and the
-          TestFlight link comes straight to this address. At full release
-          it&rsquo;s open and free to all.
+          {betaLinkStillToCome() ? (
+            <>
+              You made the list in time. The public beta link goes out on 2
+              October, one send to everyone on the list that day, and it comes
+              straight to this address. There is no second send, so keep an eye
+              out. Version 1.0 follows in January 2027, publicly available and
+              free.
+            </>
+          ) : (
+            <>
+              A heads-up: the public beta link has already gone out. It was a
+              single send, on 2 October, and there won&rsquo;t be another, so
+              this is the list for what comes next. Version 1.0 lands in January
+              2027, publicly available and free, and you&rsquo;ll hear it here
+              first.
+            </>
+          )}
         </Text>
       </Section>
 
@@ -76,16 +93,16 @@ export default function WelcomeEmail({
             <span style={{ color: brand.accent, fontWeight: 700 }}>
               {m.month} {m.year}
             </span>
-            {"  —  "}
+            {"  ·  "}
             <span style={{ color: brand.ink }}>{m.label}.</span> {m.body}
           </Text>
         ))}
       </Section>
 
       <Text style={pStyle}>
-        We&rsquo;ll keep you posted as we build it — the odd note for now,
-        picking up as launch nears, and first word the moment it&rsquo;s ready to
-        play. No noise in between, promise.
+        We&rsquo;ll keep you posted as we build it: the odd note for now, picking up
+        as launch nears, and first word the moment it&rsquo;s ready to play. No
+        noise in between, promise.
       </Text>
 
       <Text style={{ ...pStyle, color: brand.ink, marginTop: 22 }}>

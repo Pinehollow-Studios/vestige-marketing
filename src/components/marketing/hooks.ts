@@ -289,10 +289,16 @@ export function useTilt<T extends HTMLElement = HTMLElement>(max = 6) {
  * is inside the surrounding `areaSelector` ancestor (falls back to the
  * element itself). Writes `--mdx`/`--mdy` px offsets; CSS applies them
  * inside the element's transform so hover scales still compose.
+ *
+ * The lean is deliberately small and bounded: `maxOffset` caps the travel
+ * in px (per axis) so a CTA can never wander into the control beside it,
+ * and the pull fades to zero at the edge of `reach` instead of cutting
+ * out, so leaving the area doesn't snap the element back.
  */
 export function useMagnetic<T extends HTMLElement = HTMLElement>(
   strength = 0.32,
-  areaSelector?: string
+  areaSelector?: string,
+  maxOffset = 8
 ) {
   const ref = useRef<T | null>(null);
   useEffect(() => {
@@ -301,6 +307,7 @@ export function useMagnetic<T extends HTMLElement = HTMLElement>(
     const area: HTMLElement =
       (areaSelector && (el.closest(areaSelector) as HTMLElement)) || el;
     let raf = 0;
+    const clamp = (v: number, lim: number) => Math.max(-lim, Math.min(lim, v));
     const move = (e: PointerEvent) => {
       if (e.pointerType !== "mouse") return;
       const r = el.getBoundingClientRect();
@@ -312,13 +319,14 @@ export function useMagnetic<T extends HTMLElement = HTMLElement>(
       const reach = Math.max(r.width, r.height) * 1.4;
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
-        if (dist < reach) {
-          el.style.setProperty("--mdx", (dx * strength).toFixed(1));
-          el.style.setProperty("--mdy", (dy * strength).toFixed(1));
-        } else {
-          el.style.setProperty("--mdx", "0");
-          el.style.setProperty("--mdy", "0");
-        }
+        // Linear falloff: full lean near the button, nothing at the edge
+        // of reach. Vertical travel is tighter than horizontal — these
+        // pills sit in short rows, so a few px up/down is all there is.
+        const falloff = dist < reach ? 1 - dist / reach : 0;
+        const ox = clamp(dx * strength * falloff, maxOffset);
+        const oy = clamp(dy * strength * falloff, maxOffset * 0.6);
+        el.style.setProperty("--mdx", ox.toFixed(2));
+        el.style.setProperty("--mdy", oy.toFixed(2));
       });
     };
     const leave = () => {
@@ -333,7 +341,7 @@ export function useMagnetic<T extends HTMLElement = HTMLElement>(
       area.removeEventListener("pointermove", move);
       area.removeEventListener("pointerleave", leave);
     };
-  }, [strength, areaSelector]);
+  }, [strength, areaSelector, maxOffset]);
   return ref;
 }
 

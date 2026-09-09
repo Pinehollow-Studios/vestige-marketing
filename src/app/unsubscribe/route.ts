@@ -141,7 +141,7 @@ function donePage(email: string): string {
       email
     )}</strong> from the ${escapeHtml(
       brandName
-    )} waiting list — you won't hear from us again unless you join again at ${escapeHtml(
+    )} waiting list. You won't hear from us again unless you join again at ${escapeHtml(
       domain
     )}.`,
     action: `<span class="muted"><a href="https://${escapeHtml(
@@ -154,7 +154,7 @@ function invalidPage(): string {
   return page({
     title: "Link invalid",
     heading: "This link didn't check out.",
-    body: `We couldn't verify this unsubscribe link — it may be incomplete or out of date. Email <a href="${supportMailto}">${escapeHtml(
+    body: `We couldn't verify this unsubscribe link. It may be incomplete or out of date. Email <a href="${supportMailto}">${escapeHtml(
       contactEmail
     )}</a> and we'll take you off the list straight away.`,
   });

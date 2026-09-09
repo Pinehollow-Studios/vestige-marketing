@@ -24,7 +24,7 @@ export default function LaunchEmail() {
   const appUrl = siteConfig.appStoreUrl ?? `https://${siteConfig.domain}`;
   return (
     <EmailShell
-      preview={`${siteConfig.brandName} is live on the App Store — ${siteConfig.tagline}`}
+      preview={`${siteConfig.brandName} is live on the App Store. ${siteConfig.tagline}`}
       footer={
         <>
           You&rsquo;re getting this because you joined the {siteConfig.brandName}{" "}
@@ -43,7 +43,7 @@ export default function LaunchEmail() {
       <Heading style={h1Style}>{siteConfig.brandName} is live.</Heading>
 
       <Text style={pStyle}>
-        The wait is over. {siteConfig.brandName} is on the App Store today — every
+        The wait is over. {siteConfig.brandName} is on the App Store today: every
         course in England, all {COURSES_EXACT_TEXT} of them, ready for you to
         start your collection. Free.
       </Text>
@@ -68,8 +68,8 @@ export default function LaunchEmail() {
 
       <Text style={pStyle}>
         Mark the courses you&rsquo;ve played, keep a round if you like, and see how
-        your collection stands — among your friends, and across the country. No
-        ads, no noise.
+        your collection stands, among your friends and across the country. No ads,
+        no noise.
       </Text>
 
       <Text style={{ ...pStyle, color: brand.ink, marginTop: 22 }}>
