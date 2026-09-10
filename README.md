@@ -1,10 +1,14 @@
 # vestige-marketing
 
-Marketing site for the Vestige iOS app. Built name-agnostic so the brand swap (when Apple approves a different name) is a single-file change.
+Marketing site for Vestige Golf at [vestige.golf](https://vestige.golf): the
+pitch, the app page, the progress map, the waiting list, the legal pages, and
+the link-landing pages that universal links fall back to (`/u/<username>`,
+`/course/<id>`, `/list/<id>`, `/society/join/<token>`). The site is live and
+indexable.
 
-Stack: Next.js 16 (App Router) · TypeScript · Tailwind 4 · Source Serif 4 + Inter via `next/font/google` · Deploy on Vercel.
+Stack: Next.js 16 (App Router) · TypeScript · Tailwind 4 · Manrope + Inter via `next/font/google` · React Email + Resend · Deploy on Vercel.
 
-Design tokens mirror the iOS app's Atlas system (`Vestige-ios/Vestige/DesignSystem/Theme.swift`). Dark-only.
+Design tokens mirror the iOS app's Atlas system (`vestige-ios/Vestige/DesignSystem/Theme.swift`). Dark-only.
 
 ## Local dev
 
@@ -13,21 +17,34 @@ npm run dev
 # http://localhost:3000
 ```
 
-## Renaming the brand
+Verify before a PR:
 
-When the App Store name is approved, edit **`src/lib/siteConfig.ts`** — every user-facing string, the domain, the App Store URL, and the hero composition flow from there. Specifically:
+```bash
+npx tsc --noEmit && npx eslint . && npm run build
+```
 
-- `brandName` / `brandShortName` / `brandLowerName`
-- `tagline`
-- `domain`
-- `appStoreUrl` (set this once the App Store listing is live — the hero swaps the waitlist form for the App Store badge)
-- `contactEmail`
-- `hero.line1` / `line2Gradient` / `line3Italic` (the three-line serif stack — keep `line2Gradient` as the most-emphasised word; it gets the mint→lime gradient)
-- `features[]` if the product framing shifts
+## Site config
+
+**`src/lib/siteConfig.ts`** is the single source of truth for everything the
+site says about the product: brand strings, the nav, the hero, the stats strip,
+the feature cards, the /app and /progress copy, the FAQ and the roadmap. The
+course figures are not typed by hand there; they come from `progressConfig.ts`,
+the same file the /progress map reads, so the hero, the stats and the emails
+cannot drift apart.
+
+Two values change with the release calendar:
+
+- `BETA_LINK_SEND_DATE` (2 October 2026) — the **one** send of the public
+  TestFlight link to the waiting list as it stands that day. There is no second
+  send; `betaLinkStillToCome()` gates every line written for people who can
+  still make the list.
+- `appStoreUrl` — null until the 1.0 listing is live (January 2027). When set,
+  the hero swaps the waitlist form for the App Store badge.
+
+Copy follows the app's rule (`vestige-ios/CLAUDE.md` §7.7): no em dashes in
+user-facing text, ever.
 
 The brand artwork does not live here — see **Brand assets** below.
-
-When you're ready to be indexed by Google, flip `robots: { index: false, follow: false }` in `src/app/layout.tsx` to `index: true` and update `src/app/robots.ts` to `allow: "/"`.
 
 ## Brand assets
 
@@ -134,23 +151,32 @@ Vercel detects Next.js automatically. Set the two Resend env vars in the Vercel 
 ```
 src/
 ├── app/
-│   ├── actions.ts          # joinWaitlist server action
-│   ├── globals.css         # Atlas tokens (mirrors iOS Theme.swift)
-│   ├── layout.tsx          # Fonts, metadata, root <html>
-│   ├── page.tsx            # Landing composition
-│   └── robots.ts           # Pre-launch noindex
+│   ├── page.tsx                 # The pitch (home)
+│   ├── app/                     # /app — the three small ideas
+│   ├── progress/                # /progress — the map so far
+│   ├── privacy/ terms/ guidelines/ beta-terms/   # Legal pages (source in legal/)
+│   ├── u/[username]/ course/[id]/ list/[id]/ society/join/[token]/
+│   │                            # Link-landing pages universal links fall back to
+│   ├── .well-known/apple-app-site-association/  # Associated Domains payload
+│   ├── unsubscribe/             # Email unsubscribe landing
+│   ├── actions.ts               # joinWaitlist server action
+│   ├── globals.css              # Atlas tokens (mirrors iOS Theme.swift)
+│   ├── layout.tsx               # Fonts, metadata, root <html>
+│   ├── opengraph-image.tsx      # Share card, generated at build time
+│   ├── robots.ts / sitemap.ts / manifest.ts
+│   └── not-found.tsx
 ├── components/
-│   ├── AtlasBackdrop.tsx   # Deep-ocean radial + dual atmosphere
-│   ├── Features.tsx        # Three glass cards
-│   ├── ForClubs.tsx        # Quiet B2B block
-│   ├── Hero.tsx            # Page-hero composition with gradient word
-│   ├── SiteFooter.tsx
-│   ├── SiteHeader.tsx
-│   ├── WaitlistForm.tsx    # Client component, useActionState
-│   └── Wordmark.tsx        # Compass-tile glyph + brand name
+│   ├── marketing/               # Pitch composition, features, stats strip, FAQ, roadmap, closing CTA, footer, waitlist field
+│   ├── progress/                # The county map and its legend
+│   └── LinkLanding.tsx          # Shared shell for the link-landing pages
+├── emails/                      # welcome.tsx · launch.tsx · update.tsx (React Email)
 └── lib/
-    ├── resend.ts           # Resend waitlist client — contacts + segment (server-only)
-    └── siteConfig.ts       # Single source of truth for brand
+    ├── siteConfig.ts            # Single source of truth for everything the site says
+    ├── progressConfig.ts        # Course / county figures the copy and map share
+    ├── resend.ts                # Resend waitlist client — contacts + segment (server-only)
+    ├── email.tsx / emailShell.tsx   # Sending + the shared branded shell
+    ├── waitlistDb.ts / waitlistCount.ts / unsubscribe.ts
+    └── sources.ts
 ```
 
 ## Voice
