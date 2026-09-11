@@ -8,7 +8,12 @@ import {
   pStyle,
 } from "../lib/emailShell";
 import { siteConfig } from "../lib/siteConfig";
-import { progressConfig, COUNTIES_TOTAL, isComplete } from "../lib/progressConfig";
+import {
+  progressConfig,
+  COUNTRIES_MAPPED,
+  COUNTRIES_TOTAL,
+  isComplete,
+} from "../lib/progressConfig";
 
 /** Where the build-progress-map script writes the snapshot, relative to the
  *  site root. Referenced absolutely below so it resolves in the inbox. */
@@ -41,11 +46,11 @@ export default function UpdateEmail() {
         : mapped,
       label: progressConfig.coursesTotal
         ? "Courses mapped"
-        : "Courses mapped, every one in England",
+        : "Courses mapped, every one in Britain",
     },
     {
-      value: `${progressConfig.completedCounties.length} of ${COUNTIES_TOTAL}`,
-      label: "Counties covered",
+      value: `${COUNTRIES_MAPPED} of ${COUNTRIES_TOTAL}`,
+      label: "Countries mapped",
     },
   ];
 
@@ -197,12 +202,12 @@ export default function UpdateEmail() {
                     </span>{" "}
                     {isComplete ? (
                       <>
-                        of England&rsquo;s top 100 are on the map. These among
-                        the last in:
+                        of {progress.justAdded.topList} are on the map. These
+                        among the last in:
                       </>
                     ) : (
                       <>
-                        of England&rsquo;s top 100 are on the map now,
+                        of {progress.justAdded.topList} are on the map now,
                         including these newcomers:
                       </>
                     )}

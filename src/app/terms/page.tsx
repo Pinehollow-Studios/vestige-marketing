@@ -144,12 +144,14 @@ export default function TermsPage() {
 
         <Section title="2. The Service">
           <p style={para}>
-            {brandName} is a map-based tracker for the golf courses you have played in England.
+            {brandName} is a map-based tracker for the golf courses you have played in Great
+            Britain.
             The core experience — logging rounds, completing counties, and comparing with friends
             — is, and will remain, <span style={strong}>free</span>. We do not show advertising.
           </p>
           <p style={para}>
-            The Service currently covers England only. Scotland and Wales are shown as
+            The Service covers England, Scotland and Wales. England is fully mapped; Scotland
+            and Wales are being added, and until their courses are in they are shown as
             &ldquo;coming soon&rdquo;. We may add, change, or remove features over time.
           </p>
           <p style={para}>

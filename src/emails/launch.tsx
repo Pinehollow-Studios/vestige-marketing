@@ -43,9 +43,9 @@ export default function LaunchEmail() {
       <Heading style={h1Style}>{siteConfig.brandName} is live.</Heading>
 
       <Text style={pStyle}>
-        The wait is over. {siteConfig.brandName} is on the App Store today: every
-        course in England, all {COURSES_EXACT_TEXT} of them, ready for you to
-        start your collection. Free.
+        The wait is over. {siteConfig.brandName} is on the App Store today: the map
+        of Great Britain, all {COURSES_EXACT_TEXT} courses of it so far, ready for
+        you to start your collection. Free.
       </Text>
 
       <Section style={{ margin: "26px 0 6px" }}>

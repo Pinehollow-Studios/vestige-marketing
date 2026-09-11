@@ -2,15 +2,15 @@
 
 import { accentFor, type Palette } from "./palette";
 import { useTilt } from "./hooks";
-import { ENGLAND_PATH, COURSE_PINS } from "./england";
+import { BRITAIN_PATH, COURSE_PINS } from "./britain";
 
 export type MotifKind = "atlas" | "tap" | "board";
 
 /**
  * Three SVG feature motifs, each tuned to match its card body copy:
  *
- *   atlas  — Simplified England silhouette with pulsing course pins.
- *            Matches "Every course in England."
+ *   atlas  — Simplified Great Britain silhouette with pulsing course pins.
+ *            Matches "Every course in Britain."
  *   tap    — Tap ripple + a logged-round receipt pill underneath.
  *            Matches "Tap the course. Add a score if you want to."
  *   board  — 5-row leaderboard, middle row highlighted as "you".
@@ -21,7 +21,7 @@ function FeatureMotif({ kind, palette }: { kind: MotifKind; palette: Palette }) 
   const acc = accentFor(palette);
 
   if (kind === "atlas") {
-    // Silhouette + real-course pin positions live in england.ts —
+    // Silhouette + real-course pin positions live in britain.ts —
     // shared with the fixed AtlasMini scroll companion.
     const pins = COURSE_PINS;
     return (
@@ -49,9 +49,9 @@ function FeatureMotif({ kind, palette }: { kind: MotifKind; palette: Palette }) 
         </defs>
         <rect x="0" y="0" width="200" height="140" fill={`url(#mot-atlas-${palette})`} />
 
-        {/* England silhouette — source noted in england.ts */}
+        {/* Great Britain silhouette — source noted in britain.ts */}
         <path
-          d={ENGLAND_PATH}
+          d={BRITAIN_PATH}
           fill={`url(#mot-atlas-fill-${palette})`}
           stroke={acc.a}
           strokeOpacity="0.6"

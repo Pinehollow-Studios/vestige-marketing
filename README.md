@@ -44,6 +44,24 @@ Two values change with the release calendar:
 Copy follows the app's rule (`vestige-ios/CLAUDE.md` §7.7): no em dashes in
 user-facing text, ever.
 
+## The map
+
+The site covers Great Britain. **`src/lib/progressConfig.ts`** holds the three
+countries, the counties mapped so far and the course figures; the map, the
+ledger, the stats strip and the emails all derive from it. England is finished
+and shows as a milestone; Scotland and Wales are drawn as single "still to
+come" shapes until their courses are mapped, when their regions join
+`counties.ts` (the region model for each is decided then).
+
+The geometry is generated, never hand-edited:
+
+| Script | Writes | Source |
+|---|---|---|
+| `scripts/build-county-paths.mjs` | `src/components/progress/counties.ts` (England's 47 counties) and `countries.ts` (Wales, Scotland) in one shared projection | evansd/uk-ceremonial-counties (fetched, cached in `scripts/data/counties.json`) and `scripts/data/countries-source.json`, a copy of the app's `coming-soon-countries.json` |
+| `scripts/build-england-outline.mjs` | `src/components/progress/englandOutline.ts`, the coastline the finale draws | traced from `counties.ts`, so re-run it after the one above |
+| `scripts/build-britain-path.mjs` | `src/components/marketing/britain.ts`, the small silhouette and course pins behind the feature card and the corner atlas | Natural Earth 1:50m countries |
+| `npm run build:map` | `public/progress/atlas-current.png`, the coverage map in the progress email | the files above plus `progressConfig` |
+
 The brand artwork does not live here — see **Brand assets** below.
 
 ## Brand assets

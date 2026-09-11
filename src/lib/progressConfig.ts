@@ -1,19 +1,22 @@
 /**
  * Hand-edited values for the public /progress page.
  *
- * When progress moves on, update the three things that change —
- * `coursesMapped`, `completedCounties`, and `lastUpdated` — and you're
- * done; the county count, fractions, percentages, map fills and the
- * headline figure quoted across the site all derive from them. County
- * names must match counties.ts exactly (the build fails loudly on a
- * typo, so a mistake can't ship silently).
+ * When progress moves on, update the things that change — `coursesMapped`,
+ * `coursesTotal`, `completedCounties`, the `countries` list and
+ * `lastUpdated` — and you're done; the counts, fractions, percentages, map
+ * fills and the headline figure quoted across the site all derive from
+ * them. County names must match counties.ts exactly (the build fails
+ * loudly on a typo, so a mistake can't ship silently).
  *
- * England is finished, so the map now runs its completion finale and
- * the copy speaks in the past tense. None of that is hardcoded: the
- * whole site reads `isComplete` below, which is simply "every county in
- * counties.ts is filled". Point this file at a bigger territory (add
- * Wales to counties.ts, say) and everything reverts to the filling-in
- * state on its own.
+ * The map covers Great Britain. England is finished — all 47 ceremonial
+ * counties are in, and the ledger carries that as a milestone — while
+ * Scotland and Wales are drawn as single "still to come" shapes
+ * (countries.ts). Neither has a region model yet: that gets decided when
+ * their courses are mapped, which is Jack's job later on. When that day
+ * comes, add the regions to counties.ts, list them in `completedCounties`
+ * as they land, and flip the country's `complete` flag when the last one
+ * is in; the site reads everything from here and nothing says "done" on
+ * its own.
  *
  * These may later be wired to a live read-only Supabase count — keep
  * this shape stable so the swap is just a fetch returning the same
@@ -21,20 +24,31 @@
  */
 
 export const progressConfig = {
-  /** Courses in the database. England is complete, so this is all of them. */
+  /** Courses in the database. Every English course, so far. */
   coursesMapped: 1803,
   /**
-   * Estimated courses across the territory still being mapped — the
-   * denominator of the "x of ~y" fraction, always rendered with a "~".
-   * Null once the counting is done and `coursesMapped` IS the total;
-   * set it again when the map grows beyond England.
+   * Estimated courses across the whole of Great Britain — the denominator
+   * of the "x of ~y" fraction, always rendered with a "~". Set it to null
+   * once the counting is done and `coursesMapped` IS the total.
    */
-  coursesTotal: null as number | null,
+  coursesTotal: 2600 as number | null,
 
   /**
-   * Counties fully mapped, filled mint on the map. 47 ceremonial
-   * counties in total — the City of London is counted within Greater
-   * London, matching the homepage's "47 ceremonial counties" stat.
+   * The three countries, in the order they're being mapped. `complete`
+   * is what the ledger and the map read; `completedOn` is stamped on the
+   * milestone banner. A country without a region model yet is drawn as
+   * one shape from countries.ts, so it needs no county list here.
+   */
+  countries: [
+    { name: "England", complete: true, completedOn: "4 August 2026" },
+    { name: "Wales", complete: false },
+    { name: "Scotland", complete: false },
+  ] as ReadonlyArray<{ name: string; complete: boolean; completedOn?: string }>,
+
+  /**
+   * Counties fully mapped, filled mint on the map. All 47 ceremonial
+   * counties of England — the City of London is counted within Greater
+   * London. Scottish and Welsh regions join this list once they exist.
    */
   completedCounties: [
     "Bedfordshire",
@@ -87,38 +101,56 @@ export const progressConfig = {
   ],
 
   /** The most recently mapped county — gets the "Just added" beacon on the
-   *  atlas and the ledger line while there are still counties to come.
-   *  Once the map is complete the finale takes over and this is unused,
-   *  but it stays accurate for the record. Must be one of the above. */
+   *  atlas and the ledger line while a country is mid-fill. With England
+   *  finished and nothing started elsewhere, the milestone banner is the
+   *  news instead and this is unused, but it stays accurate for the
+   *  record. Must be one of the above. */
   latestCounty: "Northumberland",
 
-  /** The day the last county landed — stamped on the completion badge. */
-  completedOn: "4 August 2026",
-
-  lastUpdated: "18 August 2026",
+  lastUpdated: "11 September 2026",
 
   /** Honest, present-tense — rewrite it whenever the work changes. */
   rightNow:
-    "The database is done: every course in England is in, all the way to the Northumberland coast. Tom's polishing the app's main flows and squashing beta feedback ahead of a wider release; Jack's moved from mapping to filling out: more content inside the app, and deeper detail on each course.",
+    "England is done: every course is in, all the way to the Northumberland coast, and the map now runs to the whole of Great Britain. Scotland and Wales are next on Jack's list. Tom's polishing the app's main flows and squashing beta feedback ahead of a wider release.",
 
   /**
    * One real screenshot of the app. Drop the file in public/progress/
    * and point at it; set to null to fall back to the placeholder.
+   * TODO: replace with a capture from a build that draws Scotland and
+   * Wales — this one still shows Wales greyed out as "coming soon".
    */
   screenshot: {
     src: "/progress/app-home-2.png",
-    alt: "The Vestige home screen on the closed beta: a county map of England with the collection filling in, 11 of 942 courses played, Surrey within reach at 9 of 68.",
+    alt: "The Vestige home screen on the closed beta: the county map of England with the collection filling in, Wales greyed out beside it, 11 of 942 courses played, Surrey within reach at 9 of 68.",
   } as { src: string; alt: string } | null,
 } as const;
 
 /** Ceremonial counties of England (City of London within Greater London). */
 export const COUNTIES_TOTAL = 47;
 
+/** The countries the map covers: England, Scotland and Wales. */
+export const COUNTRIES_TOTAL = progressConfig.countries.length;
+
+/** How many of them are finished. */
+export const COUNTRIES_MAPPED = progressConfig.countries.filter((c) => c.complete).length;
+
 /**
- * Every county mapped. Drives the map's finale, the ledger's "complete"
+ * Every country mapped. Drives the map's finale, the ledger's "complete"
  * state and the past-tense copy — nothing says "done" on its own.
  */
-export const isComplete = progressConfig.completedCounties.length === COUNTIES_TOTAL;
+export const isComplete = COUNTRIES_MAPPED === COUNTRIES_TOTAL;
+
+/**
+ * The most recently finished country, for the milestone banner the
+ * ledger leads with while the rest is still filling in. Null once the
+ * whole map is done (the finale takes over) or before anything is.
+ */
+export const milestone = (() => {
+  if (isComplete) return null;
+  const done = progressConfig.countries.filter((c) => c.complete);
+  const last = done[done.length - 1];
+  return last ? { label: `${last.name} complete`, date: last.completedOn } : null;
+})();
 
 /**
  * The headline course figure, for marketing copy: the real count rounded
@@ -140,3 +172,9 @@ export const COURSES_HEADLINE_PLUS = `${COURSES_HEADLINE_TEXT}+`;
 
 /** "1,803" — the exact count, for the places that earn the precision. */
 export const COURSES_EXACT_TEXT = progressConfig.coursesMapped.toLocaleString("en-GB");
+
+/** "~2,600" — the estimated total across Great Britain, or null once counted. */
+export const COURSES_TOTAL_TEXT =
+  progressConfig.coursesTotal != null
+    ? `~${progressConfig.coursesTotal.toLocaleString("en-GB")}`
+    : null;

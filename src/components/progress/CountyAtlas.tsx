@@ -1,36 +1,47 @@
 import type { CSSProperties } from "react";
 import { COUNTY_SHAPES, COUNTY_VIEW } from "./counties";
+import { COUNTRY_SHAPES } from "./countries";
 import { ENGLAND_COAST, ENGLAND_ISLES } from "./englandOutline";
 
 /**
- * The hero of /progress — England with every ceremonial county drawn,
- * the completed ones filling in mint one by one, south to north (the
- * order the database was actually grown in). A server component on
- * purpose: the ~6,000 points of county geometry render once into HTML
- * and never ship as client JavaScript; the choreography is pure CSS
- * animation-delay, so the map needs no hydration at all.
+ * The hero of /progress — Great Britain, with every ceremonial county of
+ * England drawn and the completed ones filling in mint one by one, south
+ * to north (the order the database was actually grown in), and Wales and
+ * Scotland beside it as single "still to come" shapes until their
+ * regions exist. A server component on purpose: the ~9,000 points of
+ * geometry render once into HTML and never ship as client JavaScript;
+ * the choreography is pure CSS animation-delay, so the map needs no
+ * hydration at all.
  *
  * Completed counties are painted twice — once faint in the base layer
  * with all 47, once mint in the overlay — so each fade-in simply
  * reveals the overlay over an already-complete map.
  *
- * When the last county lands the map runs its finale: the seams between
- * the counties dissolve so the 47 pieces become one country, the
- * coastline draws itself round the whole of England, a pulse of light
- * leaves the coast and a flush sweeps across the land. Every beat is
- * timed off the county count, so it stays glued to the end of the fill
- * sweep however many counties there are. While counties are still to
- * come, the newest one pulses instead and the finale never runs.
+ * When the whole map is done (`complete`) it runs its finale: the seams
+ * between the counties dissolve so the pieces become one country, the
+ * coastline draws itself round the land, a pulse of light leaves the
+ * coast and a flush sweeps across. Every beat is timed off the county
+ * count, so it stays glued to the end of the fill sweep however many
+ * counties there are. While anything is still to come, the newest
+ * county pulses instead (if given) and the finale never runs.
+ *
+ * NB the finale's coastline is England's (englandOutline.ts). When
+ * Scotland and Wales are in and the map really is complete, regenerate
+ * it over the whole of Britain first — the outline script traces
+ * whatever is in counties.ts.
  */
 export function CountyAtlas({
   completed,
   latest,
   courses,
+  complete,
 }: {
   completed: ReadonlyArray<string>;
   latest?: string;
   /** Courses mapped — the second figure on the completion badge. */
   courses?: number;
+  /** Every country mapped — runs the finale instead of the legend. */
+  complete: boolean;
 }) {
   const known = new Set(COUNTY_SHAPES.map((s) => s.name));
   const unknown = completed.filter((n) => !known.has(n));
@@ -52,8 +63,6 @@ export function CountyAtlas({
     (a, b) => b.cy - a.cy
   );
 
-  const complete = done.length === COUNTY_SHAPES.length;
-
   // The moment the last county has finished fading in. Mirrors the
   // done-path timing in globals.css (620ms + i*55ms, 500ms each). Every
   // beat that has to land after the sweep — the legend, the "just added"
@@ -67,22 +76,24 @@ export function CountyAtlas({
   const latestShape =
     !complete && latest ? done.find((s) => s.name === latest) : undefined;
 
+  const coming = complete ? [] : COUNTRY_SHAPES;
+
   const vars = { "--sweep-end": `${sweepEnd}ms` } as Record<string, string>;
   // The flush crosses the map's own width, so the distance is the viewBox.
   if (complete) vars["--catlas-w"] = `${COUNTY_VIEW.w}px`;
+
+  const label = complete
+    ? `Map of Great Britain: all ${COUNTY_SHAPES.length} counties mapped, the map complete`
+    : `Map of Great Britain: ${completed.length} of ${COUNTY_SHAPES.length} counties mapped so far${
+        latestShape ? `, most recently ${latestShape.name}` : ""
+      }${coming.length ? `; ${coming.map((c) => c.name).join(" and ")} still to come` : ""}`;
 
   return (
     <figure
       className="fw-catlas"
       data-complete={complete ? "1" : "0"}
       role="img"
-      aria-label={
-        complete
-          ? `Map of England: all ${COUNTY_SHAPES.length} counties mapped, the country complete`
-          : `Map of England: ${completed.length} of ${COUNTY_SHAPES.length} counties mapped so far${
-              latestShape ? `, most recently ${latestShape.name}` : ""
-            }`
-      }
+      aria-label={label}
       style={vars as CSSProperties}
     >
       <svg viewBox={`0 0 ${COUNTY_VIEW.w} ${COUNTY_VIEW.h}`} width="100%">
@@ -102,7 +113,7 @@ export function CountyAtlas({
             <>
               {/* The flush of light that crosses the finished country —
                   a band wider than the map, slid across and clipped to
-                  the coast so it can only ever light up England. */}
+                  the coast so it can only ever light up the land. */}
               <linearGradient id="fw-catlas-flush" x1="0" y1="0" x2="1" y2="0">
                 <stop offset="0%" stopColor="#EAFBF5" stopOpacity="0" />
                 <stop offset="45%" stopColor="#EAFBF5" stopOpacity="0.5" />
@@ -116,6 +127,32 @@ export function CountyAtlas({
             </>
           )}
         </defs>
+        {/* Still to come: the countries without a region model yet, as one
+            quiet shape each — the same treatment the app gives them. */}
+        {coming.length > 0 && (
+          <g className="fw-catlas-coming">
+            {coming.map((c) => (
+              <path key={c.name} d={c.d} fillRule="evenodd">
+                <title>{`${c.name} — still to come`}</title>
+              </path>
+            ))}
+            {coming.map((c) => (
+              <text
+                key={`${c.name}-label`}
+                className="fw-catlas-coming-label"
+                x={c.lx}
+                y={c.ly}
+                textAnchor="middle"
+                aria-hidden="true"
+              >
+                <tspan x={c.lx}>{c.name}</tspan>
+                <tspan x={c.lx} dy="11" className="sub">
+                  still to come
+                </tspan>
+              </text>
+            ))}
+          </g>
+        )}
         <g className="fw-catlas-base">
           {COUNTY_SHAPES.map((s) => (
             <path key={s.name} d={s.d} fillRule="evenodd">
@@ -123,7 +160,7 @@ export function CountyAtlas({
             </path>
           ))}
         </g>
-        {/* One solid England beneath the counties, faded in as the seams
+        {/* One solid country beneath the counties, faded in as the seams
             go. Each county was simplified on its own, so neighbours meet
             with hairline gaps — invisible under a stroke, but the moment
             the strokes dissolve those gaps let the dark page through and

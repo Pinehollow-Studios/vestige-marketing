@@ -5,8 +5,11 @@ import { siteConfig } from "@/lib/siteConfig";
 import {
   progressConfig,
   COUNTIES_TOTAL,
+  COUNTRIES_MAPPED,
+  COUNTRIES_TOTAL,
   COURSES_EXACT_TEXT,
   isComplete,
+  milestone,
 } from "@/lib/progressConfig";
 import { CountyAtlas } from "@/components/progress/CountyAtlas";
 import { ProgressStats } from "@/components/progress/ProgressStats";
@@ -15,17 +18,16 @@ import { StickyNav } from "@/components/marketing/StickyNav";
 import { SiteFooter } from "@/components/marketing/SiteFooter";
 import { Reveal } from "@/components/marketing/Reveal";
 import { RevealHeadline } from "@/components/marketing/atoms";
-import { ENGLAND_PATH } from "@/components/marketing/england";
+import { BRITAIN_PATH } from "@/components/marketing/britain";
 
 /**
  * /progress — the build, in the open. A reward for the waiting list
- * and a recruiting tool for the curious: the county map filling in and
- * then lighting up complete, the two honest figures, what's happening
- * right now, and one way in. The homepage carries only the map as a
- * peek; everything else about the build lives here. Numbers are
- * hand-edited in src/lib/progressConfig.ts, and every "complete" here
- * derives from that file rather than being written into the copy — add
- * a territory to counties.ts and the page goes back to filling in.
+ * and a recruiting tool for the curious: the map of Great Britain
+ * filling in country by country, the two honest figures, what's
+ * happening right now, and one way in. The homepage carries only the
+ * map as a peek; everything else about the build lives here. Numbers
+ * are hand-edited in src/lib/progressConfig.ts, and every "complete"
+ * here derives from that file rather than being written into the copy.
  *
  * Deliberately absent: the roadmap and FAQ (they live on the
  * homepage), a second signup form, a changelog. One idea per page.
@@ -34,8 +36,10 @@ import { ENGLAND_PATH } from "@/components/marketing/england";
 export const metadata: Metadata = {
   title: "Progress",
   description: isComplete
-    ? `How far ${siteConfig.brandName} has come: every county in England mapped, ${COURSES_EXACT_TEXT} courses collected, and what we're working on right now.`
-    : `How far ${siteConfig.brandName} has come: counties mapped, courses collected, and what we're working on right now.`,
+    ? `How far ${siteConfig.brandName} has come: every course in Great Britain mapped, ${COURSES_EXACT_TEXT} of them, and what we're working on right now.`
+    : milestone
+      ? `How far ${siteConfig.brandName} has come: England's ${COUNTIES_TOTAL} counties mapped and ${COURSES_EXACT_TEXT} courses collected, Scotland and Wales next, and what we're working on right now.`
+      : `How far ${siteConfig.brandName} has come: counties mapped, courses collected, and what we're working on right now.`,
 };
 
 export default function ProgressPage() {
@@ -44,11 +48,11 @@ export default function ProgressPage() {
     coursesTotal,
     completedCounties,
     latestCounty,
-    completedOn,
     lastUpdated,
     rightNow,
     screenshot,
   } = progressConfig;
+  const completedOn = progressConfig.countries[progressConfig.countries.length - 1]?.completedOn;
 
   return (
     <div className="fw-root">
@@ -64,7 +68,7 @@ export default function ProgressPage() {
                 phone column and the desktop hero cell — at 43px+ a
                 375px phone orphans the last word. */}
             <RevealHeadline
-              pre="England, "
+              pre="Britain, "
               ital={isComplete ? "complete" : "filling in"}
               post="."
               fontSize="clamp(40px, 10.5vw, 68px)"
@@ -75,43 +79,52 @@ export default function ProgressPage() {
               {isComplete ? (
                 <>
                   Vestige is an iPhone app that puts every golf course in
-                  England on one map, and keeps the ones you&rsquo;ve played.
-                  The map is finished: all {COUNTIES_TOTAL} counties,{" "}
-                  {COURSES_EXACT_TEXT} courses, every one of them in. This is
-                  how it got there.
+                  Great Britain on one map, and keeps the ones you&rsquo;ve
+                  played. The map is finished: {COURSES_EXACT_TEXT} courses,
+                  every one of them in. This is how it got there.
+                </>
+              ) : milestone ? (
+                <>
+                  Vestige is an iPhone app that puts every golf course in
+                  Great Britain on one map, and keeps the ones you&rsquo;ve
+                  played. England is finished: all {COUNTIES_TOTAL} counties,{" "}
+                  {COURSES_EXACT_TEXT} courses, every one of them in. Scotland
+                  and Wales are next. This is how far the map has come.
                 </>
               ) : (
                 <>
                   Vestige is an iPhone app that puts every golf course in
-                  England on one map, and keeps the ones you&rsquo;ve played.
-                  We&rsquo;re partway through building it. This is how far the
-                  map has come.
+                  Great Britain on one map, and keeps the ones you&rsquo;ve
+                  played. We&rsquo;re partway through building it. This is how
+                  far the map has come.
                 </>
               )}
             </p>
           </div>
           <CountyAtlas
             completed={completedCounties}
-            latest={latestCounty}
+            latest={milestone ? undefined : latestCounty}
             courses={coursesMapped}
+            complete={isComplete}
           />
           <ProgressStats
-            counties={{
-              label: "Counties mapped",
-              value: completedCounties.length,
-              total: COUNTIES_TOTAL,
+            countries={{
+              label: "Countries mapped",
+              value: COUNTRIES_MAPPED,
+              total: COUNTRIES_TOTAL,
             }}
             courses={{
               label: "Courses mapped",
               value: coursesMapped,
               total: coursesTotal,
               approx: true,
-              note: "every one in England",
+              note: "every one in Britain",
             }}
             latest={latestCounty}
             lastUpdated={lastUpdated}
             complete={isComplete}
             completedOn={completedOn}
+            milestone={milestone}
           />
         </section>
 
@@ -149,7 +162,7 @@ export default function ProgressPage() {
                 <div className="fw-prog-shot-placeholder">
                   <svg viewBox="0 0 200 140" width="58%" aria-hidden="true">
                     <path
-                      d={ENGLAND_PATH}
+                      d={BRITAIN_PATH}
                       fill="rgba(91,228,195,0.06)"
                       stroke="rgba(91,228,195,0.45)"
                       strokeWidth="0.8"

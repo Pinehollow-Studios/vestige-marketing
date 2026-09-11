@@ -10,7 +10,7 @@
 **Last updated:** 8 September 2026
 
 Vestige ("Vestige", "we", "us") is a golf-course collection tracker for
-England, built by Pinehollow Studios Limited. This policy explains what
+Great Britain, built by Pinehollow Studios Limited. This policy explains what
 personal data we collect, why, and your rights over it. It covers the
 Vestige iOS app and, in its final section, the vestige.golf website.
 

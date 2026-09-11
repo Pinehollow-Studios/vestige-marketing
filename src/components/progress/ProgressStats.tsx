@@ -52,7 +52,7 @@ function StatRow({
           )}
         </span>
         {/* The percentage earns its place only against a denominator.
-            Next to "every one in England" it says nothing new, and on a
+            Next to "every one in Britain" it says nothing new, and on a
             phone it was the thing that pushed the row onto two lines. */}
         {stat.total && <span className="pct">{pct}%</span>}
       </div>
@@ -76,33 +76,47 @@ function StatRow({
  * choreography as the homepage StatsStrip. The homepage snapshot
  * omits `lastUpdated`; the full /progress page carries it.
  *
- * With the map finished the card leads with the completion banner and
- * the fractions become statements: 47 of 47, and a course count with
- * nothing left to divide it by. `latest` is ignored in that state —
- * "just added" stops being the news once there's nothing left to add.
+ * With the whole map finished the card leads with the completion
+ * banner and the fractions become statements: 3 of 3, and a course
+ * count with nothing left to divide it by. Short of that, a finished
+ * country is a `milestone` — the same banner, above fractions that
+ * still have somewhere to go. `latest` is ignored in either state —
+ * "just added" stops being the news once a country is done.
  */
 export function ProgressStats({
-  counties,
+  countries,
   courses,
   latest,
   lastUpdated,
   complete,
   completedOn,
+  milestone,
 }: {
-  counties: Stat;
+  countries: Stat;
   courses: Stat;
   /** Most recently mapped county — named in a "Just added" ledger line. */
   latest?: string;
   lastUpdated?: string;
-  /** Every county mapped — leads with the banner instead of the beacon. */
+  /** Every country mapped — leads with the banner instead of the beacon. */
   complete?: boolean;
   /** The day the last county landed, stamped on the banner. */
   completedOn?: string;
+  /** A finished country while the rest is still filling in. */
+  milestone?: { label: string; date?: string } | null;
 }) {
   const [ref, revealed] = useScrollReveal<HTMLDivElement>({ threshold: 0.25 });
+  const banner = complete
+    ? { label: "Great Britain complete", date: completedOn }
+    : milestone ?? null;
+  const showLatest = !complete && !milestone && latest;
   return (
-    <div ref={ref} className="fw-prog-card" data-complete={complete ? "1" : "0"}>
-      {complete && (
+    <div
+      ref={ref}
+      className="fw-prog-card"
+      data-complete={complete ? "1" : "0"}
+      data-milestone={!complete && banner ? "1" : "0"}
+    >
+      {banner && (
         <div
           className="fw-prog-banner"
           style={{
@@ -112,13 +126,13 @@ export function ProgressStats({
           }}
         >
           <span className="fw-prog-banner-tick" aria-hidden="true" />
-          <span className="fw-prog-banner-text">England complete</span>
-          {completedOn && <span className="fw-prog-banner-date">{completedOn}</span>}
+          <span className="fw-prog-banner-text">{banner.label}</span>
+          {banner.date && <span className="fw-prog-banner-date">{banner.date}</span>}
         </div>
       )}
-      <StatRow stat={counties} revealed={revealed} delay={complete ? 120 : 0} />
-      <StatRow stat={courses} revealed={revealed} delay={complete ? 240 : 120} />
-      {!complete && latest && (
+      <StatRow stat={countries} revealed={revealed} delay={banner ? 120 : 0} />
+      <StatRow stat={courses} revealed={revealed} delay={banner ? 240 : 120} />
+      {showLatest && (
         <div className="fw-prog-stamp fw-prog-latest">
           <span className="dot" aria-hidden="true" />
           Just added <b>{latest}</b>
@@ -127,9 +141,9 @@ export function ProgressStats({
       {/* The banner already carries the completion date, and on the day
           the map finished it IS the last-updated date — printing it twice
           in one card just looks like a bug. */}
-      {lastUpdated && !(complete && lastUpdated === completedOn) && (
+      {lastUpdated && !(banner && lastUpdated === banner.date) && (
         <div
-          className={`fw-prog-stamp${!complete && latest ? " fw-prog-stamp-plain" : ""}`}
+          className={`fw-prog-stamp${showLatest ? " fw-prog-stamp-plain" : ""}`}
         >
           <span className="dot" aria-hidden="true" />
           Last updated <b>{lastUpdated}</b>

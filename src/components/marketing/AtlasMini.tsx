@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { ENGLAND_PATH, COURSE_PINS } from "./england";
+import { BRITAIN_PATH, COURSE_PINS } from "./britain";
 import { progressConfig, COURSES_EXACT_TEXT } from "@/lib/progressConfig";
 
 /**
- * The atlas companion — a small fixed England map that rides along in
+ * The atlas companion — a small fixed map of Britain that rides along in
  * the corner and fills in as the visitor scrolls: the coastline draws
  * itself, course pins light one by one, and the counter ticks up to the
  * real course count. The product's promise ("your map of the country,
@@ -62,7 +62,7 @@ export function AtlasMini() {
   return (
     <div className="fw-atlasmini" data-shown={shown ? "1" : "0"} aria-hidden="true">
       <svg viewBox="0 0 200 140" width="100%">
-        <path d={ENGLAND_PATH} className="fw-atlasmini-outline" pathLength={1} />
+        <path d={BRITAIN_PATH} className="fw-atlasmini-outline" pathLength={1} />
         {COURSE_PINS.map((p, i) => (
           <g key={i}>
             <circle className="fw-atlasmini-pin-base" cx={p.x} cy={p.y} r={1.7} />
