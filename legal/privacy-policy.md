@@ -60,6 +60,13 @@ are also checked automatically for unsafe content shortly after upload — the
 copy sent for that check is the re-encoded one, so it carries no embedded
 metadata, and it is sent without your name or handle attached.
 
+**Messages.** Messages you send in the app — today, to the Vestige team,
+including replies to your feedback — are stored so the conversation can be
+read back by you and by us. They are private to the people in the
+conversation and are never shown on your profile or to other users. You can
+unsend a message; it is then withheld from everyone, and the conversation
+itself is deleted with your account.
+
 **Location.** Only when you use a feature that needs it: sorting the course
 suggestions on your home screen by distance, and showing your position on
 the map when you ask for it. We take a single reading while the app is open
@@ -97,8 +104,11 @@ across other apps or websites.
   upload, are also checked by Microsoft's Azure AI Content Safety service
   (EU region) as a second opinion: it can flag something for a person to
   look at, and can hide a photo pending that review, but it never decides
-  anything about your account. Private notes you keep to yourself, and the
-  bug reports you send us, are deliberately not screened at all.
+  anything about your account. Messages you send are never refused by the
+  word list; they are only checked by that second-opinion service, so that
+  a person can look if something is reported or flagged. Private notes you
+  keep to yourself, and the bug reports you send us, are deliberately not
+  screened at all.
 - To produce **aggregated, anonymised insights for golf clubs** — for
   example, how many Vestige users played a club, or added it to one of their
   lists, over a period. These insights are always aggregated across many
