@@ -68,7 +68,14 @@ Contact: **support@pinehollow.studio**. Minimum age: **17**.
    the solicitor**, not something to treat as closed.
    **The rest of the list has not been checked, and the same personal-vs-
    company question applies to every one of them** — that is the real
-   outstanding work in this item.
+   outstanding work in this item. **Supabase (2026-09-11):** the production
+   org was upgraded to the Pro plan and paid for with the company's card and
+   registered address, but *without* the "purchasing as a business" flag,
+   because that flag only exists to collect a VAT number and Pinehollow
+   Studios Limited is not VAT-registered. The receipts therefore carry the
+   organisation name and address rather than a VAT-validated company
+   identity — the same question as the Azure `Individual` account type, for
+   the solicitor in the same sitting.
 5. **App Store Connect** — keep the Privacy "Nutrition Label" questionnaire
    consistent with the privacy policy whenever either changes. The 2026-09-08
    content-safety change adds no new *category* of collected data, so no
@@ -121,3 +128,14 @@ Contact: **support@pinehollow.studio**. Minimum age: **17**.
   in-region — which the earlier pass had deliberately left out while we
   still believed there was a data-logging switch to find. Details in
   `vestige-ios/docs/azure-content-safety-setup.md`.
+
+## Pending: Messages (written 2026-09-12, NOT yet live)
+
+The privacy policy (`.md` + `src/app/privacy/page.tsx`) and the guidelines
+carry a **Messages** paragraph for the in-app team channel (iOS
+`docs/messaging-build-plan.md`). The schema is on prod (2026-09-12, switched off) and
+the feature ships behind a flag with build 27. **When it goes live on prod, bump the
+policy's "Last updated" date and redeploy the site in the same step** — the
+paragraph describes data we do not yet collect from anyone, and the date must
+not move before the feature does. No new processor: Microsoft already covers
+the second-opinion text check.
