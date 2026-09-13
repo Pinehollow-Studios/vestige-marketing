@@ -9,7 +9,7 @@ import { siteConfig } from "@/lib/siteConfig";
  * Generated at build time and cached. 1200×630, brand dark + mint.
  */
 
-export const alt = "Vestige — every course in England, collected.";
+export const alt = "Vestige — every course in Britain, collected.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -93,7 +93,7 @@ export default async function Image() {
               color: ink,
             }}
           >
-            <div style={{ display: "flex" }}>Every course in England,</div>
+            <div style={{ display: "flex" }}>Every course in Britain,</div>
             <div style={{ display: "flex", color: mint }}>collected.</div>
           </div>
           <div

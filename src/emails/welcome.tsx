@@ -50,8 +50,8 @@ export default function WelcomeEmail({
 
       <Text style={pStyle}>
         Thanks for joining the waiting list for {siteConfig.brandName}, the way to
-        keep every golf course you&rsquo;ve played in England and see how your
-        collection stands against your friends.
+        keep every golf course you&rsquo;ve played in Great Britain and see how
+        your collection stands against your friends.
       </Text>
 
       <Section

@@ -1,9 +1,13 @@
 // One-off generator for the England coastline used by the /progress map's
 // "England complete" finale (src/components/progress/englandOutline.ts).
 //
-// Third in the family: build-england-path.mjs makes the little 200x140
+// Third in the family: build-britain-path.mjs makes the little 200x140
 // silhouette for the marketing motifs, build-county-paths.mjs makes the 47
-// fillable county shapes, and this makes the single outline that wraps them.
+// fillable county shapes (plus Wales and Scotland as single shapes), and
+// this makes the single outline that wraps the English counties — the map
+// covers Great Britain now, but the finale that draws this coastline runs
+// only when England is the whole of what's finished, or for the record of
+// it. Same projection as counties.ts, read from the file.
 //
 // The outline HAS to sit exactly on top of the county shapes — a coastline
 // half a pixel adrift from the fill it traces looks broken — so it is derived

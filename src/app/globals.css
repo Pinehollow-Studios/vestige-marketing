@@ -1769,36 +1769,64 @@ html {
 /* ─── The county atlas ─────────────────────────────────────── */
 .fw-catlas {
   position: relative;
-  width: min(100%, 420px);
+  /* The frame is Great Britain now (400x621), so the map is half as tall
+     again as it is wide; capped a touch narrower than England alone was
+     (420px) so it doesn't run the length of a phone screen. */
+  width: min(100%, 380px);
   margin: clamp(30px, 7vw, 52px) auto 0;
 }
-/* Soft mint halo behind the country.
-   Centred on England, NOT on the box: the country's area centroid sits at
-   x=240 of the 400-unit viewBox — 60% across — because the Welsh
-   indentation and the gap above the West Country take a bite out of the
-   left. The ::before is the figure inset by -12%, so 60% of the map is
-   (0.60 + 0.12) / 1.24 = 58% of this box. Centring the gradient at 50%
-   reads as visibly off to the left. Vertically 48% is already within a
-   point of the centroid once the caption below the svg is accounted for. */
+/* Soft mint halo behind the lit part of the map.
+   Centred on England, NOT on the box: with Wales and Scotland in the
+   frame England's area centroid sits at 68% across and 71% down the
+   viewBox (build-county-paths.mjs prints it). The ::before is the figure
+   inset by -12%, so that lands at (0.68 + 0.12) / 1.24 = 65% across, and
+   a shade under 67% down once the caption below the svg is accounted
+   for. Centring the gradient on the box would light the Irish Sea. */
 .fw-catlas::before {
   content: "";
   position: absolute;
   inset: -12%;
-  background: radial-gradient(50% 45% at 58% 48%, rgba(91, 228, 195, 0.09), transparent 70%);
+  background: radial-gradient(46% 38% at 65% 65%, rgba(91, 228, 195, 0.09), transparent 70%);
   pointer-events: none;
 }
 .fw-catlas svg {
   position: relative;
   display: block;
-  /* The county projection leaves only 10 user units of padding around
-     England (scripts/build-county-paths.mjs), and the glow on the fills
-     and the coastline blurs further than that — so an SVG clipped to its
-     own viewBox slices the haze flat wherever the country reaches the
-     edge: the Northumberland tip, the Norfolk bulge, Cornwall. Letting
+  /* The projection leaves only 10 user units of padding around Britain
+     (scripts/build-county-paths.mjs), and the glow on the fills and the
+     coastline blurs further than that — so an SVG clipped to its own
+     viewBox slices the haze flat wherever the land reaches the edge:
+     the Norfolk bulge, Cornwall, the Hebrides. Letting
      it paint outside costs nothing (the spill is a soft ~12px and
      .fw-root already clips the page horizontally) and the alternative,
      padding the viewBox, would shrink the map to buy the same room. */
   overflow: visible;
+}
+/* Still to come: Wales and Scotland as one quiet shape each, a shade
+   fainter than the unfilled counties so the eye reads them as "not yet
+   part of the game" rather than "not yet mapped". Labelled in the
+   legend's voice, on the land, where the app puts its own capsule. */
+.fw-catlas-coming {
+  animation: fw-catlas-fade 700ms ease 150ms both;
+}
+.fw-catlas-coming path {
+  fill: rgba(246, 244, 238, 0.025);
+  stroke: rgba(255, 255, 255, 0.10);
+  stroke-width: 0.6;
+  stroke-linejoin: round;
+}
+.fw-catlas-coming-label {
+  font-family: var(--font-ui);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  fill: rgba(246, 244, 238, 0.42);
+}
+.fw-catlas-coming-label .sub {
+  font-size: 7px;
+  letter-spacing: 1.2px;
+  fill: rgba(246, 244, 238, 0.28);
 }
 .fw-catlas-base {
   animation: fw-catlas-fade 700ms ease 150ms both;
@@ -1880,20 +1908,24 @@ html {
   50%      { opacity: 0.3;  stroke-width: 2.4; }
 }
 
-/* ═══ The finale — "England, complete" ═══════════════════════════
-   Runs only on a map with every county filled (data-complete="1"), and
+/* ═══ The finale — "Britain, complete" ═══════════════════════════
+   Runs only on a map with every country filled (data-complete="1"), and
    only after the south→north sweep has finished. Five beats, each one
    offset from --sweep-end so the whole sequence follows the fill however
    many counties there are:
 
-     +0.06s  the seams between the counties dissolve — 47 pieces stop
+     +0.06s  the seams between the counties dissolve — the pieces stop
              being pieces and become one country
-     +0.12s  the coastline draws itself round the whole of England,
+     +0.12s  the coastline draws itself round the whole of the land,
              1.5s for the lap, thick and bright at the front
      +1.35s  the halo behind the map blooms and settles brighter
      +1.48s  a ring of light leaves the coast as the loop closes
      +1.42s  a flush rakes across the land, clipped to the coastline
-     +1.90s  the "England complete" badge lands
+     +1.90s  the "complete" badge lands
+
+   A finished country short of the whole map (England, today) is a
+   milestone, not a finale: its counties stay mint, the ledger leads
+   with the banner, and this sequence waits for the rest.
 
    After that the coast holds on a slow breath — the one thing that
    keeps moving, so a visitor arriving late still sees a live map. */
@@ -1928,7 +1960,7 @@ html {
 /* Beat two: the coastline. Cream rather than mint so it reads as a rim
    light against the mint land it traces, with the glow carrying the
    brand colour. pathLength="1" on the element makes the dash maths
-   resolution-independent — one unit is one lap of England. */
+   resolution-independent — one unit is one lap of the coast. */
 .fw-catlas-coast {
   fill: none;
   stroke: #eafbf5;
@@ -2003,8 +2035,8 @@ html {
 /* Beat three: the halo behind the country blooms, then settles brighter
    than it started — the map stays visibly "lit" from here on. */
 .fw-catlas[data-complete="1"]::before {
-  /* 58% — England's centroid, same as the base halo above. */
-  background: radial-gradient(52% 47% at 58% 48%, rgba(91, 228, 195, 0.17), transparent 70%);
+  /* England's centroid, same as the base halo above. */
+  background: radial-gradient(48% 40% at 65% 65%, rgba(91, 228, 195, 0.17), transparent 70%);
   opacity: 0.5;
   animation: fw-catlas-halo 2600ms cubic-bezier(0.2, 0.8, 0.2, 1)
     calc(var(--sweep-end, 2200ms) + 1350ms) forwards;
@@ -2083,9 +2115,10 @@ html {
   padding: clamp(22px, 5.5vw, 30px);
   margin-top: clamp(26px, 6vw, 40px);
 }
-/* Finished: the card picks up the same mint rim the map's coastline
-   has, so the two read as one announcement. */
-.fw-prog-card[data-complete="1"] {
+/* Finished, or a country finished: the card picks up the same mint rim
+   the map's fills have, so the two read as one announcement. */
+.fw-prog-card[data-complete="1"],
+.fw-prog-card[data-milestone="1"] {
   border-color: rgba(91, 228, 195, 0.28);
   box-shadow: 0 0 0 1px rgba(91, 228, 195, 0.06), 0 18px 48px -28px rgba(91, 228, 195, 0.5);
 }
@@ -2378,7 +2411,7 @@ html {
   line-height: 1.55;
 }
 /* roomier than the /progress hero cell — it's the section's centrepiece */
-.fw-peek .fw-catlas { width: min(100%, 460px); }
+.fw-peek .fw-catlas { width: min(100%, 420px); }
 .fw-peek-more {
   display: flex;
   width: fit-content;

@@ -22,12 +22,13 @@ you confirm that you are.
 ## 2. The Service
 
 Vestige is a map-based tracker for the golf courses you have played in
-England. The core experience — logging rounds, completing counties, and
+Great Britain. The core experience — logging rounds, completing counties, and
 comparing with friends — is, and will remain, **free**. We do not show
 advertising.
 
-The Service currently covers England only. Scotland and Wales are shown as
-"coming soon". We may add, change, or remove features over time.
+The Service covers England, Scotland and Wales. England is fully mapped;
+Scotland and Wales are being added, and until their courses are in they are
+shown as "coming soon". We may add, change, or remove features over time.
 
 The app is distributed on the **United Kingdom App Store only**, and is
 intended for use in the United Kingdom. We make no representation that the

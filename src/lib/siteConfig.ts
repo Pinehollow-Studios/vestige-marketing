@@ -16,9 +16,11 @@
 // resolver won't guess at extensions the way the bundler does.
 import {
   COUNTIES_TOTAL,
+  COUNTRIES_TOTAL,
   COURSES_EXACT_TEXT,
   COURSES_HEADLINE,
   COURSES_HEADLINE_PLUS,
+  COURSES_TOTAL_TEXT,
 } from "./progressConfig.ts";
 
 /**
@@ -220,10 +222,12 @@ export type SiteConfig = {
       /** County chip labels (order as you like). */
       counties: ReadonlyArray<string>;
       /**
-       * How many of England's top 100 (top100golfcourses.com) are now on the
-       * map. Set to 0 to hide the "X of the top 100" line.
+       * How many of a top-100 list (top100golfcourses.com keeps one per
+       * country) are now on the map, and which list — "England's top 100",
+       * "Scotland's top 100". Set topCount to 0 to hide the line.
        */
       topCount: number;
+      topList: string;
       /**
        * Standout courses to feature — `rank` is their place in that top 100
        * (omit/0 to hide the number), `note` an optional aside.
@@ -270,8 +274,9 @@ export const siteConfig: SiteConfig = {
   brandName: "Vestige",
   brandShortName: "Vestige",
   brandLowerName: "vestige",
-  tagline: "Every golf course in England, collected.",
-  description: `A free iPhone app that keeps the golf courses you've played on a map of all ${COURSES_HEADLINE_PLUS} in England, and shows how your collection compares with your friends'.`,
+  tagline: "Every golf course in Britain, collected.",
+  description:
+    "A free iPhone app that keeps the golf courses you've played on a map of Great Britain, and shows how your collection compares with your friends'.",
   domain: "vestige.golf",
   appStoreUrl: null,
   contactEmail: "hello@pinehollow.studio",
@@ -292,32 +297,44 @@ export const siteConfig: SiteConfig = {
     metaStrip: ["iPhone, iOS 18+", "Free at launch", "Beta link goes out 2 Oct"],
   },
 
+  // England, Scotland and Wales in turn, so the strip reads as the whole
+  // island wherever it happens to be scrolled to.
   marquee: [
     "Royal Birkdale",
+    "St Andrews",
+    "Royal Porthcawl",
     "Sunningdale",
+    "Carnoustie",
     "Walton Heath",
     "Royal St George’s",
-    "The Berkshire",
+    "Muirfield",
+    "Royal St David’s",
     "Royal Lytham",
+    "Royal Troon",
     "Royal Liverpool",
     "St Enodoc",
+    "Royal Dornoch",
+    "Aberdovey",
     "Saunton",
+    "Turnberry",
     "Woodhall Spa",
     "Royal Cinque Ports",
-    "Hillside",
-    "Royal North Devon",
+    "Kingsbarns",
+    "Pennard",
     "Ganton",
+    "Cruden Bay",
     "Notts (Hollinwell)",
+    "Nefyn",
     "Alwoodley",
-    "Royal St David’s",
-    "Princes",
+    "North Berwick",
     "Burnham & Berrow",
     "Trevose",
+    "Machrihanish",
   ],
 
   stats: [
     { kind: "number", target: COURSES_HEADLINE, suffix: "+", label: "Courses" },
-    { kind: "number", target: COUNTIES_TOTAL, label: "Counties, all mapped" },
+    { kind: "number", target: COUNTRIES_TOTAL, label: "Countries, one map" },
     { kind: "number", target: 0, prefix: "£", label: "Cost at launch" },
     { kind: "static", value: "2 Oct", label: "Public beta link" },
   ],
@@ -343,7 +360,7 @@ export const siteConfig: SiteConfig = {
     titleItalic: "keeping.",
     body: [
       "Ask a golfer how many courses they've played and you'll get a guess, a frown, and a story about a links in Cornwall. What you won't get is a number. Nobody keeps the list.",
-      `So we're building one: every course in England on a single map, the ones you've played marked with a tap, and a friendly tally of who's collected the most. The map itself is finished, all ${COURSES_EXACT_TEXT} of them gathered county by county over the past year, so the app is what's left. Just the places you've played. England first; the rest of the British Isles to follow.`,
+      `So we're building one: every course in Great Britain on a single map, the ones you've played marked with a tap, and a friendly tally of who's collected the most. England is finished, all ${COURSES_EXACT_TEXT} of its courses gathered county by county over the past year, and Scotland and Wales are being mapped next. Just the places you've played.`,
       "The name? A vestige is the trace something leaves behind. Every round leaves one.",
     ],
   },
@@ -363,15 +380,15 @@ export const siteConfig: SiteConfig = {
     },
     {
       q: "Which courses are in it?",
-      a: `Every course in England: all ${COURSES_EXACT_TEXT} of them, from Open Championship links to your local nine-hole pitch & putt. That count is the finished one: the database was completed county by county and there is nothing left to add before launch.`,
+      a: `Every course in England: all ${COURSES_EXACT_TEXT} of them, from Open Championship links to your local nine-hole pitch & putt, completed county by county with nothing left to add. Scotland and Wales are being mapped next, which takes the map to ${COURSES_TOTAL_TEXT ?? "every"} courses across Great Britain. You can watch it fill in on the progress page.`,
     },
     {
-      q: "Is it England only?",
-      a: "England first. The rest of the British Isles will follow.",
+      q: "Which countries does it cover?",
+      a: "England, Scotland and Wales: the whole of Great Britain on one map. England is finished. Scotland and Wales are being mapped now, and until they are they sit on the map as still to come.",
     },
     {
       q: "Can I get it outside the UK?",
-      a: "Not at launch. Vestige is on the UK App Store only, because the map is English courses and there is not much in it for you if you have never played one. If you are British and abroad, the app travels fine: it is where you download it that has to be the UK.",
+      a: "Not at launch. Vestige is on the UK App Store only, because the map is British courses and there is not much in it for you if you have never played one. If you are British and abroad, the app travels fine: it is where you download it that has to be the UK.",
     },
     {
       q: "What do you do with my data?",
@@ -387,8 +404,8 @@ export const siteConfig: SiteConfig = {
     {
       kind: "atlas",
       eyebrow: "The atlas",
-      title: "Every course in England.",
-      body: `All ${COURSES_EXACT_TEXT} of them, championship links to your local nine-hole pitch & putt. The map was finished before the app was, so nothing is missing on day one.`,
+      title: "Every course in Britain.",
+      body: `England's ${COURSES_EXACT_TEXT} are in, championship links to your local nine-hole pitch & putt, and Scotland and Wales are being mapped next. Nothing in England is missing on day one.`,
     },
     {
       kind: "tap",
@@ -447,7 +464,7 @@ export const siteConfig: SiteConfig = {
     ],
     map: {
       enabled: true,
-      alt: "Map of England with every county filled in mint, the country complete.",
+      alt: "Map of Great Britain with every English county filled in mint, Wales and Scotland beside it still to come.",
     },
     spotlight: {
       enabled: false,
@@ -480,6 +497,7 @@ export const siteConfig: SiteConfig = {
       // of the top100golfcourses.com England list is on the map. Ranks are
       // omitted below — the point of this send is the sweep, not the placings.
       topCount: 100,
+      topList: "England's top 100",
       courses: [
         {
           name: "Royal Lytham & St Annes",

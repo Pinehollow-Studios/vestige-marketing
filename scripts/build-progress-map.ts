@@ -2,10 +2,11 @@
  * Builds the coverage-map snapshot used in the progress-update email
  * (src/emails/update.tsx) into public/progress/atlas-current.png.
  *
- * It renders the SAME county geometry and the SAME completed-counties list the
+ * It renders the SAME geometry and the SAME completed-counties list the
  * website's /progress map uses (src/components/progress/counties.ts +
- * src/lib/progressConfig.ts), so the email map can never disagree with the
- * site. Email clients don't render inline SVG reliably, hence a PNG.
+ * countries.ts + src/lib/progressConfig.ts), so the email map can never
+ * disagree with the site. Email clients don't render inline SVG reliably,
+ * hence a PNG.
  *
  * Workflow each send: edit progressConfig (coursesMapped / completedCounties /
  * latestCounty), run `npm run build:map`, commit the regenerated PNG, deploy,
@@ -18,11 +19,12 @@ import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import { Resvg } from "@resvg/resvg-js";
 import { COUNTY_SHAPES, COUNTY_VIEW } from "../src/components/progress/counties.ts";
+import { COUNTRY_SHAPES } from "../src/components/progress/countries.ts";
 import {
   ENGLAND_COAST,
   ENGLAND_ISLES,
 } from "../src/components/progress/englandOutline.ts";
-import { progressConfig, isComplete } from "../src/lib/progressConfig.ts";
+import { progressConfig, isComplete, milestone } from "../src/lib/progressConfig.ts";
 import { siteConfig } from "../src/lib/siteConfig.ts";
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -44,7 +46,17 @@ if (unknown.length) {
 const doneSet = new Set<string>(progressConfig.completedCounties);
 const latest = progressConfig.latestCounty;
 
-// Colours/strokes mirror globals.css (.fw-catlas-base / .fw-catlas-done).
+// Colours/strokes mirror globals.css (.fw-catlas-coming / .fw-catlas-base /
+// .fw-catlas-done). The countries without regions yet sit underneath as one
+// quiet shape each; no label, the email copy says what they are. Drawn a
+// shade firmer than on the site — a 10% hairline does not survive an email
+// client's recompression, and there is no hover title to fall back on.
+const comingPaths = isComplete
+  ? ""
+  : COUNTRY_SHAPES.map(
+      (s) =>
+        `<path d="${s.d}" fill="rgba(246,244,238,0.05)" stroke="rgba(255,255,255,0.22)" stroke-width="0.8" stroke-linejoin="round" fill-rule="evenodd"/>`
+    ).join("");
 // A complete map has every county filled, so the base layer is pure overdraw —
 // and its faint stroke would redraw the very borders the finished state drops.
 const basePaths = isComplete
@@ -70,9 +82,11 @@ const spot = siteConfig.progress.spotlight;
 // The most-recent county gets a soft light outline (the email's static stand-in
 // for the website's pulsing "just added" beacon). Skipped when it's also the
 // pinned county — the pin already marks it, and both together read as clutter,
-// and skipped entirely once the map is complete: the coastline below is the
+// skipped while a finished country is the milestone (the website drops the
+// beacon then too: the whole country is the news, not its last county), and
+// skipped entirely once the map is complete: the coastline below is the
 // beacon then, and singling out one county undercuts it.
-const drawBeacon = !isComplete && !(spot.enabled && spot.county === latest);
+const drawBeacon = !isComplete && !milestone && !(spot.enabled && spot.county === latest);
 const latestShape = COUNTY_SHAPES.find((s) => s.name === latest && doneSet.has(s.name));
 const latestOutline =
   latestShape && drawBeacon
@@ -123,7 +137,7 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" wid
       <stop offset="0%" stop-color="#5BE4C3"/>
       <stop offset="100%" stop-color="#8FE85B"/>
     </linearGradient>
-    <radialGradient id="halo" cx="50%" cy="48%" r="55%">
+    <radialGradient id="halo" cx="64%" cy="66%" r="50%">
       <stop offset="0%" stop-color="#5BE4C3" stop-opacity="${isComplete ? 0.2 : 0.12}"/>
       <stop offset="70%" stop-color="#5BE4C3" stop-opacity="0"/>
     </radialGradient>
@@ -134,6 +148,7 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" wid
     </radialGradient>
   </defs>
   <rect x="0" y="0" width="${w}" height="${h}" fill="url(#halo)"/>
+  <g>${comingPaths}</g>
   <g>${basePaths}</g>
   <g>${donePaths}</g>
   ${coastline}

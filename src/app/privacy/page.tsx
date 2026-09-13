@@ -127,7 +127,8 @@ export default function PrivacyPage() {
 
         <p style={{ fontSize: 17, lineHeight: 1.72, color: "rgba(246,244,238,0.85)", margin: 0 }}>
           {brandName} (&ldquo;{brandName}&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;) is a
-          golf-course collection tracker for England, built by {studio}. This policy explains what
+          golf-course collection tracker for Great Britain, built by {studio}. This policy explains
+          what
           personal data we collect, why, and your rights over it. It covers the {brandName} iOS
           app and, in its final section, this website.
         </p>
