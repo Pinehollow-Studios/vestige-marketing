@@ -196,6 +196,14 @@ export default function PrivacyPage() {
             attached.
           </p>
           <p style={para}>
+            <span style={strong}>Messages.</span> Messages you send in the app &mdash; today, to the{" "}
+            {brandName} team, including replies to your feedback &mdash; are stored so the
+            conversation can be read back by you and by us. They are private to the people in the
+            conversation and are never shown on your profile or to other users. You can unsend a
+            message; it is then withheld from everyone, and the conversation itself is deleted
+            with your account.
+          </p>
+          <p style={para}>
             <span style={strong}>Location.</span> Only when you use a feature that needs it:
             sorting the course suggestions on your home screen by distance, and showing your
             position on the map when you ask for it. We take a single reading while the app is
@@ -238,8 +246,10 @@ export default function PrivacyPage() {
               That same text, and the photos you upload, are also checked by Microsoft&rsquo;s
               Azure AI Content Safety service (EU region) as a second opinion: it can flag
               something for a person to look at, and can hide a photo pending that review, but it
-              never decides anything about your account. Private notes you keep to yourself, and
-              the bug reports you send us, are deliberately not screened at all.
+              never decides anything about your account. Messages you send are never refused by
+              the word list; they are only checked by that second-opinion service, so that a
+              person can look if something is reported or flagged. Private notes you keep to
+              yourself, and the bug reports you send us, are deliberately not screened at all.
             </li>
             <li>
               To produce{" "}

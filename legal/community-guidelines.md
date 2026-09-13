@@ -13,7 +13,7 @@ share it with people you choose. The social side is deliberately small:
 friends, rounds, comments, lists. These guidelines exist so it stays a good
 place to be. They apply to everything you put on Vestige that someone else
 can see — your profile, photos, round captions and reflections, comments,
-and lists.
+messages, and lists.
 
 They sit alongside our [Terms of Service](https://vestige.golf/terms),
 which are the binding rules; if you breach these guidelines, you are

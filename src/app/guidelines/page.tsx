@@ -128,7 +128,7 @@ export default function GuidelinesPage() {
           it with people you choose. The social side is deliberately small: friends, rounds,
           comments, lists. These guidelines exist so it stays a good place to be. They apply to
           everything you put on {brandName} that someone else can see — your profile, photos,
-          round captions and reflections, comments, and lists.
+          round captions and reflections, comments, messages, and lists.
         </p>
 
         <p style={{ fontSize: 17, lineHeight: 1.72, color: "rgba(246,244,238,0.85)", margin: "16px 0 0" }}>

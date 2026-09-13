@@ -25,7 +25,7 @@
 
 export const progressConfig = {
   /** Courses in the database. Every English course, so far. */
-  coursesMapped: 1803,
+  coursesMapped: 1811,
   /**
    * Estimated courses across the whole of Great Britain — the denominator
    * of the "x of ~y" fraction, always rendered with a "~". Set it to null
@@ -170,7 +170,7 @@ export const COURSES_HEADLINE_TEXT = COURSES_HEADLINE.toLocaleString("en-GB");
 /** "1,800+" — the rounded figure as it appears in headlines. */
 export const COURSES_HEADLINE_PLUS = `${COURSES_HEADLINE_TEXT}+`;
 
-/** "1,803" — the exact count, for the places that earn the precision. */
+/** "1,811" — the exact count, for the places that earn the precision. */
 export const COURSES_EXACT_TEXT = progressConfig.coursesMapped.toLocaleString("en-GB");
 
 /** "~2,600" — the estimated total across Great Britain, or null once counted. */
